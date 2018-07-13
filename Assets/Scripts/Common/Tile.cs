@@ -4,6 +4,10 @@ public class Tile : MonoBehaviour
 {
     public GameObject content;
     public Point pos;
+
+    [HideInInspector] public Tile prev;
+    [HideInInspector] public int distance;
+
     public Vector3 center { get { return pos.ToVector3(); } }
 
     public void Load(Vector3 v) {

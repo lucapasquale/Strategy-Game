@@ -13,19 +13,24 @@ public abstract class BattleState : State
 
     public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
-    protected override void AddListeners() {
-        this.AddObserver(OnMove, InputController.MoveNotification);
-    }
-
     protected virtual void Awake() {
         owner = GetComponent<BattleController>();
+    }
+
+    protected override void AddListeners() {
+        this.AddObserver(OnMove, InputController.MoveNotification);
+        this.AddObserver(OnFire, InputController.FireNotification);
+    }
+
+    protected override void RemoveListeners() {
+        this.RemoveObserver(OnMove, InputController.MoveNotification);
+        this.RemoveObserver(OnFire, InputController.FireNotification);
     }
 
     protected virtual void OnMove(object sender, object args) {
     }
 
-    protected override void RemoveListeners() {
-        this.RemoveObserver(OnMove, InputController.MoveNotification);
+    protected virtual void OnFire(object sender, object args) {
     }
 
     protected virtual void SelectTile(Point p) {
