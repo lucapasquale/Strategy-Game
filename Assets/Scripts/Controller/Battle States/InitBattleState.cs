@@ -16,7 +16,6 @@ public class InitBattleState : BattleState
                 data.Add(new Vector3(x, y));
             }
         }
-
         levelData = ScriptableObject.CreateInstance<LevelData>();
         levelData.tiles = data;
 
@@ -30,14 +29,16 @@ public class InitBattleState : BattleState
 
     private void SpawnTestUnits() {
         System.Type[] components = new System.Type[] { typeof(WalkMovement) };
-        for (int i = 0; i < 1; ++i) {
+        for (int i = 0; i < 3; ++i) {
             GameObject instance = Instantiate(owner.heroPrefab) as GameObject;
-            Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].z);
+            Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].y);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(board.GetTile(p));
             unit.Match();
-            Movement m = instance.AddComponent(components[i]) as Movement;
-            m.range = 5;
+            Movement m = instance.AddComponent<WalkMovement>();
+            m.range = 3;
+
+            units.Add(unit);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class BattleState : State
 {
@@ -11,6 +12,9 @@ public abstract class BattleState : State
     //public LevelData levelData { get { return owner.levelData; } }
     public Point pos { get { return owner.pos; } set { owner.pos = value; } }
 
+    public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
+    public Turn turn { get { return owner.turn; } }
+    public List<Unit> units { get { return owner.units; } }
     public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {
@@ -18,19 +22,19 @@ public abstract class BattleState : State
     }
 
     protected override void AddListeners() {
-        this.AddObserver(OnMove, InputController.MoveNotification);
-        this.AddObserver(OnFire, InputController.FireNotification);
+        InputController.moveEvent += OnMove;
+        InputController.fireEvent += OnFire;
     }
 
     protected override void RemoveListeners() {
-        this.RemoveObserver(OnMove, InputController.MoveNotification);
-        this.RemoveObserver(OnFire, InputController.FireNotification);
+        InputController.moveEvent -= OnMove;
+        InputController.fireEvent -= OnFire;
     }
 
-    protected virtual void OnMove(object sender, object args) {
+    protected virtual void OnMove(object sender, InfoEventArgs<Point> e) {
     }
 
-    protected virtual void OnFire(object sender, object args) {
+    protected virtual void OnFire(object sender, InfoEventArgs<int> e) {
     }
 
     protected virtual void SelectTile(Point p) {

@@ -3,17 +3,17 @@ using System.Collections;
 
 public class SelectUnitState : BattleState
 {
-    protected override void OnMove(object sender, object args) {
-        var input = (Point)args;
-        SelectTile(pos + input);
+    private int index = -1;
+
+    public override void Enter() {
+        base.Enter();
+        StartCoroutine("ChangeCurrentUnit");
     }
 
-    protected override void OnFire(object sender, object args) {
-        GameObject content = owner.currentTile.content;
-
-        if (content != null) {
-            owner.currentUnit = content.GetComponent<Unit>();
-            owner.ChangeState<MoveTargetState>();
-        }
+    private IEnumerator ChangeCurrentUnit() {
+        index = (index + 1) % units.Count;
+        turn.Change(units[index]);
+        yield return null;
+        owner.ChangeState<CommandSelectionState>();
     }
 }

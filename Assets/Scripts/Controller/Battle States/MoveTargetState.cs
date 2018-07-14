@@ -8,7 +8,7 @@ public class MoveTargetState : BattleState
 
     public override void Enter() {
         base.Enter();
-        Movement mover = owner.currentUnit.GetComponent<Movement>();
+        Movement mover = owner.turn.actor.GetComponent<Movement>();
         tiles = mover.GetTilesInRange(board);
         board.SelectTiles(tiles);
     }
@@ -19,13 +19,17 @@ public class MoveTargetState : BattleState
         tiles = null;
     }
 
-    protected override void OnMove(object sender, object args) {
-        var input = (Point)args;
-        SelectTile(pos + input);
+    protected override void OnMove(object sender, InfoEventArgs<Point> e) {
+        SelectTile(e.info + pos);
     }
 
-    protected override void OnFire(object sender, object args) {
-        if (tiles.Contains(owner.currentTile))
-            owner.ChangeState<MoveSequenceState>();
+    protected override void OnFire(object sender, InfoEventArgs<int> e) {
+        if (e.info == 0) {
+            if (tiles.Contains(owner.currentTile))
+                owner.ChangeState<MoveSequenceState>();
+        }
+        else {
+            owner.ChangeState<CommandSelectionState>();
+        }
     }
 }
