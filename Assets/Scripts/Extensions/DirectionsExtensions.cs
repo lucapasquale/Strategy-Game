@@ -14,6 +14,6 @@ public static class DirectionsExtensions
     }
 
     public static Vector3 ToEuler(this Directions d) {
-        return new Vector3(0, (int)d * 90, 0);
+        return new Vector3(0, 0, (int)d * -90);
     }
 }
