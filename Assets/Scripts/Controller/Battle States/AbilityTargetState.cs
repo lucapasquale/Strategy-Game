@@ -25,28 +25,26 @@ public class AbilityTargetState : BattleState
         //statPanelController.HideSecondary();
     }
 
-    protected override void OnMove(object sender, InfoEventArgs<Point> e) {
-        if (ar.directionOriented) {
-            ChangeDirection(e.info);
-        }
-        else {
-            currentSelection = ++currentSelection % tiles.Count;
-            SelectTile(tiles[currentSelection].pos);
-            //RefreshSecondaryStatPanel(pos);
-        }
-    }
+    //protected override void OnMove(object sender, InfoEventArgs<Point> e) {
+    //    if (ar.directionOriented) {
+    //        ChangeDirection(e.info);
+    //    }
+    //    else {
+    //        currentSelection = ++currentSelection % tiles.Count;
+    //        SelectTile(tiles[currentSelection].pos);
+    //        //RefreshSecondaryStatPanel(pos);
+    //    }
+    //}
 
-    protected override void OnFire(object sender, InfoEventArgs<int> e) {
-        if (e.info == 0) {
-            turn.hasUnitActed = true;
-            if (turn.hasUnitMoved)
-                turn.lockMove = true;
-            owner.ChangeState<CommandSelectionState>();
-        }
-        else {
-            owner.ChangeState<CategorySelectionState>();
-        }
-    }
+    //protected override void OnFire(object sender, InfoEventArgs<int> e) {
+    //    if (e.info == 0) {
+    //        turn.hasUnitActed = true;
+    //        if (turn.hasUnitMoved)
+    //            turn.lockMove = true;
+    //    }
+
+    //    owner.ChangeState<CommandSelectionState>();
+    //}
 
     private void SelectTiles() {
         tiles = ar.GetTilesInRange(board);

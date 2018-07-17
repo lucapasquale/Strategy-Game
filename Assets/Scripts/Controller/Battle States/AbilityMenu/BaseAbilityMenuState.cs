@@ -18,19 +18,19 @@ public abstract class BaseAbilityMenuState : BattleState
         abilityMenuPanelController.Hide();
     }
 
-    protected override void OnFire(object sender, InfoEventArgs<int> e) {
-        if (e.info == 0)
-            Confirm();
-        else
-            Cancel();
-    }
+    //protected override void OnFire(object sender, InfoEventArgs<int> e) {
+    //    if (e.info == 0)
+    //        Confirm();
+    //    else
+    //        Cancel();
+    //}
 
-    protected override void OnMove(object sender, InfoEventArgs<Point> e) {
-        if (e.info.x > 0 || e.info.y < 0)
-            abilityMenuPanelController.Next();
-        else
-            abilityMenuPanelController.Previous();
-    }
+    //protected override void OnMove(object sender, InfoEventArgs<Point> e) {
+    //    if (e.info.x > 0 || e.info.y < 0)
+    //        abilityMenuPanelController.Next();
+    //    else
+    //        abilityMenuPanelController.Previous();
+    //}
 
     protected abstract void LoadMenu();
 

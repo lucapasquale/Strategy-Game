@@ -4,32 +4,30 @@ using System.Collections.Generic;
 
 public class MoveTargetState : BattleState
 {
-    private List<Tile> tiles;
+    private List<Tile> tilesInRange;
 
     public override void Enter() {
         base.Enter();
         Movement mover = owner.turn.actor.GetComponent<Movement>();
-        tiles = mover.GetTilesInRange(board);
-        board.SelectTiles(tiles);
+        tilesInRange = mover.GetTilesInRange(board);
+        board.SelectTiles(tilesInRange);
     }
 
     public override void Exit() {
         base.Exit();
-        board.DeSelectTiles(tiles);
-        tiles = null;
+        board.DeSelectTiles(tilesInRange);
+        tilesInRange = null;
     }
 
-    protected override void OnMove(object sender, InfoEventArgs<Point> e) {
-        SelectTile(e.info + pos);
-    }
+    protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
+        Tile tile = board.GetTile(e.info);
 
-    protected override void OnFire(object sender, InfoEventArgs<int> e) {
-        if (e.info == 0) {
-            if (tiles.Contains(owner.currentTile))
-                owner.ChangeState<MoveSequenceState>();
+        if (tilesInRange.Contains(tile)) {
+            SelectTile(e.info);
+            owner.ChangeState<MoveSequenceState>();
+            return;
         }
-        else {
-            owner.ChangeState<CommandSelectionState>();
-        }
+
+        owner.ChangeState<SelectUnitState>();
     }
 }

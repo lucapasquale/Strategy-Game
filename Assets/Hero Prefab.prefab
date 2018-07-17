@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4836049554503798}
-  - component: {fileID: 114335833305925804}
+  - component: {fileID: 114446866987711342}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -102,18 +102,6 @@ Transform:
   m_Father: {fileID: 4075912772098412}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114335833305925804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1067411736731812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3cfe857d033ffa45aab8e90dc97aff9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 1
 --- !u!114 &114395376611642396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,6 +119,18 @@ MonoBehaviour:
     y: 0
   prev: {fileID: 0}
   distance: 0
+--- !u!114 &114446866987711342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1067411736731812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e721419b82f824781a739ebc91a02f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 1
 --- !u!114 &114464901453554140
 MonoBehaviour:
   m_ObjectHideFlags: 1

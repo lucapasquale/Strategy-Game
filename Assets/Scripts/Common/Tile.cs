@@ -2,7 +2,7 @@
 
 public class Tile : MonoBehaviour
 {
-    public GameObject content;
+    public GameObject content = null;
     public Point pos;
 
     [HideInInspector] public Tile prev;

@@ -12,13 +12,39 @@ public class InputController : MonoBehaviour
 
     public static event EventHandler<InfoEventArgs<int>> fireEvent;
 
+    public static event EventHandler<InfoEventArgs<Point>> touchEvent;
+
     private void Update() {
+        UpdateTouch();
+        UpdateAxis();
+        UpdateButtons();
+    }
+
+    private void UpdateTouch() {
+        if (Input.GetMouseButtonDown(0)) {
+            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 touchPos = new Vector2(wp.x, wp.y);
+
+            var collider = Physics2D.OverlapPoint(touchPos);
+            if (collider) {
+                var tile = collider.GetComponent<Tile>();
+                if (tile) {
+                    touchEvent?.Invoke(this, new InfoEventArgs<Point>(tile.pos));
+                }
+            }
+        }
+    }
+
+    private void UpdateAxis() {
         int x = _hor.Update();
         int y = _ver.Update();
+
         if (x != 0 || y != 0) {
             moveEvent?.Invoke(this, new InfoEventArgs<Point>(new Point(x, y)));
         }
+    }
 
+    private void UpdateButtons() {
         for (int i = 0; i < _buttons.Length; ++i) {
             if (Input.GetButtonUp(_buttons[i])) {
                 fireEvent?.Invoke(this, new InfoEventArgs<int>(i));

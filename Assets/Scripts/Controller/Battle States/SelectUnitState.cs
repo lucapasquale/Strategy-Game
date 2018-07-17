@@ -3,17 +3,23 @@ using System.Collections;
 
 public class SelectUnitState : BattleState
 {
-    private int index = -1;
-
     public override void Enter() {
         base.Enter();
-        StartCoroutine("ChangeCurrentUnit");
+        ClearSelection();
     }
 
-    private IEnumerator ChangeCurrentUnit() {
-        index = (index + 1) % units.Count;
-        turn.Change(units[index]);
-        yield return null;
-        owner.ChangeState<CommandSelectionState>();
+    protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
+        Tile tile = board.GetTile(e.info);
+        if (tile.content == null) {
+            return;
+        }
+
+        SelectTile(e.info);
+        Unit selectedUnit = tile.content.GetComponent<Unit>();
+
+        if (selectedUnit) {
+            turn.Change(selectedUnit);
+            owner.ChangeState<MoveTargetState>();
+        }
     }
 }

@@ -11,7 +11,7 @@ public class InitBattleState : BattleState
 
     private IEnumerator Init() {
         var data = new List<Vector3>();
-        for (int x = 0; x < 5; x++) {
+        for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 5; y++) {
                 data.Add(new Vector3(x, y));
             }
@@ -20,8 +20,6 @@ public class InitBattleState : BattleState
         levelData.tiles = data;
 
         board.Load(levelData);
-        Point p = new Point((int)levelData.tiles[0].x, (int)levelData.tiles[0].z);
-        SelectTile(p);
         SpawnTestUnits();
         yield return null;
         owner.ChangeState<SelectUnitState>();

@@ -24,7 +24,8 @@ public class CommandSelectionState : BaseAbilityMenuState
                 break;
 
             case 1: // Action
-                owner.ChangeState<CategorySelectionState>();
+                turn.ability = turn.actor.GetComponentInChildren<AbilityRange>().gameObject;
+                owner.ChangeState<AbilityTargetState>();
                 break;
 
             case 2: // Wait
@@ -40,7 +41,7 @@ public class CommandSelectionState : BaseAbilityMenuState
             SelectTile(turn.actor.tile.pos);
         }
         else {
-            owner.ChangeState<ExploreState>();
+            owner.ChangeState<SelectUnitState>();
         }
     }
 }

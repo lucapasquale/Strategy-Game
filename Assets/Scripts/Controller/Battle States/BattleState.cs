@@ -22,19 +22,14 @@ public abstract class BattleState : State
     }
 
     protected override void AddListeners() {
-        InputController.moveEvent += OnMove;
-        InputController.fireEvent += OnFire;
+        InputController.touchEvent += OnTouch;
     }
 
     protected override void RemoveListeners() {
-        InputController.moveEvent -= OnMove;
-        InputController.fireEvent -= OnFire;
+        InputController.touchEvent -= OnTouch;
     }
 
-    protected virtual void OnMove(object sender, InfoEventArgs<Point> e) {
-    }
-
-    protected virtual void OnFire(object sender, InfoEventArgs<int> e) {
+    protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
     }
 
     protected virtual void SelectTile(Point p) {
@@ -43,5 +38,9 @@ public abstract class BattleState : State
 
         pos = p;
         tileSelectionIndicator.localPosition = board.tiles[p].center;
+    }
+
+    protected virtual void ClearSelection() {
+        tileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }
