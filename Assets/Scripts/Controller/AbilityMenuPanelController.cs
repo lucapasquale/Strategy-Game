@@ -5,16 +5,10 @@ using System.Collections.Generic;
 
 public class AbilityMenuPanelController : MonoBehaviour
 {
-    #region Constants
-
     private const string ShowKey = "Show";
     private const string HideKey = "Hide";
     private const string EntryPoolKey = "AbilityMenuPanel.Entry";
     private const int MenuCount = 4;
-
-    #endregion Constants
-
-    #region Fields / Properties
 
     [SerializeField] private GameObject entryPrefab;
     [SerializeField] private Text titleLabel;
@@ -22,23 +16,6 @@ public class AbilityMenuPanelController : MonoBehaviour
     [SerializeField] private GameObject canvas;
     private List<AbilityMenuEntry> menuEntries = new List<AbilityMenuEntry>(MenuCount);
     public int selection { get; private set; }
-
-    #endregion Fields / Properties
-
-    #region MonoBehaviour
-
-    private void Awake() {
-        GameObjectPoolController.AddEntry(EntryPoolKey, entryPrefab, MenuCount, int.MaxValue);
-    }
-
-    private void Start() {
-        panel.SetPosition(HideKey, false);
-        canvas.SetActive(false);
-    }
-
-    #endregion MonoBehaviour
-
-    #region Public
 
     public void Show(string title, List<string> options) {
         canvas.SetActive(true);
@@ -88,9 +65,14 @@ public class AbilityMenuPanelController : MonoBehaviour
         }
     }
 
-    #endregion Public
+    private void Awake() {
+        GameObjectPoolController.AddEntry(EntryPoolKey, entryPrefab, MenuCount, int.MaxValue);
+    }
 
-    #region Private
+    private void Start() {
+        panel.SetPosition(HideKey, false);
+        canvas.SetActive(false);
+    }
 
     private AbilityMenuEntry Dequeue() {
         Poolable p = GameObjectPoolController.Dequeue(EntryPoolKey);
@@ -136,6 +118,4 @@ public class AbilityMenuPanelController : MonoBehaviour
         t.equation = EasingEquations.EaseOutQuad;
         return t;
     }
-
-    #endregion Private
 }

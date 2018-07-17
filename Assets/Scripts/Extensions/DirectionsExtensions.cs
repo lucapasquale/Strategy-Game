@@ -16,4 +16,14 @@ public static class DirectionsExtensions
     public static Vector3 ToEuler(this Directions d) {
         return new Vector3(0, 0, (int)d * -90);
     }
+
+    public static Directions GetDirection(this Point p) {
+        if (p.y > 0)
+            return Directions.North;
+        if (p.x > 0)
+            return Directions.East;
+        if (p.y < 0)
+            return Directions.South;
+        return Directions.West;
+    }
 }

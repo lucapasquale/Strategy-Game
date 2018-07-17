@@ -16,8 +16,23 @@ public abstract class Movement : MonoBehaviour
         return retValue;
     }
 
+    protected virtual void Awake() {
+        unit = GetComponent<Unit>();
+        jumper = transform.Find("Jumper");
+    }
+
+    protected virtual bool ExpandSearch(Tile from, Tile to) {
+        return (from.distance + 1) <= range;
+    }
+
+    protected virtual void Filter(List<Tile> tiles) {
+        for (int i = tiles.Count - 1; i >= 0; --i)
+            if (tiles[i].content != null)
+                tiles.RemoveAt(i);
+    }
+
     protected virtual IEnumerator Turn(Directions dir) {
-        TransformLocalEulerTweener t = (TransformLocalEulerTweener)transform.RotateToLocal(dir.ToEuler(), 2f, EasingEquations.EaseInOutQuad);
+        TransformLocalEulerTweener t = (TransformLocalEulerTweener)transform.RotateToLocal(dir.ToEuler(), 0.25f, EasingEquations.EaseInOutQuad);
 
         // When rotating between North and West, we must make an exception so it looks like the unit
         // rotates the most efficient way (since 0 and 360 are treated the same)
@@ -32,20 +47,5 @@ public abstract class Movement : MonoBehaviour
 
         while (t != null)
             yield return null;
-    }
-
-    protected virtual void Awake() {
-        unit = GetComponent<Unit>();
-        jumper = transform.Find("Jumper");
-    }
-
-    protected virtual bool ExpandSearch(Tile from, Tile to) {
-        return (from.distance + 1) <= range;
-    }
-
-    protected virtual void Filter(List<Tile> tiles) {
-        for (int i = tiles.Count - 1; i >= 0; --i)
-            if (tiles[i].content != null)
-                tiles.RemoveAt(i);
     }
 }
