@@ -8,7 +8,7 @@ public class MoveTargetState : BattleState
 
     public override void Enter() {
         base.Enter();
-        Movement mover = owner.turn.actor.GetComponent<Movement>();
+        Movement mover = roundController.current.GetComponent<Movement>();
         tilesInRange = mover.GetTilesInRange(board);
         board.SelectTiles(tilesInRange);
     }

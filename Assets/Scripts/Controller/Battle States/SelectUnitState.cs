@@ -15,10 +15,10 @@ public class SelectUnitState : BattleState
         }
 
         SelectTile(e.info);
-        Unit selectedUnit = tile.content.GetComponent<Unit>();
+        Unit unit = tile.content.GetComponent<Unit>();
 
-        if (selectedUnit) {
-            turn.Change(selectedUnit);
+        if (unit) {
+            roundController.Select(unit);
             owner.ChangeState<MoveTargetState>();
         }
     }

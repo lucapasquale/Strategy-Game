@@ -4,6 +4,8 @@ using System.Collections;
 public class Unit : MonoBehaviour
 {
     public Directions dir;
+    public Alliances alliance;
+    public Turn turn;
     public Tile tile { get; protected set; }
 
     public void Place(Tile target) {

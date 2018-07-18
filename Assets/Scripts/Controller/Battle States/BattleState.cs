@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 public abstract class BattleState : State
 {
+    // TEMP
     public LevelData levelData;
+
     protected BattleController owner;
-    public Board board { get { return owner.board; } }
-    public CameraRig cameraRig { get { return owner.cameraRig; } }
 
     //public LevelData levelData { get { return owner.levelData; } }
-    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
+    public Board board { get { return owner.board; } }
 
-    public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
-    public Turn turn { get { return owner.turn; } }
-    public List<Unit> units { get { return owner.units; } }
+    public CameraRig cameraRig { get { return owner.cameraRig; } }
+    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
+    public RoundController roundController { get { return owner.roundController; } }
     public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {

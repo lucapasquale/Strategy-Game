@@ -26,9 +26,8 @@ public class InitBattleState : BattleState
     }
 
     private void SpawnTestUnits() {
-        System.Type[] components = new System.Type[] { typeof(WalkMovement) };
         for (int i = 0; i < 3; ++i) {
-            GameObject instance = Instantiate(owner.heroPrefab) as GameObject;
+            GameObject instance = Instantiate(owner.heroPrefab, roundController.transform) as GameObject;
             Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].y);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(board.GetTile(p));
@@ -36,7 +35,8 @@ public class InitBattleState : BattleState
             Movement m = instance.AddComponent<WalkMovement>();
             m.range = 3;
 
-            units.Add(unit);
+            unit.turn = new Turn(unit);
+            roundController.AddUnit(unit);
         }
     }
 }

@@ -5,18 +5,18 @@ using System.Collections.Generic;
 public class Turn
 {
     public Unit actor;
+    public bool isAvailable;
     public bool hasUnitMoved;
     public bool hasUnitActed;
-    public bool lockMove;
     public GameObject ability;
     private Tile startTile;
     private Directions startDir;
 
-    public void Change(Unit current) {
+    public Turn(Unit current) {
         actor = current;
+        isAvailable = true;
         hasUnitMoved = false;
         hasUnitActed = false;
-        lockMove = false;
         startTile = actor.tile;
         startDir = actor.dir;
     }
