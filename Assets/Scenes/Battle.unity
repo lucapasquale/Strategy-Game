@@ -113,12 +113,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &5366772 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114108991276420122, guid: 2ec68a40cd7d2f042a09dedd5d4fcc0a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1411243664}
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &518682009
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,12 +351,48 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224406153425195938, guid: 2ec68a40cd7d2f042a09dedd5d4fcc0a,
     type: 2}
   m_PrefabInternal: {fileID: 1411243664}
---- !u!114 &1106142991 stripped
+--- !u!1 &1167799418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1167799420}
+  - component: {fileID: 1167799419}
+  m_Layer: 0
+  m_Name: Round Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1167799419
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114913458066249258, guid: 2ec68a40cd7d2f042a09dedd5d4fcc0a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1411243664}
-  m_Script: {fileID: 11500000, guid: 18036ab9966bca94ea610228b7cbc810, type: 3}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167799418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcf8a9a06320df45a6c36ef8b626383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actingSide: 1
+  current: {fileID: 0}
+--- !u!4 &1167799420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1167799418}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1495133630}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1411243664
 Prefab:
   m_ObjectHideFlags: 0
@@ -515,8 +545,9 @@ MonoBehaviour:
     y: 0
   tileSelectionIndicator: {fileID: 1509793865}
   heroPrefab: {fileID: 1957671613711242, guid: 48b1c983c2b8ed74cbe895011526e848, type: 2}
-  abilityMenuPanelController: {fileID: 1537253320}
-  units: []
+  enemyPrefab: {fileID: 1957671613711242, guid: f60e4799b6b2ec847b3d87b4591c3775,
+    type: 2}
+  roundController: {fileID: 1167799419}
 --- !u!4 &1495133630
 Transform:
   m_ObjectHideFlags: 0
@@ -530,6 +561,7 @@ Transform:
   - {fileID: 1499346263}
   - {fileID: 1509793865}
   - {fileID: 1689400189}
+  - {fileID: 1167799420}
   - {fileID: 1537253321}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -651,11 +683,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba7570d954f9ce439dd7d2df9354a3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entryPrefab: {fileID: 1806913935805540, guid: 50a17bac82fa343eb83b28397636db69,
-    type: 2}
-  titleLabel: {fileID: 5366772}
-  panel: {fileID: 1106142991}
-  canvas: {fileID: 518682009}
 --- !u!4 &1537253321
 Transform:
   m_ObjectHideFlags: 0
@@ -668,7 +695,7 @@ Transform:
   m_Children:
   - {fileID: 518682010}
   m_Father: {fileID: 1495133630}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1689400188
 GameObject:

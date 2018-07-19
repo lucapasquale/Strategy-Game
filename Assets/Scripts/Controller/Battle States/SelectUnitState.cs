@@ -17,7 +17,7 @@ public class SelectUnitState : BattleState
         SelectTile(e.info);
         Unit unit = tile.content.GetComponent<Unit>();
 
-        if (unit) {
+        if (unit && unit.turn.IsAvailable() && roundController.actingSide == unit.alliance) {
             roundController.Select(unit);
             owner.ChangeState<MoveTargetState>();
         }

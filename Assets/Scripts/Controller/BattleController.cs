@@ -9,7 +9,10 @@ public class BattleController : StateMachine
     public LevelData levelData;
     public Point pos;
     public Transform tileSelectionIndicator;
+
     public GameObject heroPrefab;
+    public GameObject enemyPrefab;
+
     public RoundController roundController;
     public Tile currentTile { get { return board.GetTile(pos); } }
 

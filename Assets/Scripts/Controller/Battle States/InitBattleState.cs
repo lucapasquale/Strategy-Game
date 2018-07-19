@@ -38,5 +38,17 @@ public class InitBattleState : BattleState
             unit.turn = new Turn(unit);
             roundController.AddUnit(unit);
         }
+
+        for (int i = 0; i < 2; ++i) {
+            GameObject instance = Instantiate(owner.enemyPrefab, roundController.transform) as GameObject;
+            Point p = new Point((int)levelData.tiles[i + 10].x, (int)levelData.tiles[i + 10].y);
+            Unit unit = instance.GetComponent<Unit>();
+            unit.Place(board.GetTile(p));
+            unit.Match();
+            Movement m = instance.AddComponent<WalkMovement>();
+            m.range = 2;
+
+            roundController.AddUnit(unit);
+        }
     }
 }

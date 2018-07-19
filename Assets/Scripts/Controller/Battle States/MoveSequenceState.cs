@@ -9,8 +9,12 @@ public class MoveSequenceState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Movement m = roundController.current.GetComponent<Movement>();
+        Unit unit = roundController.current;
+        Movement m = unit.GetComponent<Movement>();
+
         yield return StartCoroutine(m.Traverse(owner.currentTile));
+
+        unit.turn.hasUnitMoved = true;
         roundController.End();
 
         owner.ChangeState<SelectUnitState>();

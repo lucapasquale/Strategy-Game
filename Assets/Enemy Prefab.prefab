@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 212786612821850798}
   - component: {fileID: 114464901453554140}
   m_Layer: 0
-  m_Name: Hero Prefab
+  m_Name: Enemy Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dir: 0
-  alliance: 1
+  alliance: 2
 --- !u!212 &212544915379804910
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -226,7 +226,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e368780d6c748684b8ef2ed0c5dd984a, type: 3}
-  m_Color: {r: 0.31719476, g: 0.8301887, b: 0.31719476, a: 1}
+  m_Color: {r: 0.83137256, g: 0.31764704, b: 0.37390482, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

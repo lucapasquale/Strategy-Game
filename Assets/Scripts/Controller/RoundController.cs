@@ -18,6 +18,7 @@ public class RoundController : MonoBehaviour
             return;
         }
 
+        unit.turn = new Turn(unit);
         units[alliance].Add(unit);
     }
 
@@ -30,11 +31,23 @@ public class RoundController : MonoBehaviour
     }
 
     public void End() {
-        current.turn.isAvailable = false;
+        current.GetComponent<SpriteRenderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
         current = null;
 
-        if (units[actingSide].TrueForAll(u => !u.turn.isAvailable)) {
-            actingSide = actingSide == Alliances.Ally ? Alliances.Enemy : Alliances.Ally;
+        if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
+            ChangeSides();
+        }
+    }
+
+    private void ChangeSides() {
+        foreach (var unit in units[actingSide]) {
+            unit.GetComponent<SpriteRenderer>().material.color = Color.white;
+        }
+
+        actingSide = actingSide == Alliances.Ally ? Alliances.Enemy : Alliances.Ally;
+
+        foreach (var unit in units[actingSide]) {
+            unit.turn = new Turn(unit);
         }
     }
 }
