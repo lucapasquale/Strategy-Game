@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class InitBattleState : BattleState
 {
@@ -26,7 +26,7 @@ public class InitBattleState : BattleState
     }
 
     private void SpawnTestUnits() {
-        for (int i = 0; i < 3; ++i) {
+        for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.heroPrefab, roundController.transform) as GameObject;
             Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].y);
             Unit unit = instance.GetComponent<Unit>();
@@ -39,7 +39,7 @@ public class InitBattleState : BattleState
             roundController.AddUnit(unit);
         }
 
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.enemyPrefab, roundController.transform) as GameObject;
             Point p = new Point((int)levelData.tiles[i + 10].x, (int)levelData.tiles[i + 10].y);
             Unit unit = instance.GetComponent<Unit>();

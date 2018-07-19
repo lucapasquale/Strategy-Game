@@ -1,14 +1,11 @@
 ﻿using System;
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Board : MonoBehaviour
 {
     public Dictionary<Point, Tile> tiles = new Dictionary<Point, Tile>();
     [SerializeField] private GameObject tilePrefab;
-    private Color selectedTileColor = new Color(0, 1, 1, 1);
-    private Color defaultTileColor = new Color(1, 1, 1, 1);
 
     private Point[] dirs = new Point[4] {
       new Point(0, 1),
@@ -17,25 +14,12 @@ public class Board : MonoBehaviour
       new Point(-1, 0)
     };
 
-    private Point _min;
-    private Point _max;
-    public Point min { get { return _min; } }
-    public Point max { get { return _max; } }
-
     public void Load(LevelData data) {
-        _min = new Point(int.MaxValue, int.MaxValue);
-        _max = new Point(int.MinValue, int.MinValue);
-
         for (int i = 0; i < data.tiles.Count; ++i) {
             GameObject instance = Instantiate(tilePrefab, transform) as GameObject;
             Tile t = instance.GetComponent<Tile>();
             t.Load(data.tiles[i]);
             tiles.Add(t.pos, t);
-
-            _min.x = Mathf.Min(_min.x, t.pos.x);
-            _min.y = Mathf.Min(_min.y, t.pos.y);
-            _max.x = Mathf.Max(_max.x, t.pos.x);
-            _max.y = Mathf.Max(_max.y, t.pos.y);
         }
     }
 
@@ -43,14 +27,9 @@ public class Board : MonoBehaviour
         return tiles.ContainsKey(p) ? tiles[p] : null;
     }
 
-    public void SelectTiles(List<Tile> tiles) {
+    public void SelectTiles(List<Tile> tiles, Color color) {
         for (int i = tiles.Count - 1; i >= 0; --i)
-            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", selectedTileColor);
-    }
-
-    public void DeSelectTiles(List<Tile> tiles) {
-        for (int i = tiles.Count - 1; i >= 0; --i)
-            tiles[i].GetComponent<Renderer>().material.SetColor("_Color", defaultTileColor);
+            tiles[i].GetComponent<SpriteRenderer>().material.color = color;
     }
 
     public List<Tile> Search(Tile start, Func<Tile, Tile, bool> shouldAddTile) {

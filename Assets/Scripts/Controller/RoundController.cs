@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class RoundController : MonoBehaviour
 {
@@ -30,7 +29,7 @@ public class RoundController : MonoBehaviour
         current = unit;
     }
 
-    public void End() {
+    public void EndTurn() {
         current.GetComponent<SpriteRenderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
         current = null;
 
@@ -44,7 +43,7 @@ public class RoundController : MonoBehaviour
             unit.GetComponent<SpriteRenderer>().material.color = Color.white;
         }
 
-        actingSide = actingSide == Alliances.Ally ? Alliances.Enemy : Alliances.Ally;
+        //actingSide = actingSide == Alliances.Ally ? Alliances.Enemy : Alliances.Ally;
 
         foreach (var unit in units[actingSide]) {
             unit.turn = new Turn(unit);

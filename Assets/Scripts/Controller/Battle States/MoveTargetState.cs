@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MoveTargetState : BattleState
 {
@@ -10,12 +9,12 @@ public class MoveTargetState : BattleState
         base.Enter();
         Movement mover = roundController.current.GetComponent<Movement>();
         tilesInRange = mover.GetTilesInRange(board);
-        board.SelectTiles(tilesInRange);
+        board.SelectTiles(tilesInRange, Color.green);
     }
 
     public override void Exit() {
         base.Exit();
-        board.DeSelectTiles(tilesInRange);
+        board.SelectTiles(tilesInRange, Color.white);
         tilesInRange = null;
     }
 

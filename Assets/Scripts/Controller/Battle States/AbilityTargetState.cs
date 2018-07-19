@@ -1,63 +1,56 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class AbilityTargetState : BattleState
 {
-    //private List<Tile> tiles;
-    //private AbilityRange ar;
+    private List<Tile> targetTiles;
+    private AbilityRange ar;
 
-    //private int currentSelection = 0;
+    public override void Enter() {
+        base.Enter();
 
-    //public override void Enter() {
-    //    base.Enter();
-    //    ar = currentTurn.ability.GetComponent<AbilityRange>();
-    //    SelectTiles();
-    //    SelectTile(tiles[currentSelection].pos);
-    //    //statPanelController.ShowPrimary(turn.actor.gameObject);
-    //    //if (ar.directionOriented)
-    //    //    RefreshSecondaryStatPanel(pos);
-    //}
+        ar = roundController.current.GetComponentInChildren<AbilityRange>();
+        targetTiles = ar.GetTilesInRange(board);
 
-    //public override void Exit() {
-    //    base.Exit();
-    //    board.DeSelectTiles(tiles);
-    //    //statPanelController.HidePrimary();
-    //    //statPanelController.HideSecondary();
-    //}
+        board.SelectTiles(targetTiles, Color.red);
+    }
 
-    ////protected override void OnMove(object sender, InfoEventArgs<Point> e) {
-    ////    if (ar.directionOriented) {
-    ////        ChangeDirection(e.info);
-    ////    }
-    ////    else {
-    ////        currentSelection = ++currentSelection % tiles.Count;
-    ////        SelectTile(tiles[currentSelection].pos);
-    ////        //RefreshSecondaryStatPanel(pos);
-    ////    }
-    ////}
+    public override void Exit() {
+        base.Exit();
+        board.SelectTiles(targetTiles, Color.white);
+    }
 
-    ////protected override void OnFire(object sender, InfoEventArgs<int> e) {
-    ////    if (e.info == 0) {
-    ////        turn.hasUnitActed = true;
-    ////        if (turn.hasUnitMoved)
-    ////            turn.lockMove = true;
-    ////    }
+    protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
+        Tile tile = board.GetTile(e.info);
+        if (tile.content == null) {
+            return;
+        }
 
-    ////    owner.ChangeState<CommandSelectionState>();
-    ////}
+        Unit target = tile.content.GetComponent<Unit>();
+        if (!target) {
+            return;
+        }
 
-    //private void SelectTiles() {
-    //    tiles = ar.GetTilesInRange(board);
-    //    board.SelectTiles(tiles);
-    //}
+        Unit actor = roundController.current;
+        if (target == actor) {
+            EndMove();
+            return;
+        }
 
-    //private void ChangeDirection(Point p) {
-    //    Directions dir = p.GetDirection();
-    //    if (currentTurn.actor.dir != dir) {
-    //        board.DeSelectTiles(tiles);
-    //        currentTurn.actor.dir = dir;
-    //        currentTurn.actor.Match();
-    //        SelectTiles();
-    //    }
-    //}
+        bool isEnemy = target.alliance == actor.alliance.GetOpposing();
+        if (targetTiles.Contains(tile) && isEnemy) {
+            SelectTile(e.info);
+
+            print($"Attacking {target}");
+            var ability = roundController.current.GetComponentInChildren<Ability>();
+            ability.Perform(new List<Tile>() { tile });
+
+            EndMove();
+        }
+    }
+
+    private void EndMove() {
+        roundController.EndTurn();
+        owner.ChangeState<SelectUnitState>();
+    }
 }

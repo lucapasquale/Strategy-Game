@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public enum Alliances
+﻿public enum Alliances
 {
     None,
     Ally,
