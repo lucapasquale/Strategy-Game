@@ -5,19 +5,19 @@ public class Unit : MonoBehaviour
     public Directions dir;
     public Alliances alliance;
     public Turn turn;
-    public Tile tile { get; protected set; }
+    public Tile Tile { get; protected set; }
 
     public void Place(Tile target) {
-        if (tile != null && tile.content == gameObject)
-            tile.content = null;
+        if (Tile != null && Tile.content == gameObject)
+            Tile.content = null;
 
-        tile = target;
+        Tile = target;
         if (target != null)
             target.content = gameObject;
     }
 
     public void Match() {
-        transform.localPosition = tile.center;
+        transform.localPosition = Tile.Center;
         transform.localEulerAngles = dir.ToEuler();
     }
 }

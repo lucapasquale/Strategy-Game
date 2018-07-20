@@ -8,12 +8,12 @@ public abstract class BattleState : State
     protected BattleController owner;
 
     //public LevelData levelData { get { return owner.levelData; } }
-    public Board board { get { return owner.board; } }
+    public Board Board { get { return owner.board; } }
 
-    public CameraRig cameraRig { get { return owner.cameraRig; } }
-    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
-    public RoundController roundController { get { return owner.roundController; } }
-    public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
+    public CameraRig CameraRig { get { return owner.cameraRig; } }
+    public Point Pos { get { return owner.pos; } set { owner.pos = value; } }
+    public RoundController RoundController { get { return owner.roundController; } }
+    public Transform TileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {
         owner = GetComponent<BattleController>();
@@ -31,14 +31,14 @@ public abstract class BattleState : State
     }
 
     protected virtual void SelectTile(Point p) {
-        if (pos == p || !board.tiles.ContainsKey(p))
+        if (Pos == p || !Board.tiles.ContainsKey(p))
             return;
 
-        pos = p;
-        tileSelectionIndicator.localPosition = board.tiles[p].center;
+        Pos = p;
+        TileSelectionIndicator.localPosition = Board.tiles[p].Center;
     }
 
     protected virtual void ClearSelection() {
-        tileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
+        TileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }

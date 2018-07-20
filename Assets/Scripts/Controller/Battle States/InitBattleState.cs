@@ -19,7 +19,7 @@ public class InitBattleState : BattleState
         levelData = ScriptableObject.CreateInstance<LevelData>();
         levelData.tiles = data;
 
-        board.Load(levelData);
+        Board.Load(levelData);
         SpawnTestUnits();
         yield return null;
         owner.ChangeState<SelectUnitState>();
@@ -27,28 +27,28 @@ public class InitBattleState : BattleState
 
     private void SpawnTestUnits() {
         for (int i = 0; i < 1; ++i) {
-            GameObject instance = Instantiate(owner.heroPrefab, roundController.transform) as GameObject;
+            GameObject instance = Instantiate(owner.heroPrefab, RoundController.transform) as GameObject;
             Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].y);
             Unit unit = instance.GetComponent<Unit>();
-            unit.Place(board.GetTile(p));
+            unit.Place(Board.GetTile(p));
             unit.Match();
             Movement m = instance.AddComponent<WalkMovement>();
             m.range = 3;
 
             unit.turn = new Turn(unit);
-            roundController.AddUnit(unit);
+            RoundController.AddUnit(unit);
         }
 
         for (int i = 0; i < 1; ++i) {
-            GameObject instance = Instantiate(owner.enemyPrefab, roundController.transform) as GameObject;
+            GameObject instance = Instantiate(owner.enemyPrefab, RoundController.transform) as GameObject;
             Point p = new Point((int)levelData.tiles[i + 10].x, (int)levelData.tiles[i + 10].y);
             Unit unit = instance.GetComponent<Unit>();
-            unit.Place(board.GetTile(p));
+            unit.Place(Board.GetTile(p));
             unit.Match();
             Movement m = instance.AddComponent<WalkMovement>();
             m.range = 2;
 
-            roundController.AddUnit(unit);
+            RoundController.AddUnit(unit);
         }
     }
 }

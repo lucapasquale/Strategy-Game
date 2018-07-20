@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
     [HideInInspector] public Tile prev;
     [HideInInspector] public int distance;
 
-    public Vector3 center { get { return pos.ToVector3(); } }
+    public Vector3 Center { get { return pos.ToVector3(); } }
 
     public void Load(Vector3 v) {
         Load(new Point((int)v.x, (int)v.y));

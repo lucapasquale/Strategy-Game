@@ -12,7 +12,7 @@ public class Turn
     public Turn(Unit current) {
         actor = current;
         isAvailable = true;
-        startTile = actor.tile;
+        startTile = actor.Tile;
         startDir = actor.dir;
     }
 

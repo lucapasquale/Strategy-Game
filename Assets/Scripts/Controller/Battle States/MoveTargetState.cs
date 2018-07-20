@@ -9,32 +9,32 @@ public class MoveTargetState : BattleState
     public override void Enter() {
         base.Enter();
 
-        Unit unit = roundController.current;
+        Unit unit = RoundController.current;
         Movement mover = unit.GetComponent<Movement>();
 
         // Needs to GetTilesInRange again to save pathfinding on tiles
-        tilesToMove = mover.GetTilesInRange(board);
+        tilesToMove = mover.GetTilesInRange(Board);
         tilesToAct = GetTilesInActRange(unit);
-        tilesToMove = mover.GetTilesInRange(board);
+        tilesToMove = mover.GetTilesInRange(Board);
 
-        board.SelectTiles(tilesToMove, Color.green);
-        board.SelectTiles(tilesToAct, Color.red);
+        Board.SelectTiles(tilesToMove, Color.green);
+        Board.SelectTiles(tilesToAct, Color.red);
     }
 
     public override void Exit() {
         base.Exit();
-        board.ClearSelection();
+        Board.ClearSelection();
 
         tilesToMove = null;
         tilesToAct = null;
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
-        Tile tile = board.GetTile(e.info);
-        Unit actor = roundController.current;
+        Tile tile = Board.GetTile(e.info);
+        Unit actor = RoundController.current;
 
-        if (tile == actor.tile) {
-            roundController.EndTurn();
+        if (tile == actor.Tile) {
+            RoundController.EndTurn();
             owner.ChangeState<SelectUnitState>();
             return;
         }
@@ -55,10 +55,10 @@ public class MoveTargetState : BattleState
             SelectTile(e.info);
             print($"Attacking {target}");
 
-            var ability = roundController.current.GetComponentInChildren<Ability>();
+            var ability = RoundController.current.GetComponentInChildren<Ability>();
             ability.Perform(new List<Tile>() { tile });
 
-            roundController.EndTurn();
+            RoundController.EndTurn();
             owner.ChangeState<SelectUnitState>();
         }
     }
@@ -68,7 +68,7 @@ public class MoveTargetState : BattleState
         var tilesInActRange = new List<Tile>();
 
         foreach (var movableTile in tilesToMove) {
-            var targetTiles = ar.GetTilesInRange(board, movableTile);
+            var targetTiles = ar.GetTilesInRange(Board, movableTile);
             targetTiles.RemoveAll(t => tilesToMove.Contains(t) || tilesInActRange.Contains(t));
 
             foreach (var target in targetTiles) {
@@ -76,7 +76,7 @@ public class MoveTargetState : BattleState
             }
         }
 
-        tilesInActRange.Remove(unit.tile);
+        tilesInActRange.Remove(unit.Tile);
         return tilesInActRange;
     }
 }
