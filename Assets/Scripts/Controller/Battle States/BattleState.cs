@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public abstract class BattleState : State
 {
+    // TEMP
     public LevelData levelData;
+
     protected BattleController owner;
-    public Board board { get { return owner.board; } }
-    public CameraRig cameraRig { get { return owner.cameraRig; } }
 
     //public LevelData levelData { get { return owner.levelData; } }
-    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
+    public Board board { get { return owner.board; } }
 
-    public AbilityMenuPanelController abilityMenuPanelController { get { return owner.abilityMenuPanelController; } }
-    public Turn turn { get { return owner.turn; } }
-    public List<Unit> units { get { return owner.units; } }
+    public CameraRig cameraRig { get { return owner.cameraRig; } }
+    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
+    public RoundController roundController { get { return owner.roundController; } }
     public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {
@@ -22,19 +20,14 @@ public abstract class BattleState : State
     }
 
     protected override void AddListeners() {
-        InputController.moveEvent += OnMove;
-        InputController.fireEvent += OnFire;
+        InputController.touchEvent += OnTouch;
     }
 
     protected override void RemoveListeners() {
-        InputController.moveEvent -= OnMove;
-        InputController.fireEvent -= OnFire;
+        InputController.touchEvent -= OnTouch;
     }
 
-    protected virtual void OnMove(object sender, InfoEventArgs<Point> e) {
-    }
-
-    protected virtual void OnFire(object sender, InfoEventArgs<int> e) {
+    protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
     }
 
     protected virtual void SelectTile(Point p) {
@@ -43,5 +36,9 @@ public abstract class BattleState : State
 
         pos = p;
         tileSelectionIndicator.localPosition = board.tiles[p].center;
+    }
+
+    protected virtual void ClearSelection() {
+        tileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }

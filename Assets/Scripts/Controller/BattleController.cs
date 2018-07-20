@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class BattleController : StateMachine
 {
@@ -9,10 +7,11 @@ public class BattleController : StateMachine
     public LevelData levelData;
     public Point pos;
     public Transform tileSelectionIndicator;
+
     public GameObject heroPrefab;
-    public AbilityMenuPanelController abilityMenuPanelController;
-    public Turn turn = new Turn();
-    public List<Unit> units = new List<Unit>();
+    public GameObject enemyPrefab;
+
+    public RoundController roundController;
     public Tile currentTile { get { return board.GetTile(pos); } }
 
     private void Start() {

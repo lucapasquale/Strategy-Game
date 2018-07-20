@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 
 public class MoveSequenceState : BattleState
 {
@@ -9,9 +8,12 @@ public class MoveSequenceState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Movement m = turn.actor.GetComponent<Movement>();
+        Unit actor = roundController.current;
+        Movement m = actor.GetComponent<Movement>();
+
         yield return StartCoroutine(m.Traverse(owner.currentTile));
-        turn.hasUnitMoved = true;
-        owner.ChangeState<CommandSelectionState>();
+
+        roundController.EndTurn();
+        owner.ChangeState<SelectUnitState>();
     }
 }

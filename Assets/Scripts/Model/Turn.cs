@@ -1,28 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class Turn
 {
-    public Unit actor;
-    public bool hasUnitMoved;
-    public bool hasUnitActed;
-    public bool lockMove;
+    public bool isAvailable;
     public GameObject ability;
+
+    private Unit actor;
     private Tile startTile;
     private Directions startDir;
 
-    public void Change(Unit current) {
+    public Turn(Unit current) {
         actor = current;
-        hasUnitMoved = false;
-        hasUnitActed = false;
-        lockMove = false;
+        isAvailable = true;
         startTile = actor.tile;
         startDir = actor.dir;
     }
 
     public void UndoMove() {
-        hasUnitMoved = false;
+        isAvailable = true;
         actor.Place(startTile);
         actor.dir = startDir;
         actor.Match();
