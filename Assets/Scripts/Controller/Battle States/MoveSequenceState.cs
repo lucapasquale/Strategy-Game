@@ -11,9 +11,9 @@ public class MoveSequenceState : BattleState
         Unit actor = RoundController.current;
         Movement m = actor.GetComponent<Movement>();
 
-        yield return StartCoroutine(m.Traverse(owner.currentTile));
+        yield return StartCoroutine(m.Traverse(Board.GetTile(Pos)));
 
-        RoundController.EndTurn();
-        owner.ChangeState<SelectUnitState>();
+        actor.turn.hasUnitMoved = true;
+        owner.ChangeState<AbilityTargetState>();
     }
 }

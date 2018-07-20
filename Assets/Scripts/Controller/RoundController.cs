@@ -31,10 +31,9 @@ public class RoundController : MonoBehaviour
 
     public void EndTurn() {
         current.GetComponent<SpriteRenderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
-        current.turn.isAvailable = false;
         current = null;
 
-        if (units[actingSide].TrueForAll(u => !u.turn.isAvailable)) {
+        if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
             ChangeSides();
         }
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class MoveTargetState : BattleState
 {
     private List<Tile> tilesToMove;
-    private List<Tile> tilesToAct;
 
     public override void Enter() {
         base.Enter();
@@ -14,30 +13,21 @@ public class MoveTargetState : BattleState
 
         // Needs to GetTilesInRange again to save pathfinding on tiles
         tilesToMove = mover.GetTilesInRange(Board);
-        tilesToAct = GetTilesInActRange(unit);
+        SelectActTiles(unit);
         tilesToMove = mover.GetTilesInRange(Board);
 
         Board.SelectTiles(tilesToMove, Color.green);
-        Board.SelectTiles(tilesToAct, Color.red);
     }
 
     public override void Exit() {
         base.Exit();
-        Board.ClearSelection();
 
+        Board.ClearSelection();
         tilesToMove = null;
-        tilesToAct = null;
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
-        Unit actor = RoundController.current;
-
-        if (tile == actor.Tile) {
-            RoundController.EndTurn();
-            owner.ChangeState<SelectUnitState>();
-            return;
-        }
 
         if (tilesToMove.Contains(tile)) {
             SelectTile(e.info);
@@ -45,38 +35,29 @@ public class MoveTargetState : BattleState
             return;
         }
 
-        if (!tile.content || !tilesToAct.Contains(tile)) {
-            owner.ChangeState<SelectUnitState>();
-            return;
-        }
-
-        Unit target = tile.content.GetComponent<Unit>();
-        if (target.alliance == actor.alliance.GetOpposing()) {
-            SelectTile(e.info);
-            print($"Attacking {target}");
-
-            var ability = RoundController.current.GetComponentInChildren<Ability>();
-            ability.Perform(new List<Tile>() { tile });
-
-            RoundController.EndTurn();
-            owner.ChangeState<SelectUnitState>();
-        }
+        owner.ChangeState<SelectUnitState>();
     }
 
-    private List<Tile> GetTilesInActRange(Unit unit) {
+    private void SelectActTiles(Unit unit) {
         AbilityRange ar = unit.GetComponentInChildren<AbilityRange>();
         var tilesInActRange = new List<Tile>();
 
         foreach (var movableTile in tilesToMove) {
             var targetTiles = ar.GetTilesInRange(Board, movableTile);
-            targetTiles.RemoveAll(t => tilesToMove.Contains(t) || tilesInActRange.Contains(t));
+            targetTiles.RemoveAll(t =>
+                t == unit.Tile
+                || tilesToMove.Contains(t)
+                || tilesInActRange.Contains(t)
+            );
 
             foreach (var target in targetTiles) {
                 tilesInActRange.Add(target);
             }
         }
 
-        tilesInActRange.Remove(unit.Tile);
-        return tilesInActRange;
+        Board.SelectTiles(tilesInActRange, Color.magenta);
+
+        tilesInActRange.RemoveAll(t => t.content == null);
+        Board.SelectTiles(tilesInActRange, Color.red);
     }
 }
