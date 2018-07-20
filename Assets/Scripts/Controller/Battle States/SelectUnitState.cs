@@ -14,7 +14,7 @@
         SelectTile(e.info);
         Unit unit = tile.content.GetComponent<Unit>();
 
-        if (unit && unit.turn.IsAvailable() && roundController.actingSide == unit.alliance) {
+        if (unit && unit.turn.isAvailable && roundController.actingSide == unit.alliance) {
             roundController.Select(unit);
             owner.ChangeState<MoveTargetState>();
         }

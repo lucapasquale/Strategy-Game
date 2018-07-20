@@ -2,7 +2,7 @@
 
 public class Turn
 {
-    public bool hasUnitMoved;
+    public bool isAvailable;
     public GameObject ability;
 
     private Unit actor;
@@ -11,17 +11,13 @@ public class Turn
 
     public Turn(Unit current) {
         actor = current;
-        hasUnitMoved = false;
+        isAvailable = true;
         startTile = actor.tile;
         startDir = actor.dir;
     }
 
-    public bool IsAvailable() {
-        return !hasUnitMoved;
-    }
-
     public void UndoMove() {
-        hasUnitMoved = false;
+        isAvailable = true;
         actor.Place(startTile);
         actor.dir = startDir;
         actor.Match();

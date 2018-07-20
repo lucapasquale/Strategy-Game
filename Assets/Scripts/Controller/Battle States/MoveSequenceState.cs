@@ -13,7 +13,7 @@ public class MoveSequenceState : BattleState
 
         yield return StartCoroutine(m.Traverse(owner.currentTile));
 
-        actor.turn.hasUnitMoved = true;
-        owner.ChangeState<AbilityTargetState>();
+        roundController.EndTurn();
+        owner.ChangeState<SelectUnitState>();
     }
 }

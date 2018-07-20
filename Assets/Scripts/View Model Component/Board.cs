@@ -32,6 +32,12 @@ public class Board : MonoBehaviour
             tiles[i].GetComponent<SpriteRenderer>().material.color = color;
     }
 
+    public void ClearSelection() {
+        foreach (Tile t in tiles.Values) {
+            t.GetComponent<SpriteRenderer>().material.color = Color.white;
+        }
+    }
+
     public List<Tile> Search(Tile start, Func<Tile, Tile, bool> shouldAddTile) {
         List<Tile> retValue = new List<Tile>();
         retValue.Add(start);

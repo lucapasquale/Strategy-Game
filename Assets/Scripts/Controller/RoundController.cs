@@ -31,9 +31,10 @@ public class RoundController : MonoBehaviour
 
     public void EndTurn() {
         current.GetComponent<SpriteRenderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
+        current.turn.isAvailable = false;
         current = null;
 
-        if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
+        if (units[actingSide].TrueForAll(u => !u.turn.isAvailable)) {
             ChangeSides();
         }
     }
@@ -43,7 +44,8 @@ public class RoundController : MonoBehaviour
             unit.GetComponent<SpriteRenderer>().material.color = Color.white;
         }
 
-        //actingSide = actingSide == Alliances.Ally ? Alliances.Enemy : Alliances.Ally;
+        actingSide = actingSide.GetOpposing();
+        print($"Changing to side {actingSide}");
 
         foreach (var unit in units[actingSide]) {
             unit.turn = new Turn(unit);

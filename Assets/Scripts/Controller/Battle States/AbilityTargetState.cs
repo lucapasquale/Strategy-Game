@@ -9,8 +9,10 @@ public class AbilityTargetState : BattleState
     public override void Enter() {
         base.Enter();
 
-        ar = roundController.current.GetComponentInChildren<AbilityRange>();
-        targetTiles = ar.GetTilesInRange(board);
+        var unit = roundController.current;
+
+        ar = unit.GetComponentInChildren<AbilityRange>();
+        targetTiles = ar.GetTilesInRange(board, unit.tile);
 
         board.SelectTiles(targetTiles, Color.red);
     }
