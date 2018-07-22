@@ -12,7 +12,7 @@ public class InitBattleState : BattleState
     private IEnumerator Init() {
         var data = new List<Vector3>();
         for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 5; y++) {
+            for (int y = 0; y < 1; y++) {
                 data.Add(new Vector3(x, y));
             }
         }
@@ -28,12 +28,10 @@ public class InitBattleState : BattleState
     private void SpawnTestUnits() {
         for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.heroPrefab, RoundController.transform) as GameObject;
-            Point p = new Point((int)levelData.tiles[i].x, (int)levelData.tiles[i].y);
+            Point p = new Point(0, 0);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(Board.GetTile(p));
             unit.Match();
-            Movement m = instance.AddComponent<WalkMovement>();
-            m.range = 3;
 
             unit.turn = new Turn(unit);
             RoundController.AddUnit(unit);
@@ -41,12 +39,10 @@ public class InitBattleState : BattleState
 
         for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.enemyPrefab, RoundController.transform) as GameObject;
-            Point p = new Point((int)levelData.tiles[i + 10].x, (int)levelData.tiles[i + 10].y);
+            Point p = new Point(3, 0);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(Board.GetTile(p));
             unit.Match();
-            Movement m = instance.AddComponent<WalkMovement>();
-            m.range = 2;
 
             RoundController.AddUnit(unit);
         }

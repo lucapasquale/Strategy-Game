@@ -11,7 +11,7 @@
             return;
         }
 
-        SelectTile(e.info);
+        //SelectTile(e.info);
         Unit unit = tile.content.GetComponent<Unit>();
 
         if (unit && unit.turn.IsAvailable() && RoundController.actingSide == unit.alliance) {

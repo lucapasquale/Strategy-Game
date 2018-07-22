@@ -27,14 +27,18 @@ public class ScanTilesState : BattleState
 
     private void SelectActTiles(Unit unit) {
         AbilityRange ar = unit.GetComponentInChildren<AbilityRange>();
-        var actionableTiles = new List<Tile>();
 
-        foreach (var movableTile in SelectionController.MovableTiles) {
+        var actionableTiles = new List<Tile>();
+        var startPositions = new List<Tile>(SelectionController.MovableTiles) {
+            unit.Tile
+        };
+
+        foreach (var movableTile in startPositions) {
             var targetTiles = ar.GetTilesInRange(Board, movableTile);
 
             targetTiles.RemoveAll(t =>
-                t == unit.Tile
-                || SelectionController.MovableTiles.Contains(t)
+                //t == unit.Tile
+                t.prev == null
                 || actionableTiles.Contains(t)
             );
 

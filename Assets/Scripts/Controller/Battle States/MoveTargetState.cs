@@ -6,18 +6,39 @@ public class MoveTargetState : BattleState
     public override void Exit() {
         base.Exit();
 
-        SelectionController.Clear();
+        Board.ClearSelection();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
+        Unit actor = RoundController.current;
+
+        if (tile == actor.Tile) {
+            RoundController.EndTurn();
+            owner.ChangeState<SelectUnitState>();
+            return;
+        }
 
         if (SelectionController.MovableTiles.Contains(tile)) {
-            SelectTile(e.info);
+            SelectionController.SelectMove(tile);
             owner.ChangeState<MoveSequenceState>();
             return;
         }
 
-        owner.ChangeState<SelectUnitState>();
+        if (!tile.content || !SelectionController.ActionableTiles.Contains(tile)) {
+            owner.ChangeState<SelectUnitState>();
+            return;
+        }
+
+        Unit target = tile.content.GetComponent<Unit>();
+        if (target.alliance == actor.alliance.GetOpposing()) {
+            var attackPath = Movement.GetPath(tile);
+
+            SelectionController.SelectMove(attackPath[0]);
+            SelectionController.SelectAct(tile);
+
+            owner.ChangeState<MoveSequenceState>();
+            return;
+        }
     }
 }

@@ -39,8 +39,7 @@ public class Board : MonoBehaviour
     }
 
     public List<Tile> Search(Tile start, Func<Tile, Tile, bool> shouldAddTile) {
-        List<Tile> retValue = new List<Tile>();
-        retValue.Add(start);
+        List<Tile> retValue = new List<Tile> { start };
 
         ClearSearch();
         Queue<Tile> checkNext = new Queue<Tile>();

@@ -41,7 +41,7 @@ public class AbilityTargetState : BattleState
 
         bool isEnemy = target.alliance == actor.alliance.GetOpposing();
         if (targetTiles.Contains(tile) && isEnemy) {
-            SelectTile(e.info);
+            //SelectTile(e.info);
 
             print($"Attacking {target}");
             var ability = RoundController.current.GetComponentInChildren<Ability>();

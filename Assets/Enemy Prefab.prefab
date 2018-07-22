@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 212910625988721330}
   - component: {fileID: 114702255916870722}
   - component: {fileID: 114426755789023022}
+  - component: {fileID: 114864541780403348}
   m_Layer: 0
   m_Name: Enemy Prefab
   m_TagString: Untagged
@@ -71,8 +72,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4102155547656056}
-  - component: {fileID: 114754883953588546}
   - component: {fileID: 114733977303789120}
+  - component: {fileID: 114754883953588546}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -87,7 +88,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971710649635008}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.176439, y: 5.293393, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4175872076909522}
@@ -127,7 +128,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1469448548334372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.2029524, y: -4.304854, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_Children:
   - {fileID: 4102155547656056}
@@ -221,6 +222,18 @@ MonoBehaviour:
     y: 0
   prev: {fileID: 0}
   distance: 0
+--- !u!114 &114864541780403348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1469448548334372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec0c3cfc128e5ec4787396bd96851886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 2
 --- !u!212 &212803233297078152
 SpriteRenderer:
   m_ObjectHideFlags: 1
