@@ -9,7 +9,9 @@ public class MoveSequenceState : BattleState
 
     private IEnumerator Sequence() {
         Unit actor = RoundController.current;
+
         Movement m = actor.GetComponent<Movement>();
+        m.GetTilesInRange(Board);
 
         yield return StartCoroutine(m.Traverse(Board.GetTile(Pos)));
 

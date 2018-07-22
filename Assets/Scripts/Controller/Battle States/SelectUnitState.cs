@@ -16,7 +16,7 @@
 
         if (unit && unit.turn.IsAvailable() && RoundController.actingSide == unit.alliance) {
             RoundController.Select(unit);
-            owner.ChangeState<MoveTargetState>();
+            owner.ChangeState<ScanTilesState>();
         }
     }
 }

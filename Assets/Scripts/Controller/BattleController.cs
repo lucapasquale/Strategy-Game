@@ -11,6 +11,7 @@ public class BattleController : StateMachine
     public Point pos;
     public Transform tileSelectionIndicator;
     public RoundController roundController;
+    public SelectionController selectionController;
 
     private void Start() {
         ChangeState<InitBattleState>();

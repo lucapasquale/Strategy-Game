@@ -8,6 +8,16 @@ public abstract class Movement : MonoBehaviour
     protected Unit unit;
     protected Transform jumper;
 
+    public static List<Tile> GetPath(Tile tile) {
+        List<Tile> targets = new List<Tile>();
+        while (tile != null) {
+            targets.Insert(0, tile);
+            tile = tile.prev;
+        }
+
+        return targets;
+    }
+
     public abstract IEnumerator Traverse(Tile tile);
 
     public virtual List<Tile> GetTilesInRange(Board board) {

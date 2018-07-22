@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class BattleState : State
 {
-    // TEMP
     public LevelData levelData;
-
     protected BattleController owner;
 
     //public LevelData levelData { get { return owner.levelData; } }
@@ -12,7 +11,9 @@ public abstract class BattleState : State
 
     public CameraRig CameraRig { get { return owner.cameraRig; } }
     public Point Pos { get { return owner.pos; } set { owner.pos = value; } }
+
     public RoundController RoundController { get { return owner.roundController; } }
+    public SelectionController SelectionController { get { return owner.selectionController; } }
     public Transform TileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {
