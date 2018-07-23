@@ -25,16 +25,16 @@ public class MoveTargetState : BattleState
             return;
         }
 
-        if (!tile.content || !SelectionController.ActionableTiles.Contains(tile)) {
+        if (!tile.content || !SelectionController.ActionableTiles.ContainsKey(tile)) {
             owner.ChangeState<SelectUnitState>();
             return;
         }
 
         Unit target = tile.content.GetComponent<Unit>();
         if (target.alliance == actor.alliance.GetOpposing()) {
-            var attackPath = Movement.GetPath(tile);
+            var attackOrigins = SelectionController.ActionableTiles[tile];
 
-            SelectionController.SelectMove(attackPath[0]);
+            SelectionController.SelectMove(attackOrigins[0]);
             SelectionController.SelectAct(tile);
 
             owner.ChangeState<MoveSequenceState>();

@@ -27,26 +27,20 @@ public class ScanTilesState : BattleState
 
     private void SelectActTiles(Unit unit) {
         AbilityRange ar = unit.GetComponentInChildren<AbilityRange>();
+        var attackOrigins = new Dictionary<Tile, List<Tile>>();
 
-        var actionableTiles = new List<Tile>();
-        var startPositions = new List<Tile>(SelectionController.MovableTiles) {
-            unit.Tile
-        };
-
-        foreach (var movableTile in startPositions) {
+        foreach (var movableTile in SelectionController.MovableTiles) {
             var targetTiles = ar.GetTilesInRange(Board, movableTile);
 
-            targetTiles.RemoveAll(t =>
-                //t == unit.Tile
-                t.prev == null
-                || actionableTiles.Contains(t)
-            );
-
             foreach (var target in targetTiles) {
-                actionableTiles.Add(target);
+                if (!attackOrigins.ContainsKey(target)) {
+                    attackOrigins.Add(target, new List<Tile>());
+                }
+
+                attackOrigins[target].Add(movableTile);
             }
         }
 
-        SelectionController.SetActionable(actionableTiles);
+        SelectionController.SetActionable(attackOrigins);
     }
 }

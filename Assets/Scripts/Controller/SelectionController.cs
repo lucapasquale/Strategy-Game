@@ -9,14 +9,14 @@ public class SelectionController : MonoBehaviour
 
     private Board board;
     public List<Tile> MovableTiles { get; private set; }
-    public List<Tile> ActionableTiles { get; private set; }
+    public Dictionary<Tile, List<Tile>> ActionableTiles { get; private set; }
 
     public void SetMovable(List<Tile> _movalble) {
         MovableTiles = _movalble;
         Match();
     }
 
-    public void SetActionable(List<Tile> _actionable) {
+    public void SetActionable(Dictionary<Tile, List<Tile>> _actionable) {
         ActionableTiles = _actionable;
         Match();
     }
@@ -31,19 +31,19 @@ public class SelectionController : MonoBehaviour
     }
 
     public void SelectAct(Tile tile) {
-        if (!ActionableTiles.Contains(tile)) {
+        if (!ActionableTiles.ContainsKey(tile) || ActionableTiles[tile].Count == 0) {
             Debug.LogError("Act tile not found");
             return;
         }
 
-        actTile = tile;
+        actTile = ActionableTiles[tile][0];
     }
 
     private void Awake() {
         board = transform.parent.GetComponentInChildren<Board>();
 
         MovableTiles = new List<Tile>();
-        ActionableTiles = new List<Tile>();
+        ActionableTiles = new Dictionary<Tile, List<Tile>>();
     }
 
     private void OnEnable() {
@@ -56,18 +56,26 @@ public class SelectionController : MonoBehaviour
 
     private void OnChangingSides(object sender, object args) {
         MovableTiles = new List<Tile>();
-        ActionableTiles = new List<Tile>();
+        ActionableTiles = new Dictionary<Tile, List<Tile>>();
 
         board.ClearSelection();
     }
 
     private void Match() {
-        board.SelectTiles(ActionableTiles, Color.magenta);
+        var emptyActionTiles = new List<Tile>();
+        var filledActionTiles = new List<Tile>();
 
-        var possibleActions = new List<Tile>(ActionableTiles);
-        possibleActions.RemoveAll(t => t.content == null);
+        foreach (var actionTile in ActionableTiles) {
+            if (actionTile.Key == null) {
+                emptyActionTiles.Add(actionTile.Key);
+                continue;
+            }
 
+            filledActionTiles.Add(actionTile.Key);
+        }
+
+        board.SelectTiles(emptyActionTiles, Color.magenta);
+        board.SelectTiles(filledActionTiles, Color.red);
         board.SelectTiles(MovableTiles, Color.blue);
-        board.SelectTiles(possibleActions, Color.red);
     }
 }

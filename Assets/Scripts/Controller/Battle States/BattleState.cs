@@ -3,14 +3,13 @@ using UnityEngine;
 
 public abstract class BattleState : State
 {
+    //public LevelData levelData { get { return owner.levelData; } }
     public LevelData levelData;
+
     protected BattleController owner;
 
-    //public LevelData levelData { get { return owner.levelData; } }
     public Board Board { get { return owner.board; } }
-
     public CameraRig CameraRig { get { return owner.cameraRig; } }
-    //public Point Pos { get { return owner.pos; } set { owner.pos = value; } }
 
     public RoundController RoundController { get { return owner.roundController; } }
     public SelectionController SelectionController { get { return owner.selectionController; } }
@@ -30,14 +29,6 @@ public abstract class BattleState : State
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
     }
-
-    //protected virtual void SelectTile(Point p) {
-    //    if (Pos == p || !Board.tiles.ContainsKey(p))
-    //        return;
-
-    //    Pos = p;
-    //    TileSelectionIndicator.localPosition = Board.tiles[p].Center;
-    //}
 
     protected virtual void ClearSelection() {
         TileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);

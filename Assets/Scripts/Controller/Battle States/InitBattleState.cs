@@ -12,7 +12,7 @@ public class InitBattleState : BattleState
     private IEnumerator Init() {
         var data = new List<Vector3>();
         for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 1; y++) {
+            for (int y = 0; y < 5; y++) {
                 data.Add(new Vector3(x, y));
             }
         }
@@ -39,7 +39,7 @@ public class InitBattleState : BattleState
 
         for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.enemyPrefab, RoundController.transform) as GameObject;
-            Point p = new Point(3, 0);
+            Point p = new Point(3, 3);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(Board.GetTile(p));
             unit.Match();
