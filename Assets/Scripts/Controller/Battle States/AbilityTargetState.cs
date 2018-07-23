@@ -9,17 +9,12 @@ public class AbilityTargetState : BattleState
     public override void Enter() {
         base.Enter();
 
-        var unit = RoundController.current;
+        var unit = RoundController.Current;
 
         ar = unit.GetComponentInChildren<AbilityRange>();
         targetTiles = ar.GetTilesInRange(Board, unit.Tile);
 
         Board.SelectTiles(targetTiles, Color.red);
-    }
-
-    public override void Exit() {
-        base.Exit();
-        Board.SelectTiles(targetTiles, Color.white);
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -33,7 +28,7 @@ public class AbilityTargetState : BattleState
             return;
         }
 
-        Unit actor = RoundController.current;
+        Unit actor = RoundController.Current;
         if (target == actor) {
             EndMove();
             return;
@@ -41,10 +36,8 @@ public class AbilityTargetState : BattleState
 
         bool isEnemy = target.alliance == actor.alliance.GetOpposing();
         if (targetTiles.Contains(tile) && isEnemy) {
-            //SelectTile(e.info);
-
             print($"Attacking {target}");
-            var ability = RoundController.current.GetComponentInChildren<Ability>();
+            var ability = RoundController.Current.GetComponentInChildren<Ability>();
             ability.Perform(new List<Tile>() { tile });
 
             EndMove();

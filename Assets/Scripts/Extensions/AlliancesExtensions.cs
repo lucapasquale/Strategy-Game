@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public static class AlliancesExtensions
+﻿public static class AlliancesExtensions
 {
     public static Alliances GetOpposing(this Alliances a) {
         if (a == Alliances.None) {

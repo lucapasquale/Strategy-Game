@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class DefaultAbilityEffectTarget : AbilityEffectTarget
+﻿public class DefaultAbilityEffectTarget : AbilityEffectTarget
 {
     public override bool IsTarget(Tile tile) {
         if (tile == null || tile.content == null)

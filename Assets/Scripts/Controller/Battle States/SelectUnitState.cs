@@ -2,7 +2,8 @@
 {
     public override void Enter() {
         base.Enter();
-        ClearSelection();
+
+        SelectionController.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -11,9 +12,7 @@
             return;
         }
 
-        //SelectTile(e.info);
         Unit unit = tile.content.GetComponent<Unit>();
-
         if (unit && unit.turn.IsAvailable() && RoundController.actingSide == unit.alliance) {
             RoundController.Select(unit);
             owner.ChangeState<ScanTilesState>();

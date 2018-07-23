@@ -8,7 +8,7 @@ public class MoveSequenceState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Unit actor = RoundController.current;
+        Unit actor = RoundController.Current;
 
         Movement m = actor.GetComponent<Movement>();
         m.GetTilesInRange(Board);
@@ -17,9 +17,12 @@ public class MoveSequenceState : BattleState
         yield return StartCoroutine(m.Traverse(endPoint));
 
         actor.turn.hasUnitMoved = true;
-        //owner.ChangeState<AbilityTargetState>();
+        if (SelectionController.actTile != null) {
+            RoundController.EndTurn();
+            owner.ChangeState<SelectUnitState>();
+            yield break;
+        }
 
-        RoundController.EndTurn();
-        owner.ChangeState<SelectUnitState>();
+        owner.ChangeState<AbilityTargetState>();
     }
 }

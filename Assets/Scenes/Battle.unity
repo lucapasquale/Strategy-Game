@@ -339,9 +339,6 @@ MonoBehaviour:
   heroPrefab: {fileID: 1957671613711242, guid: 48b1c983c2b8ed74cbe895011526e848, type: 2}
   enemyPrefab: {fileID: 1469448548334372, guid: f60e4799b6b2ec847b3d87b4591c3775,
     type: 2}
-  pos:
-    x: 0
-    y: 0
   tileSelectionIndicator: {fileID: 1509793865}
   roundController: {fileID: 1167799419}
   selectionController: {fileID: 1895093855}
@@ -415,7 +412,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4328542167811958, guid: 24836d5ebd8348c43a5061433c708e8d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 4328542167811958, guid: 24836d5ebd8348c43a5061433c708e8d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -521,6 +518,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfaa6aac7182f24c822efbfb61418ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveTile: {fileID: 0}
+  actTile: {fileID: 0}
 --- !u!4 &1895093856
 Transform:
   m_ObjectHideFlags: 0

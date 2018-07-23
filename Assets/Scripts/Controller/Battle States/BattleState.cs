@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class BattleState : State
 {
@@ -28,9 +27,5 @@ public abstract class BattleState : State
     }
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
-    }
-
-    protected virtual void ClearSelection() {
-        TileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }

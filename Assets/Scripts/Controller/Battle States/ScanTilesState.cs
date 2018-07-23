@@ -10,7 +10,7 @@ public class ScanTilesState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Unit unit = RoundController.current;
+        Unit unit = RoundController.Current;
 
         SelectMoveTiles(unit);
         SelectActTiles(unit);
@@ -29,7 +29,7 @@ public class ScanTilesState : BattleState
         AbilityRange ar = unit.GetComponentInChildren<AbilityRange>();
         var attackOrigins = new Dictionary<Tile, List<Tile>>();
 
-        foreach (var movableTile in SelectionController.MovableTiles) {
+        foreach (var movableTile in SelectionController.MoveTiles) {
             var targetTiles = ar.GetTilesInRange(Board, movableTile);
 
             foreach (var target in targetTiles) {
