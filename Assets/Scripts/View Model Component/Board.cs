@@ -29,18 +29,17 @@ public class Board : MonoBehaviour
 
     public void SelectTiles(List<Tile> tiles, Color color) {
         for (int i = tiles.Count - 1; i >= 0; --i)
-            tiles[i].GetComponent<SpriteRenderer>().material.color = color;
+            tiles[i].GetComponent<SpriteRenderer>().color = color;
     }
 
     public void ClearSelection() {
         foreach (Tile t in tiles.Values) {
-            t.GetComponent<SpriteRenderer>().material.color = Color.white;
+            t.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
 
     public List<Tile> Search(Tile start, Func<Tile, Tile, bool> shouldAddTile) {
-        List<Tile> retValue = new List<Tile>();
-        retValue.Add(start);
+        List<Tile> retValue = new List<Tile> { start };
 
         ClearSearch();
         Queue<Tile> checkNext = new Queue<Tile>();

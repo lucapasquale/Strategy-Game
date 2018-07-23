@@ -8,10 +8,20 @@ public abstract class Movement : MonoBehaviour
     protected Unit unit;
     protected Transform jumper;
 
+    public static List<Tile> GetPath(Tile tile) {
+        List<Tile> targets = new List<Tile>();
+        while (tile != null) {
+            targets.Insert(0, tile);
+            tile = tile.prev;
+        }
+
+        return targets;
+    }
+
     public abstract IEnumerator Traverse(Tile tile);
 
     public virtual List<Tile> GetTilesInRange(Board board) {
-        List<Tile> retValue = board.Search(unit.tile, ExpandSearch);
+        List<Tile> retValue = board.Search(unit.Tile, ExpandSearch);
         Filter(retValue);
         return retValue;
     }
@@ -27,7 +37,7 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Filter(List<Tile> tiles) {
         for (int i = tiles.Count - 1; i >= 0; --i)
-            if (tiles[i].content != null)
+            if (tiles[i].content != null && tiles[i].content != unit.gameObject)
                 tiles.RemoveAt(i);
     }
 

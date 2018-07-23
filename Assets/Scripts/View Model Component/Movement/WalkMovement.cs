@@ -5,13 +5,8 @@ public class WalkMovement : Movement
 {
     public override IEnumerator Traverse(Tile tile) {
         unit.Place(tile);
-        // Build a list of way points from the unit's
-        // starting tile to the destination tile
-        List<Tile> targets = new List<Tile>();
-        while (tile != null) {
-            targets.Insert(0, tile);
-            tile = tile.prev;
-        }
+        List<Tile> targets = GetPath(tile);
+
         // Move to each way point in succession
         for (int i = 1; i < targets.Count; ++i) {
             Tile from = targets[i - 1];
@@ -34,7 +29,7 @@ public class WalkMovement : Movement
     }
 
     private IEnumerator Walk(Tile target) {
-        Tweener tweener = transform.MoveTo(target.center, 0.25f, EasingEquations.Linear);
+        Tweener tweener = transform.MoveTo(target.Center, 0.125f, EasingEquations.Linear);
         while (tweener != null)
             yield return null;
     }

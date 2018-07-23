@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
     public GameObject content = null;
     public Point pos;
 
-    [HideInInspector] public Tile prev;
-    [HideInInspector] public int distance;
+    public Tile prev;
+    public int distance;
 
-    public Vector3 center { get { return pos.ToVector3(); } }
+    public Vector3 Center { get { return pos.ToVector3(); } }
 
     public void Load(Vector3 v) {
         Load(new Point((int)v.x, (int)v.y));

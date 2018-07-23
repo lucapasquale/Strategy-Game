@@ -1,19 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class BattleState : State
 {
-    // TEMP
+    //public LevelData levelData { get { return owner.levelData; } }
     public LevelData levelData;
 
     protected BattleController owner;
 
-    //public LevelData levelData { get { return owner.levelData; } }
-    public Board board { get { return owner.board; } }
+    public Board Board { get { return owner.board; } }
+    public CameraRig CameraRig { get { return owner.cameraRig; } }
 
-    public CameraRig cameraRig { get { return owner.cameraRig; } }
-    public Point pos { get { return owner.pos; } set { owner.pos = value; } }
-    public RoundController roundController { get { return owner.roundController; } }
-    public Transform tileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
+    public RoundController RoundController { get { return owner.roundController; } }
+    public SelectionController SelectionController { get { return owner.selectionController; } }
+    public Transform TileSelectionIndicator { get { return owner.tileSelectionIndicator; } }
 
     protected virtual void Awake() {
         owner = GetComponent<BattleController>();
@@ -30,15 +30,7 @@ public abstract class BattleState : State
     protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
     }
 
-    protected virtual void SelectTile(Point p) {
-        if (pos == p || !board.tiles.ContainsKey(p))
-            return;
-
-        pos = p;
-        tileSelectionIndicator.localPosition = board.tiles[p].center;
-    }
-
     protected virtual void ClearSelection() {
-        tileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
+        TileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }

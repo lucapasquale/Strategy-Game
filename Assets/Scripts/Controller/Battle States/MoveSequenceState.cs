@@ -8,12 +8,18 @@ public class MoveSequenceState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Unit actor = roundController.current;
+        Unit actor = RoundController.current;
+
         Movement m = actor.GetComponent<Movement>();
+        m.GetTilesInRange(Board);
 
-        yield return StartCoroutine(m.Traverse(owner.currentTile));
+        Tile endPoint = SelectionController.moveTile;
+        yield return StartCoroutine(m.Traverse(endPoint));
 
-        roundController.EndTurn();
+        actor.turn.hasUnitMoved = true;
+        //owner.ChangeState<AbilityTargetState>();
+
+        RoundController.EndTurn();
         owner.ChangeState<SelectUnitState>();
     }
 }
