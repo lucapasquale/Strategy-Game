@@ -2,7 +2,6 @@
 
 public class Unit : MonoBehaviour
 {
-    public Directions dir;
     public Alliances alliance;
     public Turn turn;
     public Tile Tile { get; protected set; }
@@ -18,6 +17,5 @@ public class Unit : MonoBehaviour
 
     public void Match() {
         transform.localPosition = Tile.Center;
-        transform.localEulerAngles = dir.ToEuler();
     }
 }

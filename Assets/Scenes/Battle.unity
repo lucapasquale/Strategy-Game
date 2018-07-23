@@ -280,7 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actingSide: 1
-  current: {fileID: 0}
 --- !u!4 &1167799420
 Transform:
   m_ObjectHideFlags: 0

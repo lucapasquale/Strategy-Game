@@ -19,11 +19,11 @@ public abstract class BattleState : State
     }
 
     protected override void AddListeners() {
-        InputController.touchEvent += OnTouch;
+        InputController.TouchEvent += OnTouch;
     }
 
     protected override void RemoveListeners() {
-        InputController.touchEvent -= OnTouch;
+        InputController.TouchEvent -= OnTouch;
     }
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {

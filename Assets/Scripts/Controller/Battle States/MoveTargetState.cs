@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public class MoveTargetState : BattleState
+﻿public class MoveTargetState : BattleState
 {
     public override void Exit() {
         base.Exit();
