@@ -11,24 +11,25 @@ public class ScanTilesState : BattleState
     private IEnumerator Sequence() {
         Unit unit = RoundController.Current;
 
-        SelectMoveTiles(unit);
-        SelectActTiles(unit);
+        var moveTiles = GetMoveTiles(unit);
+        var actOriginTiles = GetActOriginTiles(unit, moveTiles);
 
+        SelectionController.SetTiles(moveTiles, actOriginTiles);
         yield return null;
 
-        owner.ChangeState<MoveTargetState>();
+        owner.ChangeState<SelectActionState>();
     }
 
-    private void SelectMoveTiles(Unit unit) {
+    private List<Tile> GetMoveTiles(Unit unit) {
         Movement mover = unit.GetComponent<Movement>();
-        SelectionController.SetMovable(mover.GetTilesInRange(Board));
+        return mover.GetTilesInRange(Board);
     }
 
-    private void SelectActTiles(Unit unit) {
+    private Dictionary<Tile, List<Tile>> GetActOriginTiles(Unit unit, List<Tile> moveTiles) {
         AbilityRange ar = unit.GetComponentInChildren<AbilityRange>();
         var attackOrigins = new Dictionary<Tile, List<Tile>>();
 
-        foreach (var movableTile in SelectionController.MoveTiles) {
+        foreach (var movableTile in moveTiles) {
             var targetTiles = ar.GetTilesInRange(Board, movableTile);
 
             foreach (var target in targetTiles) {
@@ -40,6 +41,6 @@ public class ScanTilesState : BattleState
             }
         }
 
-        SelectionController.SetActionable(attackOrigins);
+        return attackOrigins;
     }
 }

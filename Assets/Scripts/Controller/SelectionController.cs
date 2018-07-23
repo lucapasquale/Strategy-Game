@@ -28,13 +28,10 @@ public class SelectionController : MonoBehaviour
         actTile = ActOriginTiles[tile][0];
     }
 
-    public void SetMovable(List<Tile> movableTiles) {
+    public void SetTiles(List<Tile> movableTiles, Dictionary<Tile, List<Tile>> actionable) {
         MoveTiles = movableTiles;
-        Match();
-    }
-
-    public void SetActionable(Dictionary<Tile, List<Tile>> actionable) {
         ActOriginTiles = actionable;
+
         Match();
     }
 

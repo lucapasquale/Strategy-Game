@@ -1,4 +1,4 @@
-﻿public class MoveTargetState : BattleState
+﻿public class SelectActionState : BattleState
 {
     public override void Exit() {
         base.Exit();
@@ -12,6 +12,7 @@
 
         // Skip turn
         if (tile == actor.Tile) {
+            actor.turn.hasUnitMoved = true;
             RoundController.EndTurn();
             owner.ChangeState<SelectUnitState>();
             return;
