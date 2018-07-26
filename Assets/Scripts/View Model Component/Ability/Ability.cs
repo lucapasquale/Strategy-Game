@@ -26,10 +26,9 @@ public class Ability : MonoBehaviour
     }
 
     private void Perform(Tile target) {
-        for (int i = 0; i < transform.childCount; ++i) {
-            Transform child = transform.GetChild(i);
-            AbilityEffect effect = child.GetComponent<AbilityEffect>();
-            effect.Apply(target);
+        var Effects = GetComponents<AbilityEffect>();
+        for (int i = 0; i < Effects.Length; i++) {
+            Effects[i].Apply(target);
         }
     }
 }

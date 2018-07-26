@@ -4,21 +4,20 @@ public class MoveSequenceState : BattleState
 {
     public override void Enter() {
         base.Enter();
-        StartCoroutine("Sequence");
+        StartCoroutine(Sequence());
     }
 
     private IEnumerator Sequence() {
-        Unit actor = RoundController.Current;
+        Unit unit = RoundController.Current;
 
-        Movement m = actor.GetComponent<Movement>();
+        Movement m = unit.GetComponent<Movement>();
         m.GetTilesInRange(Board);
 
         yield return StartCoroutine(m.Traverse(SelectionController.moveTile));
-        actor.turn.hasUnitMoved = true;
+        unit.turn.hasUnitMoved = true;
 
         if (SelectionController.actTile != null) {
-            RoundController.EndTurn();
-            owner.ChangeState<SelectUnitState>();
+            owner.ChangeState<PerformAbilityState>();
             yield break;
         }
 

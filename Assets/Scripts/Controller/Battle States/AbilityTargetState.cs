@@ -3,18 +3,9 @@ using UnityEngine;
 
 public class AbilityTargetState : BattleState
 {
-    private List<Tile> targetTiles;
-    private AbilityRange ar;
-
     public override void Enter() {
         base.Enter();
-
-        var unit = RoundController.Current;
-
-        ar = unit.GetComponentInChildren<AbilityRange>();
-        targetTiles = ar.GetTilesInRange(Board, unit.Tile);
-
-        Board.SelectTiles(targetTiles, Color.red);
+        SelectionController.UpdateSelections();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -30,22 +21,14 @@ public class AbilityTargetState : BattleState
 
         Unit actor = RoundController.Current;
         if (target == actor) {
-            EndMove();
+            RoundController.EndTurn();
+            owner.ChangeState<SelectUnitState>();
             return;
         }
 
-        bool isEnemy = target.alliance == actor.alliance.GetOpposing();
-        if (targetTiles.Contains(tile) && isEnemy) {
-            print($"Attacking {target}");
-            var ability = RoundController.Current.GetComponentInChildren<Ability>();
-            ability.Perform(new List<Tile>() { tile });
-
-            EndMove();
+        if (target.alliance == actor.alliance.GetOpposing()) {
+            SelectionController.SelectAct(tile);
+            owner.ChangeState<PerformAbilityState>();
         }
-    }
-
-    private void EndMove() {
-        RoundController.EndTurn();
-        owner.ChangeState<SelectUnitState>();
     }
 }

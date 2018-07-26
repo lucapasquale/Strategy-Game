@@ -1,4 +1,4 @@
-﻿public class EnemyAbilityEffectTarget : AbilityEffectTarget
+﻿public class EnemyAbilityTarget : AbilityTarget
 {
     private Alliances alliance;
 

@@ -14,7 +14,7 @@ public abstract class AbilityEffect : MonoBehaviour
     public abstract int Predict(Tile target);
 
     public void Apply(Tile target) {
-        if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
+        if (GetComponent<AbilityTarget>().IsTarget(target) == false)
             return;
 
         this.PostNotification(HitNotification, OnApply(target));

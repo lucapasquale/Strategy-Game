@@ -1,8 +1,12 @@
 ﻿public class SelectActionState : BattleState
 {
+    public override void Enter() {
+        base.Enter();
+        SelectionController.UpdateSelections();
+    }
+
     public override void Exit() {
         base.Exit();
-
         Board.ClearSelection();
     }
 
