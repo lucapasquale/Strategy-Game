@@ -3,15 +3,14 @@ using UnityEngine;
 
 public class RoundController : MonoBehaviour
 {
-    public const string ChangingSidesNotification = "RoundController.ChangingSidesNotification";
-
     public Alliances actingSide = Alliances.Ally;
-    public Unit current;
 
     public Dictionary<Alliances, List<Unit>> units = new Dictionary<Alliances, List<Unit>>() {
         { Alliances.Ally, new List<Unit>() },
         { Alliances.Enemy, new List<Unit>() },
     };
+
+    public Unit Current { get; private set; }
 
     public void AddUnit(Unit unit) {
         var alliance = unit.alliance;
@@ -28,12 +27,12 @@ public class RoundController : MonoBehaviour
             throw new System.Exception("nao esta no round controller units");
         }
 
-        current = unit;
+        Current = unit;
     }
 
     public void EndTurn() {
-        current.GetComponent<SpriteRenderer>().material.color = new Color(0.75f, 0.75f, 0.75f);
-        current = null;
+        Current.GetComponent<SpriteRenderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
+        Current = null;
 
         if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
             ChangeSides();
@@ -46,9 +45,8 @@ public class RoundController : MonoBehaviour
         }
 
         actingSide = actingSide.GetOpposing();
-        this.PostNotification(ChangingSidesNotification, actingSide);
-
         print($"Changing to side {actingSide}");
+
         foreach (var unit in units[actingSide]) {
             unit.turn = new Turn(unit);
         }

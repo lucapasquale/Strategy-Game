@@ -5,19 +5,8 @@ public class WalkMovement : Movement
 {
     public override IEnumerator Traverse(Tile tile) {
         unit.Place(tile);
-        List<Tile> targets = GetPath(tile);
 
-        // Move to each way point in succession
-        for (int i = 1; i < targets.Count; ++i) {
-            Tile from = targets[i - 1];
-            Tile to = targets[i];
-            Directions dir = from.GetDirection(to);
-            if (unit.dir != dir)
-                yield return StartCoroutine(Turn(dir));
-
-            yield return StartCoroutine(Walk(to));
-        }
-        yield return null;
+        yield return StartCoroutine(Walk(tile));
     }
 
     protected override bool ExpandSearch(Tile from, Tile to) {
@@ -29,7 +18,7 @@ public class WalkMovement : Movement
     }
 
     private IEnumerator Walk(Tile target) {
-        Tweener tweener = transform.MoveTo(target.Center, 0.125f, EasingEquations.Linear);
+        Tweener tweener = transform.MoveTo(target.Center, 0.2f, EasingEquations.Linear);
         while (tweener != null)
             yield return null;
     }

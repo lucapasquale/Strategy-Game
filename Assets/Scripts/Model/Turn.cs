@@ -6,14 +6,12 @@ public class Turn
     public GameObject ability;
 
     private readonly Tile startTile;
-    private readonly Directions startDir;
     private Unit actor;
 
     public Turn(Unit current) {
         actor = current;
         hasUnitMoved = false;
         startTile = actor.Tile;
-        startDir = actor.dir;
     }
 
     public bool IsAvailable() {
@@ -23,7 +21,6 @@ public class Turn
     public void UndoMove() {
         hasUnitMoved = false;
         actor.Place(startTile);
-        actor.dir = startDir;
         actor.Match();
     }
 }

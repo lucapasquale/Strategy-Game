@@ -6,17 +6,6 @@ public abstract class Movement : MonoBehaviour
 {
     public int range;
     protected Unit unit;
-    protected Transform jumper;
-
-    public static List<Tile> GetPath(Tile tile) {
-        List<Tile> targets = new List<Tile>();
-        while (tile != null) {
-            targets.Insert(0, tile);
-            tile = tile.prev;
-        }
-
-        return targets;
-    }
 
     public abstract IEnumerator Traverse(Tile tile);
 
@@ -28,7 +17,6 @@ public abstract class Movement : MonoBehaviour
 
     protected virtual void Awake() {
         unit = GetComponent<Unit>();
-        jumper = transform.Find("Jumper");
     }
 
     protected virtual bool ExpandSearch(Tile from, Tile to) {
@@ -39,23 +27,5 @@ public abstract class Movement : MonoBehaviour
         for (int i = tiles.Count - 1; i >= 0; --i)
             if (tiles[i].content != null && tiles[i].content != unit.gameObject)
                 tiles.RemoveAt(i);
-    }
-
-    protected virtual IEnumerator Turn(Directions dir) {
-        TransformLocalEulerTweener t = (TransformLocalEulerTweener)transform.RotateToLocal(dir.ToEuler(), 0.25f, EasingEquations.EaseInOutQuad);
-
-        // When rotating between North and West, we must make an exception so it looks like the unit
-        // rotates the most efficient way (since 0 and 360 are treated the same)
-        if (Mathf.Approximately(t.startTweenValue.z, 0f) && Mathf.Approximately(t.endTweenValue.z, 270f)) {
-            t.startTweenValue = new Vector3(t.startTweenValue.x, t.startTweenValue.y, 360f);
-        }
-        else if (Mathf.Approximately(t.startTweenValue.z, 270) && Mathf.Approximately(t.endTweenValue.z, 0)) {
-            t.endTweenValue = new Vector3(t.startTweenValue.x, t.startTweenValue.y, 360f);
-        }
-
-        unit.dir = dir;
-
-        while (t != null)
-            yield return null;
     }
 }

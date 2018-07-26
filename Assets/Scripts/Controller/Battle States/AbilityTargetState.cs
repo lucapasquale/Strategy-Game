@@ -3,23 +3,9 @@ using UnityEngine;
 
 public class AbilityTargetState : BattleState
 {
-    private List<Tile> targetTiles;
-    private AbilityRange ar;
-
     public override void Enter() {
         base.Enter();
-
-        var unit = RoundController.current;
-
-        ar = unit.GetComponentInChildren<AbilityRange>();
-        targetTiles = ar.GetTilesInRange(Board, unit.Tile);
-
-        Board.SelectTiles(targetTiles, Color.red);
-    }
-
-    public override void Exit() {
-        base.Exit();
-        Board.SelectTiles(targetTiles, Color.white);
+        SelectionController.UpdateSelections();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -33,26 +19,16 @@ public class AbilityTargetState : BattleState
             return;
         }
 
-        Unit actor = RoundController.current;
+        Unit actor = RoundController.Current;
         if (target == actor) {
-            EndMove();
+            RoundController.EndTurn();
+            owner.ChangeState<SelectUnitState>();
             return;
         }
 
-        bool isEnemy = target.alliance == actor.alliance.GetOpposing();
-        if (targetTiles.Contains(tile) && isEnemy) {
-            //SelectTile(e.info);
-
-            print($"Attacking {target}");
-            var ability = RoundController.current.GetComponentInChildren<Ability>();
-            ability.Perform(new List<Tile>() { tile });
-
-            EndMove();
+        if (target.alliance == actor.alliance.GetOpposing()) {
+            SelectionController.SelectAct(tile);
+            owner.ChangeState<PerformAbilityState>();
         }
-    }
-
-    private void EndMove() {
-        RoundController.EndTurn();
-        owner.ChangeState<SelectUnitState>();
     }
 }

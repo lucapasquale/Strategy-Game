@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class BattleState : State
 {
@@ -20,17 +19,13 @@ public abstract class BattleState : State
     }
 
     protected override void AddListeners() {
-        InputController.touchEvent += OnTouch;
+        InputController.TouchEvent += OnTouch;
     }
 
     protected override void RemoveListeners() {
-        InputController.touchEvent -= OnTouch;
+        InputController.TouchEvent -= OnTouch;
     }
 
     protected virtual void OnTouch(object sender, InfoEventArgs<Point> e) {
-    }
-
-    protected virtual void ClearSelection() {
-        TileSelectionIndicator.localPosition = new Vector3(-10, -10, 0);
     }
 }

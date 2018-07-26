@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AbilityEffect : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public abstract class AbilityEffect : MonoBehaviour
     public abstract int Predict(Tile target);
 
     public void Apply(Tile target) {
-        if (GetComponent<AbilityEffectTarget>().IsTarget(target) == false)
+        if (GetComponent<AbilityTarget>().IsTarget(target) == false)
             return;
 
         this.PostNotification(HitNotification, OnApply(target));

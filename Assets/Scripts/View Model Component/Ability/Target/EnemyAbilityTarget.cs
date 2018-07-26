@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class EnemyAbilityEffectTarget : AbilityEffectTarget
+﻿public class EnemyAbilityTarget : AbilityTarget
 {
     private Alliances alliance;
 

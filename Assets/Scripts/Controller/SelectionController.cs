@@ -1,28 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SelectionController : MonoBehaviour
 {
     public Tile moveTile;
     public Tile actTile;
 
-    private Board board;
-    public List<Tile> MovableTiles { get; private set; }
-    public Dictionary<Tile, List<Tile>> ActionableTiles { get; private set; }
+    private BattleController owner;
 
-    public void SetMovable(List<Tile> _movalble) {
-        MovableTiles = _movalble;
-        Match();
-    }
-
-    public void SetActionable(Dictionary<Tile, List<Tile>> _actionable) {
-        ActionableTiles = _actionable;
-        Match();
-    }
+    public List<Tile> MoveTiles { get; private set; }
+    public Dictionary<Tile, List<Tile>> ActOriginTiles { get; private set; }
 
     public void SelectMove(Tile tile) {
-        if (!MovableTiles.Contains(tile)) {
+        if (!MoveTiles.Contains(tile)) {
             Debug.LogError("Move tile not found");
             return;
         }
@@ -31,42 +21,36 @@ public class SelectionController : MonoBehaviour
     }
 
     public void SelectAct(Tile tile) {
-        if (!ActionableTiles.ContainsKey(tile) || ActionableTiles[tile].Count == 0) {
+        if (!ActOriginTiles.ContainsKey(tile)) {
             Debug.LogError("Act tile not found");
             return;
         }
 
-        actTile = ActionableTiles[tile][0];
+        actTile = tile;
     }
 
-    private void Awake() {
-        board = transform.parent.GetComponentInChildren<Board>();
-
-        MovableTiles = new List<Tile>();
-        ActionableTiles = new Dictionary<Tile, List<Tile>>();
+    public void UpdateSelections() {
+        MoveTiles = GetMoveTiles();
+        ActOriginTiles = GetActOriginTiles();
+        Match();
     }
 
-    private void OnEnable() {
-        this.AddObserver(OnChangingSides, RoundController.ChangingSidesNotification);
-    }
+    public void Clear() {
+        MoveTiles = new List<Tile>();
+        moveTile = null;
 
-    private void OnDisable() {
-        this.RemoveObserver(OnChangingSides, RoundController.ChangingSidesNotification);
-    }
+        ActOriginTiles = new Dictionary<Tile, List<Tile>>();
+        actTile = null;
 
-    private void OnChangingSides(object sender, object args) {
-        MovableTiles = new List<Tile>();
-        ActionableTiles = new Dictionary<Tile, List<Tile>>();
-
-        board.ClearSelection();
+        owner.board.ClearSelection();
     }
 
     private void Match() {
         var emptyActionTiles = new List<Tile>();
         var filledActionTiles = new List<Tile>();
 
-        foreach (var actionTile in ActionableTiles) {
-            if (actionTile.Key == null) {
+        foreach (var actionTile in ActOriginTiles) {
+            if (actionTile.Key.content == null) {
                 emptyActionTiles.Add(actionTile.Key);
                 continue;
             }
@@ -74,8 +58,46 @@ public class SelectionController : MonoBehaviour
             filledActionTiles.Add(actionTile.Key);
         }
 
-        board.SelectTiles(emptyActionTiles, Color.magenta);
-        board.SelectTiles(filledActionTiles, Color.red);
-        board.SelectTiles(MovableTiles, Color.blue);
+        owner.board.SelectTiles(emptyActionTiles, Color.magenta);
+        owner.board.SelectTiles(filledActionTiles, Color.red);
+
+        if (!owner.roundController.Current.turn.hasUnitMoved) {
+            owner.board.SelectTiles(MoveTiles, Color.blue);
+        }
+    }
+
+    private void Awake() {
+        owner = GetComponentInParent<BattleController>();
+    }
+
+    private List<Tile> GetMoveTiles() {
+        Unit unit = owner.roundController.Current;
+
+        if (unit.turn.hasUnitMoved) {
+            return new List<Tile>() { unit.Tile };
+        }
+
+        Movement mover = unit.GetComponent<Movement>();
+        return mover.GetTilesInRange(owner.board);
+    }
+
+    private Dictionary<Tile, List<Tile>> GetActOriginTiles() {
+        Unit unit = owner.roundController.Current;
+        var abilityRange = unit.GetComponentInChildren<AbilityRange>();
+
+        var attackOrigins = new Dictionary<Tile, List<Tile>>();
+        foreach (var movableTile in MoveTiles) {
+            var targetTiles = abilityRange.GetTilesInRange(owner.board, movableTile);
+
+            foreach (var target in targetTiles) {
+                if (!attackOrigins.ContainsKey(target)) {
+                    attackOrigins.Add(target, new List<Tile>());
+                }
+
+                attackOrigins[target].Add(movableTile);
+            }
+        }
+
+        return attackOrigins;
     }
 }
