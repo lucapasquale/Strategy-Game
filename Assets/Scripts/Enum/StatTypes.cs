@@ -2,7 +2,10 @@
 {
     MHP,
     HP,
-    DMG,
+
+    ATK,
+    DEF,
+
     RANGE,
     MOV,
 

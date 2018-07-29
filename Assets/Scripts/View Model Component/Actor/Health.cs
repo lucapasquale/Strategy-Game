@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class Health : MonoBehaviour
 {
@@ -8,19 +10,17 @@ public class Health : MonoBehaviour
     private Stats stats;
 
     public int HP {
-        get { return Mathf.FloorToInt(stats[StatTypes.HP]); }
+        get { return stats[StatTypes.HP]; }
         set { stats[StatTypes.HP] = value; }
     }
 
     public int MHP {
-        get { return Mathf.FloorToInt(stats[StatTypes.MHP]); }
+        get { return stats[StatTypes.MHP]; }
         set { stats[StatTypes.MHP] = value; }
     }
 
     private void Awake() {
         stats = GetComponent<Stats>();
-        MHP = 50;
-        HP = MHP;
     }
 
     private void OnEnable() {

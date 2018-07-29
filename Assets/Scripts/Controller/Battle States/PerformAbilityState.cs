@@ -20,9 +20,11 @@ public class PerformAbilityState : BattleState
     }
 
     private void ApplyAbility() {
-        GameObject target = SelectionController.actTile.content;
-        Health health = target.GetComponent<Health>();
+        var target = SelectionController.actTile;
 
-        health.HP -= 10;
+        var effects = RoundController.Current.GetComponentsInChildren<AbilityEffect>();
+        for (int i = 0; i < effects.Length; i++) {
+            effects[i].Apply(target);
+        }
     }
 }
