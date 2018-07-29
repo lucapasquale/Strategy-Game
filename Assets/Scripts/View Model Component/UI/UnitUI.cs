@@ -34,7 +34,7 @@ public class UnitUI : MonoBehaviour
     }
 
     private void Match() {
-        var healthPercent = health.HP / health.MHP;
+        var healthPercent = (float)health.HP / health.MHP;
 
         label.text = health.HP.ToString();
         healthBar.rectTransform.sizeDelta = new Vector2(maxWidth * healthPercent, healthBar.rectTransform.sizeDelta.y);

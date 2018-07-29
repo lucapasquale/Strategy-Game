@@ -18,13 +18,6 @@ public class DamageAbilityEffect : AbilityEffect
         int damage = attack - (defense / 2);
         damage = Mathf.Max(damage, 1);
 
-        // Get the abilities power stat considering possible variations
-        int power = GetStat(attacker, defender, GetPowerNotification, 0);
-
-        // Apply power bonus
-        damage = power * damage / 100;
-        damage = Mathf.Max(damage, 1);
-
         // Tweak the damage based on a variety of other checks like
         // Elemental damage, Critical Hits, Damage multipliers, etc.
         damage = GetStat(attacker, defender, TweakDamageNotification, damage);
@@ -36,19 +29,11 @@ public class DamageAbilityEffect : AbilityEffect
 
     protected override int OnApply(Tile target) {
         Unit defender = target.content.GetComponent<Unit>();
-
-        // Start with the predicted damage value
-        int value = Predict(target);
-
-        // Add some random variance
-        value = Mathf.FloorToInt(value * Random.Range(0.9f, 1.1f));
-
-        // Clamp the damage to a range
-        value = Mathf.Clamp(value, minDamage, maxDamage);
-
-        // Apply the damage to the target
         Stats s = defender.GetComponent<Stats>();
+
+        int value = Predict(target);
         s[StatTypes.HP] += value;
+
         return value;
     }
 }

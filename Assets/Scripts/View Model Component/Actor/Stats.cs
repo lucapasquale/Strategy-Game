@@ -6,9 +6,9 @@ public class Stats : MonoBehaviour
     private static Dictionary<StatTypes, string> _willChangeNotifications = new Dictionary<StatTypes, string>();
     private static Dictionary<StatTypes, string> _didChangeNotifications = new Dictionary<StatTypes, string>();
 
-    private float[] _data = new float[(int)StatTypes.Count];
+    private int[] _data = new int[(int)StatTypes.Count];
 
-    public float this[StatTypes s] {
+    public int this[StatTypes s] {
         get { return _data[(int)s]; }
         set { SetValue(s, value, true); }
     }
@@ -26,7 +26,7 @@ public class Stats : MonoBehaviour
     }
 
     public void SetValue(StatTypes type, float value, bool allowExceptions = true) {
-        float oldValue = this[type];
+        int oldValue = this[type];
         if (oldValue == value)
             return;
 
@@ -45,7 +45,7 @@ public class Stats : MonoBehaviour
                 return;
         }
 
-        _data[(int)type] = value;
+        _data[(int)type] = (int)value;
         this.PostNotification(DidChangeNotification(type), oldValue);
     }
 }

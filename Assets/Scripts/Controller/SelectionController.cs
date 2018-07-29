@@ -46,11 +46,13 @@ public class SelectionController : MonoBehaviour
     }
 
     private void Match() {
+        var target = owner.roundController.Current.GetComponentInChildren<AbilityTarget>();
+
         var emptyActionTiles = new List<Tile>();
         var filledActionTiles = new List<Tile>();
 
         foreach (var actionTile in ActOriginTiles) {
-            if (actionTile.Key.content == null) {
+            if (actionTile.Key.content == null || !target.IsTarget(actionTile.Key)) {
                 emptyActionTiles.Add(actionTile.Key);
                 continue;
             }
