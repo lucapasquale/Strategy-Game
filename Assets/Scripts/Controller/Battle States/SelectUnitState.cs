@@ -9,6 +9,7 @@
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         if (tile.content == null) {
+            RoundController.Select(null);
             return;
         }
 
