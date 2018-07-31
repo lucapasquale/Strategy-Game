@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public class AbilityTargetState : BattleState
+﻿public class AbilityTargetState : BattleState
 {
     public override void Enter() {
         base.Enter();
-        SelectionController.UpdateSelections();
+
+        RangeController.UpdateSelections();
+        SelectionController.Match();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -27,7 +26,7 @@ public class AbilityTargetState : BattleState
         }
 
         if (target.alliance == actor.alliance.GetOpposing()) {
-            SelectionController.SelectAct(tile);
+            RangeController.SelectAct(tile);
             owner.ChangeState<PerformAbilityState>();
         }
     }

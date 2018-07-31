@@ -13,10 +13,10 @@ public class MoveSequenceState : BattleState
         Movement m = unit.GetComponent<Movement>();
         m.GetTilesInRange(Board);
 
-        yield return StartCoroutine(m.Traverse(SelectionController.moveTile));
+        yield return StartCoroutine(m.Traverse(RangeController.moveTile));
         unit.turn.hasUnitMoved = true;
 
-        if (SelectionController.actTile != null) {
+        if (RangeController.actTile != null) {
             owner.ChangeState<PerformAbilityState>();
             yield break;
         }

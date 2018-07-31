@@ -8,11 +8,10 @@ public class BattleController : StateMachine
     public GameObject heroPrefab;
     public GameObject enemyPrefab;
 
-    //public Point pos;
-    public Transform tileSelectionIndicator;
-
     public RoundController roundController;
+    public RangeController rangeController;
     public SelectionController selectionController;
+    public StatPanelController statPanelController;
 
     private void Start() {
         ChangeState<InitBattleState>();

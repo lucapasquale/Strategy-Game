@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Collections;
-
 public class StatModifierFeature : Feature
 {
     public StatTypes type;

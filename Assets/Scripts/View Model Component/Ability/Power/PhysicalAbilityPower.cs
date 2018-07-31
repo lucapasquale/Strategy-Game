@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class PhysicalAbilityPower : AbilityPower
+﻿public class PhysicalAbilityPower : AbilityPower
 {
     public int level;
 

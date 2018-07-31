@@ -3,6 +3,8 @@
     public override void Enter() {
         base.Enter();
 
+        RoundController.Select(null);
+        RangeController.UpdateSelections();
         SelectionController.Clear();
     }
 

@@ -23,7 +23,7 @@ public class RoundController : MonoBehaviour
     }
 
     public void Select(Unit unit) {
-        if (!units[unit.alliance].Exists(u => u == unit)) {
+        if (unit != null && !units[unit.alliance].Exists(u => u == unit)) {
             throw new System.Exception("nao esta no round controller units");
         }
 
