@@ -3,6 +3,7 @@
 public class Tile : MonoBehaviour
 {
     public GameObject content = null;
+    public GameObject selection;
     public Point pos;
 
     public Tile prev;

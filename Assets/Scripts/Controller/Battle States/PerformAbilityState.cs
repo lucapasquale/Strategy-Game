@@ -18,7 +18,7 @@ public class PerformAbilityState : BattleState
     }
 
     private void ApplyAbility() {
-        var target = SelectionController.actTile;
+        var target = RangeController.actTile;
 
         var effects = RoundController.Current.GetComponentsInChildren<AbilityEffect>();
         for (int i = 0; i < effects.Length; i++) {

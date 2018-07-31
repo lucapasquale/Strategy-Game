@@ -2,12 +2,15 @@
 {
     public override void Enter() {
         base.Enter();
-        SelectionController.UpdateSelections();
+
+        RangeController.UpdateSelections();
+        SelectionController.Match();
     }
 
     public override void Exit() {
         base.Exit();
-        Board.ClearSelection();
+
+        SelectionController.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -23,14 +26,14 @@
         }
 
         // Just move
-        if (SelectionController.MoveTiles.Contains(tile)) {
-            SelectionController.SelectMove(tile);
+        if (RangeController.MoveTiles.Contains(tile)) {
+            RangeController.SelectMove(tile);
             owner.ChangeState<MoveSequenceState>();
             return;
         }
 
         // Undo Selection
-        if (!tile.content || !SelectionController.ActOriginTiles.ContainsKey(tile)) {
+        if (!tile.content || !RangeController.ActOriginTiles.ContainsKey(tile)) {
             owner.ChangeState<SelectUnitState>();
             return;
         }
@@ -38,10 +41,10 @@
         // Move to position and act
         Unit target = tile.content.GetComponent<Unit>();
         if (target.alliance == actor.alliance.GetOpposing()) {
-            var attackOrigins = SelectionController.ActOriginTiles[tile];
+            var attackOrigins = RangeController.ActOriginTiles[tile];
 
-            SelectionController.SelectMove(attackOrigins[0]);
-            SelectionController.SelectAct(tile);
+            RangeController.SelectMove(attackOrigins[0]);
+            RangeController.SelectAct(tile);
 
             owner.ChangeState<MoveSequenceState>();
         }

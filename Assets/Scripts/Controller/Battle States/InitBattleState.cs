@@ -28,7 +28,7 @@ public class InitBattleState : BattleState
     private void SpawnTestUnits() {
         for (int i = 0; i < 2; ++i) {
             GameObject instance = Instantiate(owner.heroPrefab, RoundController.transform) as GameObject;
-            Point p = new Point(1, i * 3);
+            Point p = new Point(2, i * 3);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(Board.GetTile(p));
             unit.Match();
@@ -39,7 +39,7 @@ public class InitBattleState : BattleState
 
         for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.enemyPrefab, RoundController.transform) as GameObject;
-            Point p = new Point(11, 5);
+            Point p = new Point(4, 4);
             Unit unit = instance.GetComponent<Unit>();
             unit.Place(Board.GetTile(p));
             unit.Match();

@@ -11,6 +11,7 @@ public abstract class BattleState : State
     public CameraRig CameraRig { get { return owner.cameraRig; } }
 
     public RoundController RoundController { get { return owner.roundController; } }
+    public RangeController RangeController { get { return owner.rangeController; } }
     public SelectionController SelectionController { get { return owner.selectionController; } }
     public StatPanelController StatPanelController { get { return owner.statPanelController; } }
 

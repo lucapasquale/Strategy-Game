@@ -2,7 +2,9 @@
 {
     public override void Enter() {
         base.Enter();
-        SelectionController.UpdateSelections();
+
+        RangeController.UpdateSelections();
+        SelectionController.Match();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -24,7 +26,7 @@
         }
 
         if (target.alliance == actor.alliance.GetOpposing()) {
-            SelectionController.SelectAct(tile);
+            RangeController.SelectAct(tile);
             owner.ChangeState<PerformAbilityState>();
         }
     }
