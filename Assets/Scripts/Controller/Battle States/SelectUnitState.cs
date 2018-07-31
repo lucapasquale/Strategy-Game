@@ -16,6 +16,7 @@
         Unit unit = tile.content.GetComponent<Unit>();
         if (unit && unit.turn.IsAvailable() && RoundController.actingSide == unit.alliance) {
             RoundController.Select(unit);
+            StatPanelController.ShowPrimary(tile.content);
             owner.ChangeState<SelectActionState>();
         }
     }

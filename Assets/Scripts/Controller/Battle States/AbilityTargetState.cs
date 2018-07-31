@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-public class AbilityTargetState : BattleState
+﻿public class AbilityTargetState : BattleState
 {
     public override void Enter() {
         base.Enter();

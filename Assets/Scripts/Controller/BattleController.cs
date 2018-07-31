@@ -13,6 +13,7 @@ public class BattleController : StateMachine
 
     public RoundController roundController;
     public SelectionController selectionController;
+    public StatPanelController statPanelController;
 
     private void Start() {
         ChangeState<InitBattleState>();
