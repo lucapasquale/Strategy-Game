@@ -18,6 +18,7 @@
             return;
         }
 
+        // if select itself, end turn
         Unit actor = RoundController.Current;
         if (target == actor) {
             RoundController.EndTurn();
@@ -25,6 +26,7 @@
             return;
         }
 
+        // do action on target
         if (target.alliance == actor.alliance.GetOpposing()) {
             RangeController.SelectAct(tile);
             owner.ChangeState<PerformAbilityState>();

@@ -2,27 +2,31 @@
 
 public class DamageAbilityEffect : AbilityEffect
 {
+    protected const int minDamage = 1;
+    protected const int maxDamage = 999;
+
+
     public override int Predict(Tile target) {
         Unit attacker = GetComponentInParent<Unit>();
         Unit defender = target.content.GetComponent<Unit>();
 
         // Get the attackers base attack stat considering
         // mission items, support check, status check, and equipment, etc
-        int attack = GetStat(attacker, defender, GetAttackNotification, 0);
+        int attack = attacker.GetComponentInParent<Stats>()[StatTypes.ATK];
+        attack = GetStat(attacker, defender, GetAttackNotification, attack);
 
         // Get the targets base defense stat considering
         // mission items, support check, status check, and equipment, etc
-        int defense = GetStat(attacker, defender, GetDefenseNotification, 0);
+        int defense = defender.GetComponentInParent<Stats>()[StatTypes.DEF];
+        defense = GetStat(attacker, defender, GetDefenseNotification, defense);
 
         // Calculate base damage
         int damage = attack - (defense / 2);
-        damage = Mathf.Max(damage, 1);
 
         // Tweak the damage based on a variety of other checks like
         // Elemental damage, Critical Hits, Damage multipliers, etc.
         damage = GetStat(attacker, defender, TweakDamageNotification, damage);
 
-        // Clamp the damage to a range
         damage = Mathf.Clamp(damage, minDamage, maxDamage);
         return -damage;
     }
