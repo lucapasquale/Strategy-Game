@@ -5,11 +5,9 @@ public abstract class AbilityEffect : MonoBehaviour
 {
     public const string GetAttackNotification = "BaseAbilityEffect.GetAttackNotification";
     public const string GetDefenseNotification = "BaseAbilityEffect.GetDefenseNotification";
-    public const string GetPowerNotification = "BaseAbilityEffect.GetPowerNotification";
     public const string TweakDamageNotification = "BaseAbilityEffect.TweakDamageNotification";
     public const string HitNotification = "BaseAbilityEffect.HitNotification";
-    protected const int minDamage = -999;
-    protected const int maxDamage = 999;
+
 
     public abstract int Predict(Tile target);
 
@@ -32,9 +30,7 @@ public abstract class AbilityEffect : MonoBehaviour
         for (int i = 0; i < mods.Count; ++i)
             value = mods[i].Modify(startValue, value);
 
-        int retValue = Mathf.FloorToInt(value);
-        retValue = Mathf.Clamp(retValue, minDamage, maxDamage);
-        return retValue;
+        return Mathf.FloorToInt(value);
     }
 
     private int Compare(ValueModifier x, ValueModifier y) {

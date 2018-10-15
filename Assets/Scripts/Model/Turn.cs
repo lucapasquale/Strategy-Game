@@ -21,6 +21,5 @@ public class Turn
     public void UndoMove() {
         hasUnitMoved = false;
         actor.Place(startTile);
-        actor.Match();
     }
 }

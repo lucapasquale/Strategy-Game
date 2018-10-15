@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  amount: 10
+  amount: 1
 --- !u!1 &1278961338309018
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 4169344594606426}
   - component: {fileID: 114124495372453178}
   - component: {fileID: 114950170815303516}
-  - component: {fileID: 114092367222632902}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
@@ -181,19 +180,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 2
---- !u!114 &114092367222632902
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278961338309018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71fabc5945e30043ac577fcde3219c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  level: 0
 --- !u!1 &1721438614182752
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,8 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1a002ac2256cb488702b692daf425d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nickname: 
   alliance: 1
-  sprite: {fileID: 3975144081698128996}
+  Sprite: {fileID: 3975144081698128996}
 --- !u!114 &114201475413274506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,8 +305,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 35
-  ATK: 5
-  DEF: 10
+  ATK: 10
+  DEF: 0
 --- !u!1 &1930660479992862
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 2542574327824763892}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4523450763907102}
   m_RootOrder: 0

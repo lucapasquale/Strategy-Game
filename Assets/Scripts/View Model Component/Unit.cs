@@ -2,11 +2,12 @@
 
 public class Unit : MonoBehaviour
 {
+    public string nickname;
     public Alliances alliance;
     public Turn turn;
-    public Tile Tile { get; protected set; }
 
-    [SerializeField] private SpriteRenderer sprite;
+    public Tile Tile { get; protected set; }
+    public SpriteRenderer Sprite;
 
     public void Place(Tile target) {
         if (Tile != null && Tile.content == gameObject)
@@ -22,6 +23,6 @@ public class Unit : MonoBehaviour
     }
 
     public void Paint(Color color) {
-        sprite.color = color;
+        Sprite.color = color;
     }
 }

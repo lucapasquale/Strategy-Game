@@ -4,18 +4,16 @@ using UnityEngine;
 public class Ability : MonoBehaviour
 {
     public const string CanPerformCheck = "Ability.CanPerformCheck";
-    public const string FailedNotification = "Ability.FailedNotification";
+    public const string FailedNotification = "Ability.FailedPerformNotification";
     public const string DidPerformNotification = "Ability.DidPerformNotification";
 
-    public void Perform(List<Tile> targets) {
+    public void Perform(Tile target) {
         if (!CanPerform()) {
             this.PostNotification(FailedNotification);
             return;
         }
 
-        for (int i = 0; i < targets.Count; ++i)
-            Perform(targets[i]);
-
+        ApplyEffects(target);
         this.PostNotification(DidPerformNotification);
     }
 
@@ -25,10 +23,11 @@ public class Ability : MonoBehaviour
         return exc.toggle;
     }
 
-    private void Perform(Tile target) {
-        var Effects = GetComponents<AbilityEffect>();
-        for (int i = 0; i < Effects.Length; i++) {
-            Effects[i].Apply(target);
+    private void ApplyEffects(Tile target) {
+        var effects = GetComponentsInChildren<AbilityEffect>();
+
+        for (int i = 0; i < effects.Length; i++) {
+            effects[i].Apply(target);
         }
     }
 }

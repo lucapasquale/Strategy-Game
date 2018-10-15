@@ -9,13 +9,14 @@ public class MoveSequenceState : BattleState
 
     private IEnumerator Sequence() {
         Unit unit = RoundController.Current;
+        Movement mov = unit.GetComponent<Movement>();
 
-        Movement m = unit.GetComponent<Movement>();
-        m.GetTilesInRange(Board);
+        mov.GetTilesInRange(Board);
+        yield return StartCoroutine(mov.Traverse(RangeController.moveTile));
 
-        yield return StartCoroutine(m.Traverse(RangeController.moveTile));
         unit.turn.hasUnitMoved = true;
 
+        // if action was already selected, do action
         if (RangeController.actTile != null) {
             owner.ChangeState<PerformAbilityState>();
             yield break;

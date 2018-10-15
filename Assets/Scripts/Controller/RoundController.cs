@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class RoundController : MonoBehaviour
 {
+    public const string SelectedNotification = "RoundController.SelectedNotification";
+
     public Alliances actingSide = Alliances.Ally;
 
     public Dictionary<Alliances, List<Unit>> units = new Dictionary<Alliances, List<Unit>>() {
@@ -28,11 +30,12 @@ public class RoundController : MonoBehaviour
         }
 
         Current = unit;
+        this.PostNotification(SelectedNotification, Current);
     }
 
     public void EndTurn() {
         Current.Paint(new Color(0.5f, 0.5f, 0.5f));
-        Current = null;
+        Select(null);
 
         if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
             ChangeSides();

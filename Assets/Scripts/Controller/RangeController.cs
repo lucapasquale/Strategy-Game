@@ -8,8 +8,8 @@ public class RangeController : MonoBehaviour
 
     private BattleController owner;
 
-    public List<Tile> MoveTiles { get; private set; }
-    public Dictionary<Tile, List<Tile>> ActOriginTiles { get; private set; }
+    public List<Tile> MoveTiles { get; private set; } = new List<Tile>();
+    public Dictionary<Tile, List<Tile>> ActOriginTiles { get; private set; } = new Dictionary<Tile, List<Tile>>();
 
     public void SelectMove(Tile tile) {
         if (!MoveTiles.Contains(tile)) {
@@ -41,10 +41,10 @@ public class RangeController : MonoBehaviour
     }
 
     private void Clear() {
-        MoveTiles = new List<Tile>();
+        MoveTiles.Clear();
         moveTile = null;
 
-        ActOriginTiles = new Dictionary<Tile, List<Tile>>();
+        ActOriginTiles.Clear();
         actTile = null;
     }
 
