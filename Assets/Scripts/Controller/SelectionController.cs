@@ -36,13 +36,13 @@ public class SelectionController : MonoBehaviour
         var allTiles = owner.board.tiles;
 
         foreach (Tile t in allTiles.Values) {
-            t.selection.GetComponent<SpriteRenderer>().color = Color.clear;
+            t.Paint(Color.clear);
         }
     }
 
     private void SelectTiles(List<Tile> tiles, Color color) {
         for (int i = tiles.Count - 1; i >= 0; --i) {
-            tiles[i].selection.GetComponent<SpriteRenderer>().color = color;
+            tiles[i].Paint(color);
         }
     }
 

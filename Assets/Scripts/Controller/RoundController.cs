@@ -31,7 +31,7 @@ public class RoundController : MonoBehaviour
     }
 
     public void EndTurn() {
-        Current.GetComponent<SpriteRenderer>().material.color = new Color(0.5f, 0.5f, 0.5f);
+        Current.Paint(new Color(0.5f, 0.5f, 0.5f));
         Current = null;
 
         if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
@@ -41,7 +41,7 @@ public class RoundController : MonoBehaviour
 
     private void ChangeSides() {
         foreach (var unit in units[actingSide]) {
-            unit.GetComponent<SpriteRenderer>().material.color = Color.white;
+            unit.Paint(Color.white);
         }
 
         actingSide = actingSide.GetOpposing();

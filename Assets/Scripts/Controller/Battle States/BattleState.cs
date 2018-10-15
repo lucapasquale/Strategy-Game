@@ -13,7 +13,6 @@ public abstract class BattleState : State
     public RoundController RoundController { get { return owner.roundController; } }
     public RangeController RangeController { get { return owner.rangeController; } }
     public SelectionController SelectionController { get { return owner.selectionController; } }
-    public StatPanelController StatPanelController { get { return owner.statPanelController; } }
 
     protected virtual void Awake() {
         owner = GetComponent<BattleController>();

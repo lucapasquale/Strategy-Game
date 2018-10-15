@@ -10,7 +10,7 @@ public class TestUI : MonoBehaviour
     }
 
     private void OnGUI() {
-        if (GUI.Button(new Rect(0, 10, 75, 50), "Restart")) {
+        if (GUI.Button(new Rect(10, 10, 250, 100), "Restart")) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 

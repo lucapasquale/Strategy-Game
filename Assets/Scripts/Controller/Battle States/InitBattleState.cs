@@ -11,8 +11,8 @@ public class InitBattleState : BattleState
 
     private IEnumerator Init() {
         var data = new List<Vector3>();
-        for (int x = 0; x < 16; x++) {
-            for (int y = 0; y < 9; y++) {
+        for (int x = 0; x < 9; x++) {
+            for (int y = 0; y < 16; y++) {
                 data.Add(new Vector3(x, y));
             }
         }

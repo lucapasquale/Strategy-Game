@@ -6,6 +6,8 @@ public class Unit : MonoBehaviour
     public Turn turn;
     public Tile Tile { get; protected set; }
 
+    [SerializeField] private SpriteRenderer sprite;
+
     public void Place(Tile target) {
         if (Tile != null && Tile.content == gameObject)
             Tile.content = null;
@@ -17,5 +19,9 @@ public class Unit : MonoBehaviour
 
     public void Match() {
         transform.localPosition = Tile.Center;
+    }
+
+    public void Paint(Color color) {
+        sprite.color = color;
     }
 }
