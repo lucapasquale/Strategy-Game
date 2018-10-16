@@ -2,8 +2,10 @@
 
 public class Health : MonoBehaviour
 {
-    public int MinHP = 0;
+    public const string UnitDiedNotification = "Health.UnitDiedNotification";
 
+
+    public int MinHP = 0;
     private Stats stats;
 
     public int HP {
@@ -16,12 +18,14 @@ public class Health : MonoBehaviour
         set { stats[StatTypes.MHP] = value; }
     }
 
+
     private void Awake() {
         stats = GetComponent<Stats>();
     }
 
     private void OnEnable() {
         this.AddObserver(OnHPWillChange, Stats.WillChangeNotification(StatTypes.HP), stats);
+        this.AddObserver(OnHPDidChange, Stats.DidChangeNotification(StatTypes.HP), stats);
         this.AddObserver(OnMHPDidChange, Stats.DidChangeNotification(StatTypes.MHP), stats);
     }
 
@@ -33,6 +37,15 @@ public class Health : MonoBehaviour
     private void OnHPWillChange(object sender, object args) {
         ValueChangeException vce = args as ValueChangeException;
         vce.AddModifier(new ClampValueModifier(int.MaxValue, MinHP, stats[StatTypes.MHP]));
+    }
+
+    private void OnHPDidChange(object sender, object args) {
+        var unit = stats.GetComponent<Unit>();
+
+        if (HP == 0) {
+            this.PostNotification(UnitDiedNotification, unit);
+            unit.Disable();
+        }
     }
 
     private void OnMHPDidChange(object sender, object args) {

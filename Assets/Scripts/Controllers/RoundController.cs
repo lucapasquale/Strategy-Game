@@ -32,10 +32,12 @@ public class RoundController : MonoBehaviour
 
     private void OnEnable() {
         this.AddObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
+        this.AddObserver(UnitDied, Health.UnitDiedNotification);
     }
 
     private void OnDisable() {
         this.RemoveObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
+        this.RemoveObserver(UnitDied, Health.UnitDiedNotification);
     }
 
     private void UnitSpawned(object sender, object args) {
@@ -50,6 +52,13 @@ public class RoundController : MonoBehaviour
         units[alliance].Add(unit);
     }
 
+    private void UnitDied(object sender, object args) {
+        Unit unit = args as Unit;
+        Alliances alliance = unit.alliance;
+
+        units[alliance].Remove(unit);
+    }
+
     private void ChangeSides() {
         foreach (var unit in units[actingSide]) {
             unit.Paint(Color.white);
@@ -57,6 +66,10 @@ public class RoundController : MonoBehaviour
 
         actingSide = actingSide.GetOpposing();
         print($"Changing to side {actingSide}");
+
+        if (units[actingSide].Count == 0) {
+            ChangeSides();
+        }
 
         foreach (var unit in units[actingSide]) {
             unit.turn = new Turn(unit);

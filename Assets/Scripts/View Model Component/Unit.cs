@@ -25,4 +25,9 @@ public class Unit : MonoBehaviour
     public void Paint(Color color) {
         Sprite.color = color;
     }
+
+    public void Disable() {
+        Tile.content = null;
+        gameObject.SetActive(false);
+    }
 }
