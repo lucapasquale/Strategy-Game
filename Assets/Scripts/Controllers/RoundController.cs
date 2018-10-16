@@ -9,8 +9,6 @@ public class RoundController : MonoBehaviour
     public Unit Current { get; private set; }
     public Alliances actingSide = Alliances.Ally;
 
-    public AreaHighlightManager areaHighlightManager;
-
     public Dictionary<Alliances, List<Unit>> units = new Dictionary<Alliances, List<Unit>>() {
         { Alliances.Ally, new List<Unit>() },
         { Alliances.Enemy, new List<Unit>() },
@@ -31,10 +29,6 @@ public class RoundController : MonoBehaviour
         }
     }
 
-
-    private void Awake() {
-        areaHighlightManager = GetComponent<AreaHighlightManager>();
-    }
 
     private void OnEnable() {
         this.AddObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);

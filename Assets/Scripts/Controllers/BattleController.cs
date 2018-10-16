@@ -10,6 +10,7 @@ public class BattleController : StateMachine
 
     public RoundController roundController;
     public RangeController rangeController;
+    public AreaHighlightManager areaHighlightManager;
 
     private void Start() {
         ChangeState<InitBattleState>();

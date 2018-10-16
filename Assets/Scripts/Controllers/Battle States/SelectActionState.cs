@@ -4,13 +4,12 @@
         base.Enter();
 
         RangeController.UpdateSelections();
-        owner.roundController.areaHighlightManager.Match();
+        AreaHighlightManager.Match();
     }
 
     public override void Exit() {
         base.Exit();
-
-        owner.roundController.areaHighlightManager.Clear();
+        AreaHighlightManager.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {

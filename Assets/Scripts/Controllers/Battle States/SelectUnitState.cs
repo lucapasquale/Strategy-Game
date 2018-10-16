@@ -5,7 +5,7 @@
         RoundController.Select(null);
 
         RangeController.UpdateSelections();
-        owner.roundController.areaHighlightManager.Clear();
+        AreaHighlightManager.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
