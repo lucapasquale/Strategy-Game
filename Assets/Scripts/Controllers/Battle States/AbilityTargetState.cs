@@ -4,7 +4,7 @@
         base.Enter();
 
         RangeController.UpdateSelections();
-        SelectionController.Match();
+        owner.roundController.areaHighlightManager.Match();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {

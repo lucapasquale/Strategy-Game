@@ -2,16 +2,15 @@
 {
     public override void Enter() {
         base.Enter();
-
         RoundController.Select(null);
+
         RangeController.UpdateSelections();
-        SelectionController.Clear();
+        owner.roundController.areaHighlightManager.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         if (tile.content == null) {
-            RoundController.Select(null);
             return;
         }
 

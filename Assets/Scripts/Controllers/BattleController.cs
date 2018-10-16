@@ -10,7 +10,6 @@ public class BattleController : StateMachine
 
     public RoundController roundController;
     public RangeController rangeController;
-    public SelectionController selectionController;
 
     private void Start() {
         ChangeState<InitBattleState>();
