@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class InitBattleState : BattleState
 {
+    public const string UnitSpawnedNotification = "InitBattleState.UnitSpawnedNotification";
+
+
     public override void Enter() {
         base.Enter();
         StartCoroutine(Init());
@@ -38,7 +41,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            RoundController.AddUnit(unit);
+            this.PostNotification(UnitSpawnedNotification, unit);
         }
 
         for (int i = 0; i < 1; ++i) {
@@ -51,7 +54,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            RoundController.AddUnit(unit);
+            this.PostNotification(UnitSpawnedNotification, unit);
         }
     }
 }

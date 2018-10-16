@@ -5,6 +5,8 @@ public class RoundController : MonoBehaviour
 {
     public const string SelectedNotification = "RoundController.SelectedNotification";
 
+
+    public Unit Current { get; private set; }
     public Alliances actingSide = Alliances.Ally;
 
     public Dictionary<Alliances, List<Unit>> units = new Dictionary<Alliances, List<Unit>>() {
@@ -12,17 +14,6 @@ public class RoundController : MonoBehaviour
         { Alliances.Enemy, new List<Unit>() },
     };
 
-    public Unit Current { get; private set; }
-
-    public void AddUnit(Unit unit) {
-        var alliance = unit.alliance;
-        if (alliance == Alliances.None) {
-            return;
-        }
-
-        unit.turn = new Turn(unit);
-        units[alliance].Add(unit);
-    }
 
     public void Select(Unit unit) {
         if (unit != null && !units[unit.alliance].Exists(u => u == unit)) {
@@ -40,6 +31,27 @@ public class RoundController : MonoBehaviour
         if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
             ChangeSides();
         }
+    }
+
+
+    private void OnEnable() {
+        this.AddObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
+    }
+
+    private void OnDisable() {
+        this.RemoveObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
+    }
+
+    private void UnitSpawned(object sender, object args) {
+        Unit unit = args as Unit;
+        Alliances alliance = unit.alliance;
+
+        if (alliance == Alliances.None) {
+            return;
+        }
+
+        unit.turn = new Turn(unit);
+        units[alliance].Add(unit);
     }
 
     private void ChangeSides() {
