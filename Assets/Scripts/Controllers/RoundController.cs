@@ -9,11 +9,13 @@ public class RoundController : MonoBehaviour
     public Unit Current { get; private set; }
     public Alliances actingSide = Alliances.Ally;
 
-    public Dictionary<Alliances, List<Unit>> units = new Dictionary<Alliances, List<Unit>>() {
-        { Alliances.Ally, new List<Unit>() },
-        { Alliances.Enemy, new List<Unit>() },
-    };
+    private List<Unit> currentUnits = new List<Unit>();
+    private BattleController owner;
 
+
+    public void StartGame() {
+        StartRound(Alliances.Ally);
+    }
 
     public void Select(Unit unit) {
         Current = unit;
@@ -22,53 +24,34 @@ public class RoundController : MonoBehaviour
 
     public void EndTurn() {
         Current.Paint(new Color(0.5f, 0.5f, 0.5f));
+        Current.turn.End();
         Select(null);
 
-        if (units[actingSide].TrueForAll(u => !u.turn.IsAvailable())) {
-            ChangeSides();
+        if (GetAvailableUnits().Count == 0) {
+            StartRound(actingSide.GetOpposing());
         }
     }
 
 
-    private void OnEnable() {
-        this.AddObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
-        this.AddObserver(UnitDied, Health.UnitDiedNotification);
+    private void Awake() {
+        owner = GetComponentInParent<BattleController>();
     }
 
-    private void OnDisable() {
-        this.RemoveObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);
-        this.RemoveObserver(UnitDied, Health.UnitDiedNotification);
-    }
-
-    private void UnitSpawned(object sender, object args) {
-        Unit unit = args as Unit;
-        Alliances alliance = unit.alliance;
-
-        if (alliance == Alliances.None) {
-            return;
-        }
-
-        unit.turn = new Turn(unit);
-        units[alliance].Add(unit);
-    }
-
-    private void UnitDied(object sender, object args) {
-        Unit unit = args as Unit;
-        Alliances alliance = unit.alliance;
-
-        units[alliance].Remove(unit);
-    }
-
-    private void ChangeSides() {
-        foreach (var unit in units[actingSide]) {
+    public void StartRound(Alliances side) {
+        print($"Starting round for side {side}");
+        foreach (var unit in currentUnits) {
             unit.Paint(Color.white);
         }
 
-        actingSide = actingSide.GetOpposing();
-        print($"Changing to side {actingSide}");
+        actingSide = side;
+        currentUnits = owner.partyManager.GetUnits(actingSide).FindAll(u => u.isAlive);
 
-        foreach (var unit in units[actingSide]) {
+        foreach (var unit in currentUnits) {
             unit.turn = new Turn(unit);
         }
+    }
+
+    private List<Unit> GetAvailableUnits() {
+        return currentUnits.FindAll(u => u.turn.IsAvailable());
     }
 }

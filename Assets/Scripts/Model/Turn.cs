@@ -18,6 +18,10 @@ public class Turn
         return !hasUnitMoved;
     }
 
+    public void End() {
+        hasUnitMoved = true;
+    }
+
     public void UndoMove() {
         hasUnitMoved = false;
         actor.Place(startTile);

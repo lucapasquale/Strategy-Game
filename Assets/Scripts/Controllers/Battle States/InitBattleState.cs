@@ -24,7 +24,9 @@ public class InitBattleState : BattleState
         levelData.tiles = tilesPostitions;
 
         Board.Load(levelData);
+
         SpawnTestUnits();
+        owner.roundController.StartGame();
 
         yield return null;
         owner.ChangeState<SelectUnitState>();
@@ -41,6 +43,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
+            unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
 
@@ -54,6 +57,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
+            unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
     }

@@ -9,11 +9,10 @@ public class BattleController : StateMachine
     public GameObject heroPrefab;
     public GameObject enemyPrefab;
 
-    public List<Unit> units = new List<Unit>();
-
     public RoundController roundController;
     public RangeController rangeController;
     public AreaHighlightManager areaHighlightManager;
+    public PartyManager partyManager;
 
     private void Start() {
         ChangeState<InitBattleState>();
