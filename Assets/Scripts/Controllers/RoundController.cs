@@ -67,10 +67,6 @@ public class RoundController : MonoBehaviour
         actingSide = actingSide.GetOpposing();
         print($"Changing to side {actingSide}");
 
-        if (units[actingSide].Count == 0) {
-            ChangeSides();
-        }
-
         foreach (var unit in units[actingSide]) {
             unit.turn = new Turn(unit);
         }

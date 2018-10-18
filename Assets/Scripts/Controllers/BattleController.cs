@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BattleController : StateMachine
 {
@@ -7,6 +8,8 @@ public class BattleController : StateMachine
     public LevelData levelData;
     public GameObject heroPrefab;
     public GameObject enemyPrefab;
+
+    public List<Unit> units = new List<Unit>();
 
     public RoundController roundController;
     public RangeController rangeController;
