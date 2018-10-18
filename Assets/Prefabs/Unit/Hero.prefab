@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  amount: 1
+  amount: 50
 --- !u!1 &1278961338309018
 GameObject:
   m_ObjectHideFlags: 0
