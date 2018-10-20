@@ -4,6 +4,8 @@ using UnityEngine;
 public class RoundController : MonoBehaviour
 {
     public const string SelectedNotification = "RoundController.SelectedNotification";
+    public const string TurnEndedNotification = "RoundController.TurnEndedNotification";
+    public const string RoundStartedNotification = "RoundController.RoundStartedNotification";
 
 
     public Unit Current { get; private set; }
@@ -25,7 +27,11 @@ public class RoundController : MonoBehaviour
     public void EndTurn() {
         Current.Paint(new Color(0.5f, 0.5f, 0.5f));
         Current.turn.End();
+
+        Unit lastUnit = Current;
+
         Select(null);
+        this.PostNotification(TurnEndedNotification, lastUnit);
 
         if (GetAvailableUnits().Count == 0) {
             StartRound(actingSide.GetOpposing());
@@ -38,13 +44,15 @@ public class RoundController : MonoBehaviour
     }
 
     public void StartRound(Alliances side) {
-        print($"Starting round for side {side}");
         foreach (var unit in currentUnits) {
             unit.Paint(Color.white);
         }
 
         actingSide = side;
         currentUnits = owner.partyManager.GetUnits(actingSide).FindAll(u => u.isAlive);
+
+        print($"Starting round for side {side}");
+        this.PostNotification(RoundStartedNotification, side);
 
         foreach (var unit in currentUnits) {
             unit.turn = new Turn(unit);

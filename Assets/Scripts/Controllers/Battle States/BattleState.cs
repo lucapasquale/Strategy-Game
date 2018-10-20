@@ -12,6 +12,7 @@ public abstract class BattleState : State
 
     public RoundController RoundController { get { return owner.roundController; } }
     public RangeController RangeController { get { return owner.rangeController; } }
+
     public AreaHighlightManager AreaHighlightManager { get { return owner.areaHighlightManager; } }
 
 

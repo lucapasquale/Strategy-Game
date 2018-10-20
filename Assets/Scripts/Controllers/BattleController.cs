@@ -11,6 +11,7 @@ public class BattleController : StateMachine
 
     public RoundController roundController;
     public RangeController rangeController;
+
     public AreaHighlightManager areaHighlightManager;
     public PartyManager partyManager;
 
