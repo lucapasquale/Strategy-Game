@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RoundController : MonoBehaviour
+public class RoundController : Controller
 {
     public const string SelectedNotification = "RoundController.SelectedNotification";
     public const string TurnEndedNotification = "RoundController.TurnEndedNotification";
@@ -12,7 +12,6 @@ public class RoundController : MonoBehaviour
     public Alliances actingSide = Alliances.Ally;
 
     private List<Unit> currentUnits = new List<Unit>();
-    private BattleController owner;
 
 
     public void StartGame() {
@@ -38,10 +37,6 @@ public class RoundController : MonoBehaviour
         }
     }
 
-
-    private void Awake() {
-        owner = GetComponentInParent<BattleController>();
-    }
 
     public void StartRound(Alliances side) {
         foreach (var unit in currentUnits) {

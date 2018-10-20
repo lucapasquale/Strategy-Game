@@ -1,21 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PartyManager : MonoBehaviour
+public class PartyManager : Controller
 {
-    private List<Unit> units;
-    private BattleController owner;
+    private List<Unit> units = new List<Unit>();
 
 
     public List<Unit> GetUnits(Alliances side) {
         return units.FindAll(u => u.alliance == side);
     }
 
-
-    private void Awake() {
-        owner = GetComponentInParent<BattleController>();
-        units = new List<Unit>();
-    }
 
     private void OnEnable() {
         this.AddObserver(UnitSpawned, InitBattleState.UnitSpawnedNotification);

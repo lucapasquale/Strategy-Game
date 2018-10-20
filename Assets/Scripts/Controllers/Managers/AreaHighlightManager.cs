@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class AreaHighlightManager : MonoBehaviour
+public class AreaHighlightManager : Controller
 {
     public Color moveColor;
     public Color attackColor;
     public Color targetColor;
-
-    private BattleController owner;
 
 
     public void Match() {
@@ -41,10 +39,6 @@ public class AreaHighlightManager : MonoBehaviour
         }
     }
 
-
-    private void Awake() {
-        owner = GetComponentInParent<BattleController>();
-    }
 
     private void SelectTiles(List<Tile> tiles, Color color) {
         for (int i = tiles.Count - 1; i >= 0; --i) {

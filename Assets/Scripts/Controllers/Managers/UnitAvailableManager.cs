@@ -1,27 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class UnitAvailableManager : MonoBehaviour
+public class UnitAvailableManager : Controller
 {
     public GameObject highlightTilePrefab;
 
     private List<GameObject> highlightInUse = new List<GameObject>();
-    private BattleController owner;
 
-
-    private void Awake() {
-        owner = GetComponentInParent<BattleController>();
-    }
 
     private void OnEnable() {
-        this.AddObserver(ShowOnlySelected, RoundController.SelectedNotification);
+        this.AddObserver(UnitSelected, RoundController.SelectedNotification);
     }
 
     private void OnDisable() {
-        this.RemoveObserver(ShowOnlySelected, RoundController.SelectedNotification);
+        this.RemoveObserver(UnitSelected, RoundController.SelectedNotification);
     }
 
-    private void ShowOnlySelected(object sender, object args) {
+    private void UnitSelected(object sender, object args) {
         Unit unit = args as Unit;
         Clear();
 
@@ -32,7 +27,6 @@ public class UnitAvailableManager : MonoBehaviour
 
         HighlightAvailable();
     }
-
 
     private void Clear() {
         foreach (var highlight in highlightInUse) {

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeController : MonoBehaviour
+public class RangeController : Controller
 {
     public Tile moveTile;
     public Tile actTile;
 
-    private BattleController owner;
-
     public List<Tile> MoveTiles { get; private set; } = new List<Tile>();
     public Dictionary<Tile, List<Tile>> ActOriginTiles { get; private set; } = new Dictionary<Tile, List<Tile>>();
+
 
     public void SelectMove(Tile tile) {
         if (!MoveTiles.Contains(tile)) {
@@ -40,16 +39,13 @@ public class RangeController : MonoBehaviour
         ActOriginTiles = GetActOriginTiles(unit);
     }
 
+
     private void Clear() {
         MoveTiles.Clear();
         moveTile = null;
 
         ActOriginTiles.Clear();
         actTile = null;
-    }
-
-    private void Awake() {
-        owner = GetComponentInParent<BattleController>();
     }
 
     private List<Tile> GetMoveTiles(Unit unit) {
