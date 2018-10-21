@@ -43,8 +43,9 @@ public class Health : MonoBehaviour
         var unit = stats.GetComponent<Unit>();
 
         if (HP == 0) {
-            this.PostNotification(UnitDiedNotification, unit);
             unit.Disable();
+            Debug.LogWarning($"Unit {unit} died");
+            this.PostNotification(UnitDiedNotification, unit);
         }
     }
 

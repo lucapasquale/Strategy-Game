@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 50
-  ATK: 5
+  ATK: 500
   DEF: 0
 --- !u!1 &1345199057461770
 GameObject:

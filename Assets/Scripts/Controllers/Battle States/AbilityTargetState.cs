@@ -3,7 +3,7 @@
     public override void Enter() {
         base.Enter();
 
-        RangeController.UpdateSelections();
+        RangeManager.GetRanges(owner.roundController.Current);
         AreaHighlightManager.Match();
     }
 
@@ -28,7 +28,7 @@
 
         // do action on target
         if (target.alliance == actor.alliance.GetOpposing()) {
-            RangeController.SelectAct(tile);
+            SelectionManager.SelectTarget(tile);
             owner.ChangeState<PerformAbilityState>();
         }
     }

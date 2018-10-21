@@ -2,6 +2,9 @@
 
 public class MoveSequenceState : BattleState
 {
+    public const string UnitMovedNotification = "MoveSequenceState.UnitMovedNotification";
+
+
     public override void Enter() {
         base.Enter();
         StartCoroutine(Sequence());
@@ -9,15 +12,18 @@ public class MoveSequenceState : BattleState
 
     private IEnumerator Sequence() {
         Unit unit = RoundController.Current;
-        Movement mov = unit.GetComponent<Movement>();
 
+        Movement mov = unit.GetComponent<Movement>();
         mov.GetTilesInRange(Board);
-        yield return StartCoroutine(mov.Traverse(RangeController.moveTile));
+
+        Tile destination = SelectionManager.MovementTile;
+        yield return StartCoroutine(mov.Traverse(destination));
 
         unit.turn.hasUnitMoved = true;
+        this.PostNotification(UnitMovedNotification, unit);
 
-        // if action was already selected, do action
-        if (RangeController.actTile != null) {
+        // If action was already selected, do action
+        if (SelectionManager.TargetTile != null) {
             owner.ChangeState<PerformAbilityState>();
             yield break;
         }

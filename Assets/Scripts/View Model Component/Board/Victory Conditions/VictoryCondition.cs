@@ -23,14 +23,14 @@ public class VictoryCondition : MonoBehaviour
     protected virtual void CheckForGameOver(object sender, object args) {
         Unit deadUnit = args as Unit;
 
-        if (PartyDefeated(deadUnit.alliance)) {
+        if (!PartyAlive(deadUnit.alliance)) {
             Winner = deadUnit.alliance.GetOpposing();
             print($"Winner: {Winner.ToString()}");
         }
     }
 
-    protected virtual bool PartyDefeated(Alliances type) {
-        var availableUnits = bc.roundController.units[type];
-        return availableUnits.Count == 0;
+    protected virtual bool PartyAlive(Alliances type) {
+        var availableUnits = bc.partyController.GetUnits(type);
+        return availableUnits.Exists(u => u.isAlive);
     }
 }

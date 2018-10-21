@@ -4,8 +4,9 @@ public class Unit : MonoBehaviour
 {
     public string nickname;
     public Alliances alliance;
-    public Turn turn;
+    public bool isAlive = true;
 
+    public Turn turn;
     public Tile Tile { get; protected set; }
     public SpriteRenderer Sprite;
 
@@ -28,6 +29,9 @@ public class Unit : MonoBehaviour
 
     public void Disable() {
         Tile.content = null;
-        gameObject.SetActive(false);
+        isAlive = false;
+
+        Paint(Color.black);
+        //gameObject.SetActive(false);
     }
 }
