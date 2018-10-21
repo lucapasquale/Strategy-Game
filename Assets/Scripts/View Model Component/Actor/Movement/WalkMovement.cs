@@ -2,10 +2,10 @@
 
 public class WalkMovement : Movement
 {
-    public override IEnumerator Traverse(Tile tile) {
+    public override IEnumerator Traverse(Tile tile, float duration) {
         unit.Place(tile);
 
-        yield return StartCoroutine(Walk(tile));
+        yield return StartCoroutine(Walk(tile, duration));
     }
 
     protected override bool ExpandSearch(Tile from, Tile to) {
@@ -16,9 +16,10 @@ public class WalkMovement : Movement
         return base.ExpandSearch(from, to);
     }
 
-    private IEnumerator Walk(Tile target) {
-        Tweener tweener = transform.MoveTo(target.Center, 0.2f, EasingEquations.Linear);
-        while (tweener != null)
+    private IEnumerator Walk(Tile target, float duration) {
+        Tweener tweener = transform.MoveTo(target.Center, duration, EasingEquations.Linear);
+        while (tweener) {
             yield return null;
+        }
     }
 }

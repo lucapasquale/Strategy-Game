@@ -17,10 +17,10 @@ public class UnitAvailableManager : Controller
     }
 
     private void UnitSelected(object sender, object args) {
-        Unit unit = args as Unit;
         Clear();
 
-        if (unit != null) {
+        Unit unit = args as Unit;
+        if (unit) {
             Highlight(unit);
             return;
         }
@@ -30,6 +30,7 @@ public class UnitAvailableManager : Controller
             Highlight(availableUnit);
         }
     }
+
 
     private void Clear() {
         foreach (var highlight in highlightInUse) {

@@ -23,19 +23,12 @@ public class AreaHighlightManager : Controller
         ClearAll();
 
         Unit unit = args as Unit;
-        if (unit == null) {
-            return;
+        if (unit) {
+            HighlightAttackArea(unit);
+            HighlightMoveArea(unit);
         }
-
-        AbilityTarget aTarget = unit.GetComponentInChildren<AbilityTarget>();
-        foreach (Tile abilityTile in owner.rangeManager.AbilityRangeAndOrigin.Keys) {
-            float intensity = aTarget.IsTarget(abilityTile) ? highIntensity : lowIntensity;
-            HighlightTile(abilityTile, SetColorIntensity(attackColor, intensity));
-        }
-
-        HighlightTiles(owner.rangeManager.MoveRange, SetColorIntensity(moveColor, highIntensity));
-        HighlightTile(unit.Tile, SetColorIntensity(moveColor, lowIntensity));
     }
+
 
     private void ClearAll() {
         foreach (var tile in usedHighlights) {
@@ -45,20 +38,32 @@ public class AreaHighlightManager : Controller
         usedHighlights.Clear();
     }
 
+    private void HighlightAttackArea(Unit unit) {
+        AbilityTarget aTarget = unit.GetComponentInChildren<AbilityTarget>();
 
-    private void HighlightTile(Tile tile, Color color) {
-        tile.Paint(color);
-        usedHighlights.Add(tile);
-    }
+        foreach (Tile abilityTile in owner.rangeManager.AbilityRangeAndOrigin.Keys) {
+            float intensity = aTarget.IsTarget(abilityTile) ? highIntensity : lowIntensity;
 
-    private void HighlightTiles(List<Tile> tiles, Color color) {
-        foreach (Tile tile in tiles) {
-            HighlightTile(tile, color);
+            HighlightTile(abilityTile, SetColorIntensity(attackColor, intensity));
         }
     }
+
+    private void HighlightMoveArea(Unit unit) {
+        foreach (Tile tile in owner.rangeManager.MoveRange) {
+            HighlightTile(tile, SetColorIntensity(moveColor, highIntensity));
+        }
+
+        HighlightTile(unit.Tile, SetColorIntensity(moveColor, lowIntensity));
+    }
+
 
     private Color SetColorIntensity(Color color, float intensity) {
         color.a = intensity;
         return color;
+    }
+
+    private void HighlightTile(Tile tile, Color color) {
+        tile.Paint(color);
+        usedHighlights.Add(tile);
     }
 }

@@ -1,5 +1,12 @@
 ﻿public class SelectActionState : BattleState
 {
+    public override void Enter() {
+        base.Enter();
+
+        SelectionManager.SelectMovement(null);
+        SelectionManager.SelectTarget(null);
+    }
+
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         Unit actor = RoundController.Current;
@@ -11,35 +18,42 @@
             return;
         }
 
-        bool inMoveRange = RangeManager.MoveRange.Contains(tile);
-        bool inAbilityRange = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
+        bool isMoveTile = RangeManager.MoveRange.Contains(tile);
+        bool isAbilityTile = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
 
-        // Undo selection if back to start or out of range
-        if (tile == actor.turn.startTile || (!inMoveRange && !inAbilityRange)) {
-            SelectionManager.SelectMovement(actor.turn.startTile);
-            owner.ChangeState<MoveSequenceState>();
+        // Restart turn if back to start or out of range
+        if (tile == actor.turn.startTile || (!isMoveTile && !isAbilityTile)) {
+            owner.ChangeState<RestartUnitState>();
             return;
         }
 
         // Just move to empty tile
-        if (inMoveRange) {
+        if (isMoveTile) {
             SelectionManager.SelectMovement(tile);
             owner.ChangeState<MoveSequenceState>();
             return;
         }
 
-        SelectionManager.SelectTarget(tile);
-
-        // If not in range, move to one of origins
-        if (!RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
-            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
-            SelectionManager.SelectMovement(attackOrigins[0]);
-
-            owner.ChangeState<MoveSequenceState>();
+        // If empty ability tile, return
+        if (tile.content == null) {
             return;
         }
 
+        // If in range, attack
+        if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
+            SelectionManager.SelectTarget(tile);
+            owner.ChangeState<PerformAbilityState>();
+            return;
+        }
 
-        owner.ChangeState<PerformAbilityState>();
+        // If not in range to target, move to one of origins
+        if (tile.content != null) {
+            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
+            SelectionManager.SelectMovement(attackOrigins[0]);
+
+            SelectionManager.SelectTarget(tile);
+            owner.ChangeState<MoveSequenceState>();
+            return;
+        }
     }
 }
