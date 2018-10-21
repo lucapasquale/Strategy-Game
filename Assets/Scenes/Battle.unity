@@ -988,10 +988,10 @@ MonoBehaviour:
   enemyPrefab: {fileID: 1032756836116248, guid: 6e4371d2fda8ae94a80374fd68450126,
     type: 3}
   roundController: {fileID: 1167799419}
-  rangeController: {fileID: 1409164814}
-  partyManager: {fileID: 1167799422}
+  partyController: {fileID: 1167799422}
   areaHighlightManager: {fileID: 1409164811}
   selectionManager: {fileID: 1409164812}
+  rangeManager: {fileID: 1409164814}
 --- !u!4 &1495133630
 Transform:
   m_ObjectHideFlags: 0
