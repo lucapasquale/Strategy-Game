@@ -5,7 +5,7 @@ public class Turn
     public bool hasUnitMoved;
     public GameObject ability;
 
-    private readonly Tile startTile;
+    public readonly Tile startTile;
     private Unit actor;
 
     public Turn(Unit current) {

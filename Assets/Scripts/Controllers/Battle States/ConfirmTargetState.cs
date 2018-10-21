@@ -1,4 +1,4 @@
-﻿public class SelectActionState : BattleState
+﻿public class ConfirmTargetState : BattleState
 {
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
@@ -20,9 +20,17 @@
             return;
         }
 
-        // Just move to empty tile
+        // If another origin of attack tile, move there
+        if (RangeManager.AbilityRangeAndOrigin[SelectionManager.TargetTile].Contains(tile)) {
+            SelectionManager.SelectMovement(tile);
+            owner.ChangeState<PerformMovement>();
+            return;
+        }
+
+        // Cancel attack and move
         if (isMoveTile) {
             SelectionManager.SelectMovement(tile);
+            SelectionManager.SelectTarget(null);
             owner.ChangeState<PerformMovement>();
             return;
         }
@@ -34,19 +42,7 @@
 
         // If in range, attack
         if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
-            SelectionManager.SelectTarget(tile);
-            //owner.ChangeState<ConfirmTargetState>();
             owner.ChangeState<PerformAbilityState>();
-            return;
-        }
-
-        // If not in range to target, move to one of origins
-        if (tile.content != null) {
-            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
-            SelectionManager.SelectMovement(attackOrigins[0]);
-
-            SelectionManager.SelectTarget(tile);
-            owner.ChangeState<PerformMovement>();
             return;
         }
     }

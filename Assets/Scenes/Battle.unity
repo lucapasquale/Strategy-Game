@@ -898,9 +898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe342f5695ba0147b06478d35b25e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveColor: {r: 0, g: 0, b: 1, a: 0.5019608}
-  attackColor: {r: 1, g: 0, b: 0, a: 0.2509804}
-  targetColor: {r: 1, g: 0, b: 0, a: 0.5019608}
+  moveColor: {r: 0, g: 0, b: 1, a: 1}
+  attackColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &1409164812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,9 +988,8 @@ MonoBehaviour:
     type: 3}
   roundController: {fileID: 1167799419}
   partyController: {fileID: 1167799422}
-  areaHighlightManager: {fileID: 1409164811}
-  selectionManager: {fileID: 1409164812}
   rangeManager: {fileID: 1409164814}
+  selectionManager: {fileID: 1409164812}
 --- !u!4 &1495133630
 Transform:
   m_ObjectHideFlags: 0

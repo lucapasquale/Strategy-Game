@@ -7,7 +7,7 @@ public abstract class Movement : MonoBehaviour
     public int range;
     protected Unit unit;
 
-    public abstract IEnumerator Traverse(Tile tile);
+    public abstract IEnumerator Traverse(Tile tile, float duration = 0.2f);
 
     public virtual List<Tile> GetTilesInRange(Board board) {
         List<Tile> retValue = board.Search(unit.Tile, ExpandSearch);
