@@ -1,43 +1,45 @@
 ﻿public class SelectActionState : BattleState
 {
-    public override void Enter() {
-        base.Enter();
-        AreaHighlightManager.Match();
-    }
-
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         Unit actor = RoundController.Current;
 
-        // Skip turn
+        // End turn if select itself
         if (tile == actor.Tile) {
             RoundController.EndTurn();
             owner.ChangeState<SelectUnitState>();
             return;
         }
 
-        // Undo selection if out of range
-        if (!RangeManager.MoveRange.Contains(tile) && !RangeManager.AbilityRangeAndOrigin.ContainsKey(tile)) {
-            owner.ChangeState<SelectUnitState>();
+        bool inMoveRange = RangeManager.MoveRange.Contains(tile);
+        bool inAbilityRange = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
+
+        // Undo selection if back to start or out of range
+        if (tile == actor.turn.startTile || (!inMoveRange && !inAbilityRange)) {
+            SelectionManager.SelectMovement(actor.turn.startTile);
+            owner.ChangeState<MoveSequenceState>();
             return;
         }
 
-        // Just move
-        if (RangeManager.MoveRange.Contains(tile)) {
+        // Just move to empty tile
+        if (inMoveRange) {
             SelectionManager.SelectMovement(tile);
             owner.ChangeState<MoveSequenceState>();
             return;
         }
 
-        // Move to position and act
-        Unit target = tile.content.GetComponent<Unit>();
-        if (target.alliance == actor.alliance.GetOpposing()) {
-            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
+        SelectionManager.SelectTarget(tile);
 
+        // If not in range, move to one of origins
+        if (!RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
+            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
             SelectionManager.SelectMovement(attackOrigins[0]);
-            SelectionManager.SelectTarget(tile);
 
             owner.ChangeState<MoveSequenceState>();
+            return;
         }
+
+
+        owner.ChangeState<PerformAbilityState>();
     }
 }

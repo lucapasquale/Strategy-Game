@@ -12,9 +12,8 @@ public class BattleController : StateMachine
     public RoundController roundController;
     public PartyController partyController;
 
-    public AreaHighlightManager areaHighlightManager;
-    public SelectionManager selectionManager;
     public RangeManager rangeManager;
+    public SelectionManager selectionManager;
 
     private void Start() {
         ChangeState<InitBattleState>();

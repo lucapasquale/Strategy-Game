@@ -1,12 +1,5 @@
 ﻿public class AbilityTargetState : BattleState
 {
-    public override void Enter() {
-        base.Enter();
-
-        RangeManager.GetRanges(owner.roundController.Current);
-        AreaHighlightManager.Match();
-    }
-
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         if (tile.content == null) {
