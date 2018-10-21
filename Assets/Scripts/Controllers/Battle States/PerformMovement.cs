@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-public class MoveSequenceState : BattleState
+public class PerformMovement : BattleState
 {
     public override void Enter() {
         base.Enter();
@@ -15,7 +15,7 @@ public class MoveSequenceState : BattleState
 
         // If action was already selected, do action
         if (SelectionManager.TargetTile) {
-            owner.ChangeState<PerformAbilityState>();
+            owner.ChangeState<ConfirmTargetState>();
             yield break;
         }
 

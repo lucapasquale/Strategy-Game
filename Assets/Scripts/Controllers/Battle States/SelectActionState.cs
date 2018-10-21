@@ -1,12 +1,5 @@
 ﻿public class SelectActionState : BattleState
 {
-    public override void Enter() {
-        base.Enter();
-
-        SelectionManager.SelectMovement(null);
-        SelectionManager.SelectTarget(null);
-    }
-
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
         Unit actor = RoundController.Current;
@@ -30,19 +23,19 @@
         // Just move to empty tile
         if (isMoveTile) {
             SelectionManager.SelectMovement(tile);
-            owner.ChangeState<MoveSequenceState>();
+            owner.ChangeState<PerformMovement>();
             return;
         }
 
-        // If empty ability tile, return
-        if (tile.content == null) {
+        // If not a target, return
+        if (actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
             return;
         }
 
         // If in range, attack
         if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
             SelectionManager.SelectTarget(tile);
-            owner.ChangeState<PerformAbilityState>();
+            owner.ChangeState<ConfirmTargetState>();
             return;
         }
 
@@ -52,7 +45,7 @@
             SelectionManager.SelectMovement(attackOrigins[0]);
 
             SelectionManager.SelectTarget(tile);
-            owner.ChangeState<MoveSequenceState>();
+            owner.ChangeState<PerformMovement>();
             return;
         }
     }

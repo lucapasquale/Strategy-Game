@@ -1,4 +1,4 @@
-﻿public class AbilityTargetState : BattleState
+﻿public class SelectTargetState : BattleState
 {
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
         Tile tile = Board.GetTile(e.info);
