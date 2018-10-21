@@ -11,17 +11,39 @@
             return;
         }
 
-        // Restart turn if selected is start or empty
-        if (tile == actor.turn.startTile || tile.content == null) {
+        bool isMoveTile = RangeManager.MoveRange.Contains(tile);
+        bool isAbilityTile = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
+
+        // Restart turn if back to start or out of range
+        if (tile == actor.turn.startTile || (!isMoveTile && !isAbilityTile)) {
             owner.ChangeState<RestartUnitState>();
             return;
         }
 
-        // If not a target, return
-        if (actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+        // If another origin of attack tile, move there
+        if (RangeManager.AbilityRangeAndOrigin[SelectionManager.TargetTile].Contains(tile)) {
+            SelectionManager.SelectMovement(tile);
+            owner.ChangeState<PerformMovement>();
             return;
         }
 
-        owner.ChangeState<PerformAbilityState>();
+        // Cancel attack and move
+        if (isMoveTile) {
+            SelectionManager.SelectMovement(tile);
+            SelectionManager.SelectTarget(null);
+            owner.ChangeState<PerformMovement>();
+            return;
+        }
+
+        // If not a target, return
+        if (!actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+            return;
+        }
+
+        // If in range, attack
+        if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
+            owner.ChangeState<PerformAbilityState>();
+            return;
+        }
     }
 }

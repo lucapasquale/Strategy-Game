@@ -28,14 +28,15 @@
         }
 
         // If not a target, return
-        if (actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+        if (!actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
             return;
         }
 
         // If in range, attack
         if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
             SelectionManager.SelectTarget(tile);
-            owner.ChangeState<ConfirmTargetState>();
+            //owner.ChangeState<ConfirmTargetState>();
+            owner.ChangeState<PerformAbilityState>();
             return;
         }
 
