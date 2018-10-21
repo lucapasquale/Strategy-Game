@@ -2,9 +2,8 @@
 {
     public override void Enter() {
         base.Enter();
-        RoundController.Select(null);
 
-        RangeController.UpdateSelections();
+        RoundController.Select(null);
         AreaHighlightManager.Clear();
     }
 
@@ -15,8 +14,10 @@
         }
 
         Unit unit = tile.content.GetComponent<Unit>();
-        if (unit && unit.turn.IsAvailable() && RoundController.actingSide == unit.alliance) {
+        if (unit && unit.turn.IsAvailable() && RoundController.RoundSide == unit.alliance) {
+            RangeManager.GetRanges(unit);
             RoundController.Select(unit);
+
             owner.ChangeState<SelectActionState>();
         }
     }

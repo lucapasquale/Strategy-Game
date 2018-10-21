@@ -22,11 +22,10 @@ public class InitBattleState : BattleState
             }
         }
         levelData.tiles = tilesPostitions;
-
         Board.Load(levelData);
 
         SpawnTestUnits();
-        owner.roundController.StartGame();
+        RoundController.StartGame();
 
         yield return null;
         owner.ChangeState<SelectUnitState>();
@@ -34,7 +33,7 @@ public class InitBattleState : BattleState
 
     private void SpawnTestUnits() {
         for (int i = 0; i < 2; ++i) {
-            GameObject instance = Instantiate(owner.heroPrefab, RoundController.transform) as GameObject;
+            GameObject instance = Instantiate(owner.heroPrefab, PartyController.transform) as GameObject;
             Point p = new Point(2, i * 3);
 
             Unit unit = instance.GetComponent<Unit>();
@@ -48,7 +47,7 @@ public class InitBattleState : BattleState
         }
 
         for (int i = 0; i < 1; ++i) {
-            GameObject instance = Instantiate(owner.enemyPrefab, RoundController.transform) as GameObject;
+            GameObject instance = Instantiate(owner.enemyPrefab, PartyController.transform) as GameObject;
             Point p = new Point(4, 4);
 
             Unit unit = instance.GetComponent<Unit>();

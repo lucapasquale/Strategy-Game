@@ -9,7 +9,7 @@ public class RoundController : Controller
 
 
     public Unit Current { get; private set; }
-    public Alliances actingSide = Alliances.Ally;
+    public Alliances RoundSide { get; private set; } = Alliances.Ally;
 
     private List<Unit> currentUnits = new List<Unit>();
 
@@ -24,37 +24,31 @@ public class RoundController : Controller
     }
 
     public void EndTurn() {
-        Current.Paint(new Color(0.5f, 0.5f, 0.5f));
-        Current.turn.End();
-
         Unit lastUnit = Current;
+        lastUnit.Paint(new Color(0.5f, 0.5f, 0.5f));
+        lastUnit.turn.End();
 
         Select(null);
         this.PostNotification(TurnEndedNotification, lastUnit);
 
-        if (GetAvailableUnits().Count == 0) {
-            StartRound(actingSide.GetOpposing());
+        if (owner.partyController.GetAvailableUnits().Count == 0) {
+            StartRound(RoundSide.GetOpposing());
         }
     }
 
 
-    public void StartRound(Alliances side) {
+    private void StartRound(Alliances side) {
         foreach (var unit in currentUnits) {
             unit.Paint(Color.white);
         }
 
-        actingSide = side;
-        currentUnits = owner.partyManager.GetUnits(actingSide).FindAll(u => u.isAlive);
-
-        print($"Starting round for side {side}");
+        RoundSide = side;
         this.PostNotification(RoundStartedNotification, side);
+        print($"Starting round for side {side}");
 
+        currentUnits = owner.partyController.GetUnits(RoundSide).FindAll(u => u.isAlive);
         foreach (var unit in currentUnits) {
             unit.turn = new Turn(unit);
         }
-    }
-
-    private List<Unit> GetAvailableUnits() {
-        return currentUnits.FindAll(u => u.turn.IsAvailable());
     }
 }

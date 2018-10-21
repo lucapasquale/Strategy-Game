@@ -30,7 +30,7 @@ public class VictoryCondition : MonoBehaviour
     }
 
     protected virtual bool PartyAlive(Alliances type) {
-        var availableUnits = bc.partyManager.GetUnits(type);
+        var availableUnits = bc.partyController.GetUnits(type);
         return availableUnits.Exists(u => u.isAlive);
     }
 }

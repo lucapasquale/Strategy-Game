@@ -11,9 +11,11 @@ public abstract class BattleState : State
     public CameraRig CameraRig { get { return owner.cameraRig; } }
 
     public RoundController RoundController { get { return owner.roundController; } }
-    public RangeController RangeController { get { return owner.rangeController; } }
+    public PartyController PartyController {  get { return owner.partyController; } }
 
+    public SelectionManager SelectionManager {  get { return owner.selectionManager; } }
     public AreaHighlightManager AreaHighlightManager { get { return owner.areaHighlightManager; } }
+    public RangeManager RangeManager { get { return owner.rangeManager; } }
 
 
     protected virtual void Awake() {

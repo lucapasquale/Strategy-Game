@@ -7,6 +7,8 @@ public class AreaHighlightManager : Controller
     public Color attackColor;
     public Color targetColor;
 
+    private List<Tile> highlights = new List<Tile>();
+
 
     public void Match() {
         Unit actor = owner.roundController.Current;
@@ -15,7 +17,7 @@ public class AreaHighlightManager : Controller
         var attackTiles = new List<Tile>();
         var targetTiles = new List<Tile>();
 
-        foreach (Tile actionTile in owner.rangeController.ActOriginTiles.Keys) {
+        foreach (Tile actionTile in owner.rangeManager.AbilityRangeAndOrigin.Keys) {
             attackTiles.Add(actionTile);
 
             if (abilityTarget.IsTarget(actionTile)) {
@@ -27,14 +29,12 @@ public class AreaHighlightManager : Controller
         SelectTiles(targetTiles, targetColor);
 
         if (!actor.turn.hasUnitMoved) {
-            SelectTiles(owner.rangeController.MoveTiles, moveColor);
+            SelectTiles(owner.rangeManager.MoveRange, moveColor);
         }
     }
 
     public void Clear() {
-        var allTiles = owner.board.tiles;
-
-        foreach (Tile t in allTiles.Values) {
+        foreach (Tile t in highlights) {
             t.Paint(Color.clear);
         }
     }
@@ -43,6 +43,7 @@ public class AreaHighlightManager : Controller
     private void SelectTiles(List<Tile> tiles, Color color) {
         for (int i = tiles.Count - 1; i >= 0; --i) {
             tiles[i].Paint(color);
+            highlights.Add(tiles[i]);
         }
     }
 }

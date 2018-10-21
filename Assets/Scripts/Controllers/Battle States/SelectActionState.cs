@@ -2,14 +2,7 @@
 {
     public override void Enter() {
         base.Enter();
-
-        RangeController.UpdateSelections();
         AreaHighlightManager.Match();
-    }
-
-    public override void Exit() {
-        base.Exit();
-        AreaHighlightManager.Clear();
     }
 
     protected override void OnTouch(object sender, InfoEventArgs<Point> e) {
@@ -18,32 +11,31 @@
 
         // Skip turn
         if (tile == actor.Tile) {
-            actor.turn.hasUnitMoved = true;
             RoundController.EndTurn();
             owner.ChangeState<SelectUnitState>();
             return;
         }
 
-        // Just move
-        if (RangeController.MoveTiles.Contains(tile)) {
-            RangeController.SelectMove(tile);
-            owner.ChangeState<MoveSequenceState>();
+        // Undo selection if out of range
+        if (!RangeManager.MoveRange.Contains(tile) && !RangeManager.AbilityRangeAndOrigin.ContainsKey(tile)) {
+            owner.ChangeState<SelectUnitState>();
             return;
         }
 
-        // Undo Selection
-        if (!tile.content || !RangeController.ActOriginTiles.ContainsKey(tile)) {
-            owner.ChangeState<SelectUnitState>();
+        // Just move
+        if (RangeManager.MoveRange.Contains(tile)) {
+            SelectionManager.SelectMovement(tile);
+            owner.ChangeState<MoveSequenceState>();
             return;
         }
 
         // Move to position and act
         Unit target = tile.content.GetComponent<Unit>();
         if (target.alliance == actor.alliance.GetOpposing()) {
-            var attackOrigins = RangeController.ActOriginTiles[tile];
+            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
 
-            RangeController.SelectMove(attackOrigins[0]);
-            RangeController.SelectAct(tile);
+            SelectionManager.SelectMovement(attackOrigins[0]);
+            SelectionManager.SelectTarget(tile);
 
             owner.ChangeState<MoveSequenceState>();
         }

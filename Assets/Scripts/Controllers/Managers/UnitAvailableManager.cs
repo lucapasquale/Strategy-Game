@@ -25,7 +25,10 @@ public class UnitAvailableManager : Controller
             return;
         }
 
-        HighlightAvailable();
+        var availableUnits = owner.partyController.GetAvailableUnits();
+        foreach (var availableUnit in availableUnits) {
+            Highlight(availableUnit);
+        }
     }
 
     private void Clear() {
@@ -39,16 +42,5 @@ public class UnitAvailableManager : Controller
     private void Highlight(Unit unit) {
         var instance = Instantiate(highlightTilePrefab, unit.transform);
         highlightInUse.Add(instance);
-    }
-
-    private void HighlightAvailable() {
-        Alliances currentSide = owner.roundController.actingSide;
-        var roundUnits = owner.partyManager.GetUnits(currentSide);
-
-        foreach (var unit in roundUnits) {
-            if (unit.turn.IsAvailable()) {
-                Highlight(unit);
-            }
-        }
     }
 }
