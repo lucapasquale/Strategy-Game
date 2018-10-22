@@ -35,7 +35,6 @@
         // If in range, attack
         if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
             SelectionManager.SelectTarget(tile);
-            //owner.ChangeState<ConfirmTargetState>();
             owner.ChangeState<PerformAbilityState>();
             return;
         }

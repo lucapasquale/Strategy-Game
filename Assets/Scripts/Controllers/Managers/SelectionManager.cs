@@ -4,6 +4,9 @@ using System.Collections;
 
 public class SelectionManager : Controller
 {
+    public const string TargetSelectedNotification = "SelectionManager.TargetSelectedNotification";
+
+
     public Tile MovementTile { get; private set; }
     public Tile TargetTile { get; private set; }
 
@@ -14,6 +17,7 @@ public class SelectionManager : Controller
 
     public void SelectTarget(Tile tile) {
         TargetTile = tile;
+        this.PostNotification(TargetSelectedNotification, tile);
     }
 
 
