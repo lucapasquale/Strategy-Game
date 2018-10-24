@@ -42,7 +42,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            unit.turn = new Turn(unit);
+            //unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
 
@@ -56,7 +56,7 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            unit.turn = new Turn(unit);
+            //unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
     }

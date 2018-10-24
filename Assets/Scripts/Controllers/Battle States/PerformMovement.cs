@@ -8,13 +8,13 @@ public class PerformMovement : BattleState
     }
 
     private IEnumerator Sequence() {
-        Unit unit = RoundController.Current;
+        Unit actor = RoundController.Current;
 
-        Movement mov = unit.GetComponent<Movement>();
-        yield return StartCoroutine(mov.Traverse(SelectionManager.MovementTile));
+        Movement mov = actor.GetComponentInChildren<Movement>();
+        yield return StartCoroutine(mov.Traverse(actor.turn.MovementTile));
 
         // If action was already selected, do action
-        if (SelectionManager.TargetTile) {
+        if (actor.turn.TargetTile) {
             owner.ChangeState<ConfirmTargetState>();
             yield break;
         }

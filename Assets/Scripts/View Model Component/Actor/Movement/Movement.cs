@@ -16,7 +16,7 @@ public abstract class Movement : MonoBehaviour
     }
 
     protected virtual void Awake() {
-        unit = GetComponent<Unit>();
+        unit = GetComponentInParent<Unit>();
     }
 
     protected virtual bool ExpandSearch(Tile from, Tile to) {

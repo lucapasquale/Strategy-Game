@@ -26,7 +26,7 @@ public class TurnUI : MonoBehaviour
         }
 
         textsPanel.SetActive(true);
-        Stats stats = unit.GetComponent<Stats>();
+        Stats stats = unit.GetComponentInChildren<Stats>();
 
         nicknameLabel.text = unit.nickname;
         hpLabel.text = $"HP: {stats[StatTypes.HP]} / {stats[StatTypes.MHP]}";

@@ -13,7 +13,6 @@ public class BattleController : StateMachine
     public PartyController partyController;
 
     public RangeManager rangeManager;
-    public SelectionManager selectionManager;
 
     private void Start() {
         ChangeState<InitBattleState>();
