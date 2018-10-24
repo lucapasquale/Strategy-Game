@@ -48,7 +48,7 @@ public class RoundController : Controller
 
         currentUnits = owner.partyController.GetUnits(RoundSide).FindAll(u => u.isAlive);
         foreach (var unit in currentUnits) {
-            unit.turn = new Turn(unit);
+            unit.turn.Start();
         }
     }
 }

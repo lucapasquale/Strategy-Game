@@ -17,7 +17,7 @@ public class RangeManager : Controller
             return new List<Tile>() { unit.Tile };
         }
 
-        Movement mover = unit.GetComponent<Movement>();
+        Movement mover = unit.GetComponentInChildren<Movement>();
         return mover.GetTilesInRange(owner.board);
     }
 

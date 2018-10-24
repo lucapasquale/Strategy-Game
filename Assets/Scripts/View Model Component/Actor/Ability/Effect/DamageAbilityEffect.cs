@@ -12,12 +12,12 @@ public class DamageAbilityEffect : AbilityEffect
 
         // Get the attackers base attack stat considering
         // mission items, support check, status check, and equipment, etc
-        int attack = attacker.GetComponentInParent<Stats>()[StatTypes.ATK];
+        int attack = attacker.GetComponentInChildren<Stats>()[StatTypes.ATK];
         attack = GetStat(attacker, defender, GetAttackNotification, attack);
 
         // Get the targets base defense stat considering
         // mission items, support check, status check, and equipment, etc
-        int defense = defender.GetComponentInParent<Stats>()[StatTypes.DEF];
+        int defense = defender.GetComponentInChildren<Stats>()[StatTypes.DEF];
         defense = GetStat(attacker, defender, GetDefenseNotification, defense);
 
         // Calculate base damage
@@ -33,7 +33,7 @@ public class DamageAbilityEffect : AbilityEffect
 
     protected override int OnApply(Tile target) {
         Unit defender = target.content.GetComponent<Unit>();
-        Stats s = defender.GetComponent<Stats>();
+        Stats s = defender.GetComponentInChildren<Stats>();
 
         int value = Predict(target);
         s[StatTypes.HP] += value;

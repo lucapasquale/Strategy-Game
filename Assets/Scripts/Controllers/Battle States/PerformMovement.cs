@@ -10,7 +10,7 @@ public class PerformMovement : BattleState
     private IEnumerator Sequence() {
         Unit unit = RoundController.Current;
 
-        Movement mov = unit.GetComponent<Movement>();
+        Movement mov = unit.GetComponentInChildren<Movement>();
         yield return StartCoroutine(mov.Traverse(SelectionManager.MovementTile));
 
         // If action was already selected, do action

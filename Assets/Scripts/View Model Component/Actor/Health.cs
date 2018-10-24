@@ -40,7 +40,7 @@ public class Health : MonoBehaviour
     }
 
     private void OnHPDidChange(object sender, object args) {
-        var unit = stats.GetComponent<Unit>();
+        var unit = stats.GetComponentInParent<Unit>();
 
         if (HP == 0) {
             unit.Disable();

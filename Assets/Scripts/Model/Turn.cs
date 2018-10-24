@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 
-public class Turn
+public class Turn : MonoBehaviour
 {
     public bool hasUnitMoved;
-    public GameObject ability;
+    public Tile startTile;
 
-    public readonly Tile startTile;
     private Unit actor;
 
-    public Turn(Unit current) {
-        actor = current;
+
+    private void Awake() {
+        actor = GetComponentInParent<Unit>();
+    }
+
+    public void Start() {
         hasUnitMoved = false;
         startTile = actor.Tile;
     }

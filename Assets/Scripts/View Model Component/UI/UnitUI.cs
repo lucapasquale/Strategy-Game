@@ -12,7 +12,7 @@ public class UnitUI : MonoBehaviour
 
     private void Awake() {
         owner = GetComponentInParent<Unit>();
-        health = owner.GetComponent<Health>();
+        health = owner.GetComponentInChildren<Health>();
         maxWidth = healthBar.rectTransform.sizeDelta.x;
 
         Match();
