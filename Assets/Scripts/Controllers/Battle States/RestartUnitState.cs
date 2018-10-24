@@ -8,10 +8,10 @@ public class RestartUnitState : BattleState
     }
 
     private IEnumerator Sequence() {
-        Unit unit = RoundController.Current;
+        Unit actor = RoundController.Current;
 
-        Movement mov = unit.GetComponent<Movement>();
-        yield return StartCoroutine(mov.Traverse(unit.turn.startTile, 0.15f));
+        Movement mov = actor.GetComponentInChildren<Movement>();
+        yield return StartCoroutine(mov.Traverse(actor.turn.StartTile, 0.15f));
 
         owner.ChangeState<SelectUnitState>();
     }

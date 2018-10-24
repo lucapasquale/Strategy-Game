@@ -21,7 +21,7 @@
 
         // do action on target
         if (target.alliance == actor.alliance.GetOpposing()) {
-            SelectionManager.SelectTarget(tile);
+            actor.turn.SelectTarget(tile);
             owner.ChangeState<PerformAbilityState>();
         }
     }

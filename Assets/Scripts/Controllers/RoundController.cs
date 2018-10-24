@@ -26,7 +26,7 @@ public class RoundController : Controller
     public void EndTurn() {
         Unit lastUnit = Current;
         lastUnit.Paint(new Color(0.5f, 0.5f, 0.5f));
-        lastUnit.turn.End();
+        lastUnit.turn.EndTurn();
 
         Select(null);
         this.PostNotification(TurnEndedNotification, lastUnit);
@@ -48,7 +48,7 @@ public class RoundController : Controller
 
         currentUnits = owner.partyController.GetUnits(RoundSide).FindAll(u => u.isAlive);
         foreach (var unit in currentUnits) {
-            unit.turn.Start();
+            unit.turn.StartTurn();
         }
     }
 }

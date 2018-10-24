@@ -15,14 +15,14 @@
         bool isAbilityTile = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
 
         // Restart turn if back to start or out of range
-        if (tile == actor.turn.startTile || (!isMoveTile && !isAbilityTile)) {
+        if (tile == actor.turn.StartTile || (!isMoveTile && !isAbilityTile)) {
             owner.ChangeState<RestartUnitState>();
             return;
         }
 
         // Just move to empty tile
         if (isMoveTile) {
-            SelectionManager.SelectMovement(tile);
+            actor.turn.SelectMovement(tile);
             owner.ChangeState<PerformMovement>();
             return;
         }
@@ -34,7 +34,7 @@
 
         // If in range, attack
         if (RangeManager.AbilityRangeAndOrigin[tile].Contains(actor.Tile)) {
-            SelectionManager.SelectTarget(tile);
+            actor.turn.SelectTarget(tile);
             owner.ChangeState<PerformAbilityState>();
             return;
         }
@@ -42,9 +42,9 @@
         // If not in range to target, move to one of origins
         if (tile.content != null) {
             var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
-            SelectionManager.SelectMovement(attackOrigins[0]);
+            actor.turn.SelectMovement(attackOrigins[0]);
 
-            SelectionManager.SelectTarget(tile);
+            actor.turn.SelectTarget(tile);
             owner.ChangeState<PerformMovement>();
             return;
         }

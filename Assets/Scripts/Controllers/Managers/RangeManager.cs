@@ -13,10 +13,6 @@ public class RangeManager : Controller
 
 
     private List<Tile> GetMovementRange(Unit unit) {
-        if (unit.turn.hasUnitMoved) {
-            return new List<Tile>() { unit.Tile };
-        }
-
         Movement mover = unit.GetComponentInChildren<Movement>();
         return mover.GetTilesInRange(owner.board);
     }

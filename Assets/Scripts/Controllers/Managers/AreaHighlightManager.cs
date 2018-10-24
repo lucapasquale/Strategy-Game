@@ -13,12 +13,12 @@ public class AreaHighlightManager : Controller
 
     private void OnEnable() {
         this.AddObserver(UnitSelected, RoundController.SelectedNotification);
-        this.AddObserver(TargetSelected, SelectionManager.TargetSelectedNotification);
+        this.AddObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void OnDisable() {
         this.RemoveObserver(UnitSelected, RoundController.SelectedNotification);
-        this.RemoveObserver(TargetSelected, SelectionManager.TargetSelectedNotification);
+        this.RemoveObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void UnitSelected(object sender, object args) {
@@ -58,7 +58,7 @@ public class AreaHighlightManager : Controller
     }
 
     private void HighlightMoveArea(Unit unit) {
-        Tile targetTile = owner.selectionManager.TargetTile;
+        Tile targetTile = unit.turn.TargetTile;
         float intensity = targetTile == null ? highIntensity : lowIntensity;
 
         foreach (Tile tile in owner.rangeManager.MoveRange) {
@@ -71,7 +71,7 @@ public class AreaHighlightManager : Controller
             }
         }
 
-        HighlightTile(unit.turn.startTile, SetColorIntensity(moveColor, lowIntensity));
+        HighlightTile(unit.turn.StartTile, SetColorIntensity(moveColor, lowIntensity));
     }
 
 

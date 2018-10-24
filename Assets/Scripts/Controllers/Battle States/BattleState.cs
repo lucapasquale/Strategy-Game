@@ -14,7 +14,6 @@ public abstract class BattleState : State
     public PartyController PartyController {  get { return owner.partyController; } }
 
     public RangeManager RangeManager { get { return owner.rangeManager; } }
-    public SelectionManager SelectionManager {  get { return owner.selectionManager; } }
 
 
     protected virtual void Awake() {
