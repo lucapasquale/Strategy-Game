@@ -659,7 +659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2374893028557184246}
   m_Layer: 0
-  m_Name: Available Tile
+  m_Name: Highlight Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

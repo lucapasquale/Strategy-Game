@@ -6,14 +6,17 @@ public class UnitAvailableManager : Controller
     public GameObject highlightTilePrefab;
 
     private List<GameObject> highlightInUse = new List<GameObject>();
+    private GameObject targetHighlight;
 
 
     private void OnEnable() {
         this.AddObserver(UnitSelected, RoundController.SelectedNotification);
+        this.AddObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void OnDisable() {
         this.RemoveObserver(UnitSelected, RoundController.SelectedNotification);
+        this.RemoveObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void UnitSelected(object sender, object args) {
@@ -21,13 +24,28 @@ public class UnitAvailableManager : Controller
 
         Unit unit = args as Unit;
         if (unit) {
-            Highlight(unit);
+            HighlightUnit(unit);
             return;
         }
 
         var availableUnits = owner.partyController.GetAvailableUnits();
         foreach (var availableUnit in availableUnits) {
-            Highlight(availableUnit);
+            HighlightUnit(availableUnit);
+        }
+    }
+
+    private void TargetSelected(object sender, object args) {
+        Tile tile = args as Tile;
+        if (!tile || !tile.content) {
+            Destroy(targetHighlight);
+            targetHighlight = null;
+            return;
+        }
+
+        var unit = owner.roundController.Current;
+        if (unit.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+            var instance = Instantiate(highlightTilePrefab, tile.transform);
+            targetHighlight = instance;
         }
     }
 
@@ -40,7 +58,7 @@ public class UnitAvailableManager : Controller
         highlightInUse = new List<GameObject>();
     }
 
-    private void Highlight(Unit unit) {
+    private void HighlightUnit(Unit unit) {
         var instance = Instantiate(highlightTilePrefab, unit.transform);
         highlightInUse.Add(instance);
     }
