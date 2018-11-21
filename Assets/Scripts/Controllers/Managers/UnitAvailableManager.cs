@@ -5,7 +5,10 @@ public class UnitAvailableManager : Controller
 {
     public GameObject highlightTilePrefab;
 
-    private List<GameObject> highlightInUse = new List<GameObject>();
+    public Color allyColor;
+    public Color enemyColor;
+
+    private List<GameObject> teamHighlights = new List<GameObject>();
     private GameObject targetHighlight;
 
 
@@ -38,28 +41,31 @@ public class UnitAvailableManager : Controller
         Tile tile = args as Tile;
         if (!tile || !tile.content) {
             Destroy(targetHighlight);
-            targetHighlight = null;
             return;
         }
 
-        var unit = owner.roundController.Current;
-        if (unit.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
-            var instance = Instantiate(highlightTilePrefab, tile.transform);
-            targetHighlight = instance;
-        }
+        var instance = Instantiate(highlightTilePrefab, tile.transform);
+        instance.GetComponent<SpriteRenderer>().color = enemyColor;
+
+        targetHighlight = instance;
     }
 
 
     private void Clear() {
-        foreach (var highlight in highlightInUse) {
+        Destroy(targetHighlight);
+
+        foreach (var highlight in teamHighlights) {
             Destroy(highlight);
         }
 
-        highlightInUse = new List<GameObject>();
+        targetHighlight = null;
+        teamHighlights = new List<GameObject>();
     }
 
     private void HighlightUnit(Unit unit) {
         var instance = Instantiate(highlightTilePrefab, unit.transform);
-        highlightInUse.Add(instance);
+        instance.GetComponent<SpriteRenderer>().color = allyColor;
+        
+        teamHighlights.Add(instance);
     }
 }

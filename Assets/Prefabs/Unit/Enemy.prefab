@@ -84,8 +84,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1aac39eb73db94aa637a363879f658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasUnitMoved: 0
-  startTile: {fileID: 0}
 --- !u!1 &1345199057461770
 GameObject:
   m_ObjectHideFlags: 0
@@ -371,8 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 50
-  ATK: 500
-  DEF: 0
+  ATK: 10
+  DEF: 2
 --- !u!1001 &159013713234256658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -426,7 +424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1768041240923558, guid: aa3baf363a324954a936749eba2e5fa8, type: 3}
       propertyPath: m_Name
-      value: Unit UI
+      value: Unit Health
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa3baf363a324954a936749eba2e5fa8, type: 3}
