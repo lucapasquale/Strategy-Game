@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 4271865901395898}
   - component: {fileID: 114168955157845656}
   - component: {fileID: 114394840352229352}
+  - component: {fileID: 1466119353916855754}
   m_Layer: 0
   m_Name: Sword
   m_TagString: Untagged
@@ -115,7 +116,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  amount: 2
+  amount: 0
+--- !u!114 &1466119353916855754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1253694079780256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac628c03647afc34c9a5393260fc6c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3
+  intensity: 1
+  effect: 0
 --- !u!1 &1278961338309018
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,8 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf1aac39eb73db94aa637a363879f658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasUnitMoved: 0
-  startTile: {fileID: 0}
 --- !u!1 &1930660479992862
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 35
-  ATK: 10
+  ATK: 0
   DEF: 0
 --- !u!4 &1880014187174202045 stripped
 Transform:
