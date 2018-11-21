@@ -40,9 +40,7 @@ public class ApplyStatusFeature : Feature
                 appliedEffect = target.gameObject.AddComponent<PoisionStatusEffect>();
                 break;
         }
-
-        appliedEffect.duration = duration;
-        appliedEffect.intensity = intensity;
-        appliedEffect.Apply();
+        
+        appliedEffect.Apply(intensity, duration);
     }
 }
