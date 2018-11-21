@@ -51,9 +51,7 @@ public class AreaHighlightManager : Controller
         AbilityTarget aTarget = unit.GetComponentInChildren<AbilityTarget>();
 
         foreach (Tile abilityTile in owner.rangeManager.AbilityRangeAndOrigin.Keys) {
-            float intensity = aTarget.IsTarget(abilityTile) ? highIntensity : lowIntensity;
-
-            HighlightTile(abilityTile, SetColorIntensity(attackColor, intensity));
+            HighlightTile(abilityTile, SetColorIntensity(attackColor, lowIntensity));
         }
     }
 
@@ -65,13 +63,13 @@ public class AreaHighlightManager : Controller
             HighlightTile(tile, SetColorIntensity(moveColor, intensity));
         }
 
+        //HighlightTile(unit.turn.StartTile, SetColorIntensity(moveColor, lowIntensity));
+
         if (targetTile) {
             foreach (Tile tile in owner.rangeManager.AbilityRangeAndOrigin[targetTile]) {
                 HighlightTile(tile, SetColorIntensity(moveColor, highIntensity));
             }
         }
-
-        HighlightTile(unit.turn.StartTile, SetColorIntensity(moveColor, lowIntensity));
     }
 
 

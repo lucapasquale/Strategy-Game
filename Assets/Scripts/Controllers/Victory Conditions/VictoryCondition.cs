@@ -1,16 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class VictoryCondition : MonoBehaviour
+public class VictoryCondition : Controller
 {
     public Alliances Winner { get; protected set; }
 
-    private BattleController bc;
-
-
-    protected virtual void Awake() {
-        bc = GetComponentInParent<BattleController>();
-    }
 
     protected virtual void OnEnable() {
         this.AddObserver(CheckForGameOver, Health.UnitDiedNotification);
@@ -30,7 +24,7 @@ public class VictoryCondition : MonoBehaviour
     }
 
     protected virtual bool PartyAlive(Alliances type) {
-        var availableUnits = bc.partyController.GetUnits(type);
+        var availableUnits = owner.partyController.GetUnits(type);
         return availableUnits.Exists(u => u.isAlive);
     }
 }

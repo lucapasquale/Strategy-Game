@@ -5,6 +5,11 @@ public class RestartUnitState : BattleState
     public override void Enter() {
         base.Enter();
         StartCoroutine(Sequence());
+
+
+        Unit actor = RoundController.Current;
+        actor.turn.SelectMovement(null);
+        actor.turn.SelectTarget(null);
     }
 
     private IEnumerator Sequence() {

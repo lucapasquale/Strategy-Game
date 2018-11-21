@@ -5,15 +5,21 @@ public class UnitAvailableManager : Controller
 {
     public GameObject highlightTilePrefab;
 
-    private List<GameObject> highlightInUse = new List<GameObject>();
+    public Color allyColor;
+    public Color enemyColor;
+
+    private List<GameObject> teamHighlights = new List<GameObject>();
+    private GameObject targetHighlight;
 
 
     private void OnEnable() {
         this.AddObserver(UnitSelected, RoundController.SelectedNotification);
+        this.AddObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void OnDisable() {
         this.RemoveObserver(UnitSelected, RoundController.SelectedNotification);
+        this.RemoveObserver(TargetSelected, Turn.TargetSelectedNotification);
     }
 
     private void UnitSelected(object sender, object args) {
@@ -21,27 +27,45 @@ public class UnitAvailableManager : Controller
 
         Unit unit = args as Unit;
         if (unit) {
-            Highlight(unit);
+            HighlightUnit(unit);
             return;
         }
 
         var availableUnits = owner.partyController.GetAvailableUnits();
         foreach (var availableUnit in availableUnits) {
-            Highlight(availableUnit);
+            HighlightUnit(availableUnit);
         }
+    }
+
+    private void TargetSelected(object sender, object args) {
+        Tile tile = args as Tile;
+        if (!tile || !tile.content) {
+            Destroy(targetHighlight);
+            return;
+        }
+
+        var instance = Instantiate(highlightTilePrefab, tile.transform);
+        instance.GetComponent<SpriteRenderer>().color = enemyColor;
+
+        targetHighlight = instance;
     }
 
 
     private void Clear() {
-        foreach (var highlight in highlightInUse) {
+        Destroy(targetHighlight);
+
+        foreach (var highlight in teamHighlights) {
             Destroy(highlight);
         }
 
-        highlightInUse = new List<GameObject>();
+        targetHighlight = null;
+        teamHighlights = new List<GameObject>();
     }
 
-    private void Highlight(Unit unit) {
+    private void HighlightUnit(Unit unit) {
         var instance = Instantiate(highlightTilePrefab, unit.transform);
-        highlightInUse.Add(instance);
+        instance.GetComponent<SpriteRenderer>().color = allyColor;
+        
+        teamHighlights.Add(instance);
     }
 }

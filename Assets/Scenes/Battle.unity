@@ -239,6 +239,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 115277104}
+  - {fileID: 1327337087}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -852,6 +853,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196778639}
   m_CullTransparentMesh: 0
+--- !u!1 &1327337086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1327337087}
+  - component: {fileID: 1327337088}
+  m_Layer: 0
+  m_Name: Others
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1327337087
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327337086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 152536237}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1327337088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327337086}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a006719066340429e79e643b143243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1728654877584037926, guid: 6e5c6c2e727c81f4a9804a07ff60a233, type: 3}
 --- !u!1 &1409164809
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +914,6 @@ GameObject:
   - component: {fileID: 1409164814}
   - component: {fileID: 1409164811}
   - component: {fileID: 1409164813}
-  - component: {fileID: 1409164812}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -900,18 +949,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveColor: {r: 0, g: 0, b: 1, a: 1}
   attackColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &1409164812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409164809}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42aa8b6ffdbb3c247bca176440577335, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1409164813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +963,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightTilePrefab: {fileID: 2374893028557184247, guid: ab6f2c6b907b8a84880d32b68b69a1eb,
     type: 3}
+  allyColor: {r: 0.5683072, g: 0.7584604, b: 0.9339623, a: 1}
+  enemyColor: {r: 0.9528302, g: 0.21124065, b: 0.21124065, a: 1}
 --- !u!114 &1409164814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,7 +1028,6 @@ MonoBehaviour:
   roundController: {fileID: 1167799419}
   partyController: {fileID: 1167799422}
   rangeManager: {fileID: 1409164814}
-  selectionManager: {fileID: 1409164812}
 --- !u!4 &1495133630
 Transform:
   m_ObjectHideFlags: 0

@@ -11,11 +11,11 @@
             return;
         }
 
-        bool isMoveTile = RangeManager.MoveRange.Contains(tile);
-        bool isAbilityTile = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
+        bool inMoveRange = RangeManager.MoveRange.Contains(tile);
+        bool inAbilityRange = RangeManager.AbilityRangeAndOrigin.ContainsKey(tile);
 
-        // Restart turn if back to start or out of range
-        if (tile == actor.turn.StartTile || (!isMoveTile && !isAbilityTile)) {
+        // Restart turn if out of range
+        if (!inMoveRange && !inAbilityRange) {
             owner.ChangeState<RestartUnitState>();
             return;
         }
@@ -28,7 +28,7 @@
         }
 
         // Cancel attack and move
-        if (isMoveTile) {
+        if (inMoveRange) {
             actor.turn.SelectMovement(tile);
             actor.turn.SelectTarget(null);
             owner.ChangeState<PerformMovement>();

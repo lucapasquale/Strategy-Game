@@ -31,6 +31,6 @@ public class TurnUI : MonoBehaviour
         nicknameLabel.text = unit.nickname;
         hpLabel.text = $"HP: {stats[StatTypes.HP]} / {stats[StatTypes.MHP]}";
         atkLabel.text = $"ATK: {stats[StatTypes.ATK]}";
-        defLabel.text = $"ATK: {stats[StatTypes.DEF]}";
+        defLabel.text = $"DEF: {stats[StatTypes.DEF]}";
     }
 }
