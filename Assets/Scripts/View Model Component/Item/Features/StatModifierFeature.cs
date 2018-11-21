@@ -5,7 +5,7 @@ public class StatModifierFeature : Feature
 
     private Stats stats {
         get {
-            return _target.GetComponentInParent<Stats>();
+            return _owner.GetComponentInParent<Stats>();
         }
     }
 

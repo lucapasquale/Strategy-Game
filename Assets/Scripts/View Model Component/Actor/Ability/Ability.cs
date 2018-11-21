@@ -14,7 +14,7 @@ public class Ability : MonoBehaviour
         }
 
         ApplyEffects(target);
-        this.PostNotification(DidPerformNotification);
+        this.PostNotification(DidPerformNotification, target);
     }
 
     public bool CanPerform() {

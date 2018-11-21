@@ -32,9 +32,9 @@ public class InitBattleState : BattleState
     }
 
     private void SpawnTestUnits() {
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 1; ++i) {
             GameObject instance = Instantiate(owner.heroPrefab, PartyController.transform) as GameObject;
-            Point p = new Point(2, i * 3);
+            Point p = new Point(3, 3);
 
             Unit unit = instance.GetComponent<Unit>();
             unit.nickname = instance.name;
@@ -42,7 +42,6 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            //unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
 
@@ -56,7 +55,6 @@ public class InitBattleState : BattleState
             unit.Place(Board.GetTile(p));
             unit.Match();
 
-            //unit.turn = new Turn(unit);
             this.PostNotification(UnitSpawnedNotification, unit);
         }
     }
