@@ -19,7 +19,7 @@ public abstract class StatusEffect : MonoBehaviour
         this.AddObserver(ApplyEffect, RoundController.RoundStartedNotification);
     }
 
-    protected virtual void Remove() {
+    public  virtual void Remove() {
         this.RemoveObserver(ApplyEffect, RoundController.RoundStartedNotification);
         Destroy(this);
     }

@@ -32,12 +32,12 @@ public class ApplyStatusFeature : Feature
             return;
         }
 
-        Unit target = tile.content.GetComponent<Unit>();
+        Status targetStatus = tile.content.GetComponentInChildren<Status>();
 
         StatusEffect appliedEffect = null;
         switch (effect) {
             case StatusEffects.Poison:
-                appliedEffect = target.gameObject.AddComponent<PoisionStatusEffect>();
+                appliedEffect = targetStatus.Add<PoisionStatusEffect>();
                 break;
         }
         
