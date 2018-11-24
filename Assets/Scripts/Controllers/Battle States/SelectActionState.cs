@@ -28,18 +28,22 @@
         }
 
         // If not a target, return
-        if (!actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+        if (!tile.content || !actor.GetComponentInChildren<AbilityTarget>().IsTarget(tile)) {
+            return;
+        }
+  
+        var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
+
+        // If already in range, go straight to attack 
+        if (attackOrigins.Contains(actor.Tile)) {
+            actor.turn.SelectTarget(tile);
+            owner.ChangeState<ConfirmTargetState>();
             return;
         }
 
         // If not in range to target, move to one of origins
-        if (tile.content != null) {
-            var attackOrigins = RangeManager.AbilityRangeAndOrigin[tile];
-            actor.turn.SelectMovement(attackOrigins[0]);
-
-            actor.turn.SelectTarget(tile);
-            owner.ChangeState<PerformMovement>();
-            return;
-        }
+        actor.turn.SelectMovement(attackOrigins[0]);
+        actor.turn.SelectTarget(tile);
+        owner.ChangeState<PerformMovement>();
     }
 }
